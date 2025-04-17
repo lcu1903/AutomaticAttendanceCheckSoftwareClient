@@ -4,7 +4,7 @@ import { AccountService } from '../../aacs/service/auth-management/auth-manageme
 import { Router } from '@angular/router';
 import { UserService } from '../../aacs/service/users/users.service';
 import { Observable, of, switchMap } from 'rxjs';
-import { LoginRes, RegisterReq } from '../../aacs/service/auth-management/types';
+import { LoginReq, LoginRes, RegisterReq } from '../../aacs/service/auth-management/types';
 import { Response } from '../response.types';
 import { UserRes } from '../../aacs/service/users/types';
 
@@ -86,11 +86,11 @@ export class AuthService {
      *
      * @param credentials
      */
-    signIn(credentials: { userName: string; password: string; rememberMe: boolean }): Observable<any> {
+    signIn(credentials: LoginReq): Observable<Response<LoginRes>> {
         // Throw error, if the user is already logged in
         if (this._authenticated) {
             // return throwError('User is already logged in.');
-            return of(true);
+            return of({} as Response<LoginRes>);
         }
 
         return this._accountService.login(credentials)
@@ -99,15 +99,15 @@ export class AuthService {
                     this.accessToken = response.data.token!.accessToken!;
                     this.refreshToken = response.data.token!.refreshToken!;
                     this._authenticated = true;
-                    return of(response.data.user!);
+                    return of(response);
                 })
             )
             .pipe(
-                switchMap((user: UserRes) => {
+                switchMap((res: Response<LoginRes>) => {
                     // Store the user on the user service
-                    this._userService.user = user;
-                    localStorage.setItem('user', JSON.stringify(user));
-                    return of(user);
+                    this._userService.user = res.data.user!;
+                    localStorage.setItem('user', JSON.stringify(res.data.user));
+                    return of(res);
                 })
             );
     }
@@ -117,6 +117,7 @@ export class AuthService {
     signOut(): Observable<any> {
         // Remove the access token from the local storage
         localStorage.removeItem('accessToken');
+        localStorage.removeItem('refreshToken');
 
         // Set the authenticated flag to false
         this._authenticated = false;

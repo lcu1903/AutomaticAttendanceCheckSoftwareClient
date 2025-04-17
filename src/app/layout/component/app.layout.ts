@@ -1,29 +1,40 @@
 import { Component, Renderer2, ViewChild } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { NavigationEnd, Router, RouterModule } from '@angular/router';
+import { ActivatedRoute, NavigationEnd, Router, RouterModule } from '@angular/router';
 import { filter, Subscription } from 'rxjs';
 import { AppTopbar } from './app.topbar';
 import { AppSidebar } from './app.sidebar';
 import { AppFooter } from './app.footer';
 import { LayoutService } from '../service/layout.service';
+import { EmptyComponent } from "./empty.component";
 
 @Component({
     selector: 'app-layout',
     standalone: true,
-    imports: [CommonModule, AppTopbar, AppSidebar, RouterModule, AppFooter],
+    imports: [CommonModule, AppTopbar, AppSidebar, RouterModule, AppFooter, EmptyComponent],
     template: `<div class="layout-wrapper" [ngClass]="containerClass">
-        <app-sidebar></app-sidebar>
-        <app-topbar></app-topbar>
-        <div class="layout-main-container">
-            <div class="layout-main bg-red-500">
+        <ng-container *ngIf="layout == 'empty'">
+            <app-empty></app-empty>
+        </ng-container>
+        
+        
+        <ng-container *ngIf="layout == 'normal'">
+            <app-sidebar></app-sidebar>
+            <app-topbar></app-topbar>
+            <div class="layout-main-container">
+                <div class="layout-main bg-red-500">
+                    <router-outlet></router-outlet>
+                </div>
+                <app-footer></app-footer>
             </div>
-            <app-footer></app-footer>
-        </div>
-        <div class="layout-mask animate-fadein"></div>
+            <div class="layout-mask animate-fadein"></div>
+        </ng-container>
     </div> `
 })
 export class AppLayout {
     overlayMenuOpenSubscription: Subscription;
+
+    layout: string = 'normal'
 
     menuOutsideClickListener: any;
 
@@ -34,8 +45,14 @@ export class AppLayout {
     constructor(
         public layoutService: LayoutService,
         public renderer: Renderer2,
+        public activatedRouter: ActivatedRoute,
         public router: Router
     ) {
+        this.activatedRouter.data.subscribe((data) => {
+            if (data['layout']) {
+                this.layout = data['layout'];
+            }
+        });
         this.overlayMenuOpenSubscription = this.layoutService.overlayOpen$.subscribe(() => {
             if (!this.menuOutsideClickListener) {
                 this.menuOutsideClickListener = this.renderer.listen('document', 'click', (event) => {

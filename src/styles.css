@@ -15,3 +15,10 @@
   @tailwind components;
   @tailwind utilities;
 }
+@layer primeng {
+  :root {
+    --p-primary-color: #ff9800 !important; /* Màu cam */ 
+    --p-primary-contrast-color: #ffffff !important;
+    --p-content-hover-background: #facc7f  !important; /* Màu nền khi hover */
+  }
+}

@@ -1,0 +1,14 @@
+{
+    "auth": {
+        "login": "Đăng nhập",
+        "username": "Tên người dùng",
+        "password": "Mật khẩu",
+        "remember": "Ghi nhớ đăng nhập",
+        "forgot": "Quên mật khẩu",
+        "noAccount": "Chưa có tài khoản?",
+        "register": "Đăng ký"
+    },
+    "error" :{
+        "required":"Bắt buộc"
+    }
+}

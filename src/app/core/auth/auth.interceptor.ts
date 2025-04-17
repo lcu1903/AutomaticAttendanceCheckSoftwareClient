@@ -3,9 +3,9 @@ import { inject } from '@angular/core';
 import { Router } from '@angular/router';
 import { BehaviorSubject, catchError, concatMap, filter, iif, map, Observable, retryWhen, switchMap, take, throwError } from 'rxjs';
 import { AuthService } from './auth.service';
-import { TranslateParams, TranslocoService } from '@ngneat/transloco';
 import { AuthUtils } from './auth.utils';
 import { isNullOrWhiteSpace } from '../../utils/validation.uitls';
+import { TranslateParams, TranslocoService } from '@jsverse/transloco';
 let isRefreshing = false;
 /**
  * Intercept

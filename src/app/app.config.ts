@@ -5,20 +5,22 @@ import { providePrimeNG } from 'primeng/config';
 import Aura from '@primeng/themes/aura';
 import { routes } from './app.routes';
 import { provideHttpClient, withFetch } from '@angular/common/http';
+import { provideTransloco } from './base-components/transloco/transloco.provider';
 
 export const appConfig: ApplicationConfig = {
   providers: [provideZoneChangeDetection({ eventCoalescing: true }),
-    provideRouter(routes, withInMemoryScrolling({ anchorScrolling: 'enabled', scrollPositionRestoration: 'enabled' }), withEnabledBlockingInitialNavigation()),
-    provideHttpClient(withFetch()),
-    provideAnimationsAsync(),
-    providePrimeNG({
-      theme: {
-          preset: Aura,
-          options: {
-            name: 'primeng',
-            order: 'tailwind-base, primeng, tailwind-utilities'
-        }
+  provideRouter(routes, withInMemoryScrolling({ anchorScrolling: 'enabled', scrollPositionRestoration: 'enabled' }), withEnabledBlockingInitialNavigation()),
+  provideHttpClient(withFetch()),
+  provideAnimationsAsync(),
+  provideTransloco(),
+  providePrimeNG({
+    theme: {
+      preset: Aura,
+      options: {
+        name: 'primeng',
+        order: 'tailwind-base, primeng, tailwind-utilities'
       }
+    }
   })
   ]
 };
