@@ -5,6 +5,7 @@ import { CommonModule } from '@angular/common';
 import { StyleClassModule } from 'primeng/styleclass';
 import { AppConfigurator } from './app.configurator';
 import { LayoutService } from '../service/layout.service';
+import { AuthService } from '../../core/auth/auth.service';
 
 @Component({
     selector: 'app-topbar',
@@ -76,17 +77,25 @@ import { LayoutService } from '../service/layout.service';
                         <i class="pi pi-user"></i>
                         <span>Profile</span>
                     </button>
+
                 </div>
             </div>
+            <button type="button" class="layout-topbar-action" (click)="signOut()">
+                <i class="pi pi-sign-out"></i>
+                <span>Sign Out</span>
+            </button>
         </div>
     </div>`
 })
 export class AppTopbar {
     items!: MenuItem[];
 
-    constructor(public layoutService: LayoutService) {}
+    constructor(public layoutService: LayoutService, private readonly _authService: AuthService) { }
 
     toggleDarkMode() {
         this.layoutService.layoutConfig.update((state) => ({ ...state, darkTheme: !state.darkTheme }));
+    }
+    signOut() {
+        this._authService.signOut();
     }
 }

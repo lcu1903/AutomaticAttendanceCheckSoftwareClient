@@ -1,5 +1,5 @@
-import { ApplicationConfig, provideZoneChangeDetection } from '@angular/core';
-import { provideRouter, withEnabledBlockingInitialNavigation, withInMemoryScrolling } from '@angular/router';
+import { ApplicationConfig, importProvidersFrom, provideZoneChangeDetection } from '@angular/core';
+import { PreloadAllModules, provideRouter, RouterModule, withEnabledBlockingInitialNavigation, withInMemoryScrolling } from '@angular/router';
 import { provideAnimationsAsync } from '@angular/platform-browser/animations/async';
 import { providePrimeNG } from 'primeng/config';
 import Aura from '@primeng/themes/aura';
@@ -13,6 +13,9 @@ export const appConfig: ApplicationConfig = {
   provideHttpClient(withFetch()),
   provideAnimationsAsync(),
   provideTransloco(),
+  importProvidersFrom(RouterModule.forRoot(routes, {
+    preloadingStrategy: PreloadAllModules
+  })),
   providePrimeNG({
     theme: {
       preset: Aura,

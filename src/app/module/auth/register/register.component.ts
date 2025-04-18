@@ -1,7 +1,7 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { AbstractControlOptions, FormBuilder, FormControl, FormGroup, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
 import { finalize, Subject, takeUntil } from 'rxjs';
-import { LoginReq } from '../../../aacs/service/auth-management/types';
+import { LoginReq, RegisterReq } from '../../../aacs/service/auth-management/types';
 import { z } from 'zod';
 import { zodValidator } from '../../../utils/validation.utils';
 import { TranslocoModule, TranslocoService } from '@jsverse/transloco';
@@ -13,20 +13,22 @@ import { AuthService } from '../../../core/auth/auth.service';
 import { ActivatedRoute, Router } from '@angular/router';
 import { MessagePopupService, PopupType } from '../../../base-components/message-popup/message-popup.component';
 @Component({
-  selector: 'app-login',
+  selector: 'app-register',
   imports: [FormsModule, ReactiveFormsModule, TranslocoModule, CmInputComponent, CommonModule],
-  templateUrl: './login.component.html',
+  templateUrl: './register.component.html',
   standalone: true,
-  styleUrl: './login.component.css'
 })
-export class LoginComponent implements OnInit, OnDestroy {
+export class RegisterComponent implements OnInit, OnDestroy {
   private readonly _unsubscribeAll: Subject<any> = new Subject<any>();
   isLoading: boolean = false;
-  loginSchema: z.ZodType<LoginReq> = z.object({
+  registerSchema: z.ZodType<RegisterReq> = z.object({
     userName: z.string().min(1, { message: 'error.required' }),
     password: z.string().min(1, { message: 'error.required' }),
+    email: z.string().email({ message: 'error.invalidEmail' }).min(1, { message: 'error.required' }),
+    phoneNumber: z.string().optional().nullable(),
+    fullName: z.string().optional().nullable(),
   })
-  loginForm!: FormGroup;
+  registerForm!: FormGroup;
   constructor(
     private readonly _formBuilder: FormBuilder,
     private readonly _translocoService: TranslocoService,
@@ -37,11 +39,14 @@ export class LoginComponent implements OnInit, OnDestroy {
   ) { }
 
   ngOnInit(): void {
-    this.loginForm = this._formBuilder.group({
+    this.registerForm = this._formBuilder.group({
       userName: [''],
-      password: ['']
+      password: [''],
+      email: [''],
+      phoneNumber: [null],
+      fullName: [null]
     }, {
-      validators: zodValidator(this.loginSchema)
+      validators: zodValidator(this.registerSchema)
     });
 
   }
@@ -52,17 +57,20 @@ export class LoginComponent implements OnInit, OnDestroy {
     this._unsubscribeAll.complete();
   }
   onSubmit() {
-    if (!this.loginForm.valid) {
-      this.loginForm.markAllAsTouched();
+    if (!this.registerForm.valid) {
+      this.registerForm.markAllAsTouched();
       return;
     }
     this.isLoading = true;
-    const formValue = this.loginForm.getRawValue();
-    const loginReq: LoginReq = {
+    const formValue = this.registerForm.getRawValue();
+    const registerReq: RegisterReq = {
       userName: formValue.userName,
-      password: formValue.password
+      password: formValue.password,
+      email: formValue.email,
+      phoneNumber: formValue.phoneNumber,
+      fullName: formValue.fullName
     };
-    this._authService.signIn(loginReq).pipe(
+    this._authService.signUp(registerReq).pipe(
       takeUntil(this._unsubscribeAll),
       finalize(() => {
         this.isLoading = false;
@@ -70,13 +78,13 @@ export class LoginComponent implements OnInit, OnDestroy {
     ).subscribe((res) => {
       if (res.success) {
 
-        const redirectURL = this._activatedRoute.snapshot.queryParamMap.get('redirectURL') || '/home'
+        const redirectURL = '/login'
         // Navigate to the redirect url
         this._router.navigateByUrl(redirectURL);
-        this._messagePopupService.show(PopupType.SUCCESS, null, 'login.success');
+        this._messagePopupService.show(PopupType.SUCCESS, null, 'message.registerSuccess');
       } else {
-        this._messagePopupService.show(PopupType.ERROR, null, res.errors?.join(', ').toString());
-        this.loginForm.enable();
+        this._messagePopupService.show(PopupType.ERROR, null, res.errors?.join(', '));
+        this.registerForm.enable();
       }
 
     });

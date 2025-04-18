@@ -34,7 +34,7 @@
             [label]="'auth.password' | transloco"
             [placeholder]="'auth.password' | transloco"
             type="secret"
-            [showSecretToggle]="true"
+            [showSecretToggle]="false"
             [required]="true"
             [errors]="loginForm.get('password')?.touched ? loginForm.errors?.['password'] : null"
           ></cm-input>
@@ -64,7 +64,7 @@
         <!-- REGISTER -->
         <p class="text-sm text-center text-gray-500">
           {{ 'auth.noAccount' | transloco }}
-          <a href="#" class="text-primary hover:underline">{{
+          <a href="/register" class="text-primary hover:underline">{{
             'auth.register' | transloco
           }}</a>
         </p>

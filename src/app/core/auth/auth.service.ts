@@ -121,7 +121,7 @@ export class AuthService {
 
         // Set the authenticated flag to false
         this._authenticated = false;
-
+        window.location.reload();
         // Return the observable
         return of(true);
     }
@@ -131,7 +131,7 @@ export class AuthService {
      *
      * @param user
      */
-    signUp(user: RegisterReq): Observable<any> {
+    signUp(user: RegisterReq): Observable<Response<LoginRes>> {
         return this._accountService.register(user);
     }
 

@@ -6,6 +6,7 @@ import { AuthGuard } from './core/auth/guard/auth.guard';
 import { EmptyComponent } from './layout/component/empty.component';
 import { PageGuard } from './core/auth/guard/page.guard';
 import { HomeComponent } from './module/home/home.component';
+import { RegisterComponent } from './module/auth/register/register.component';
 export const routes: Routes = [
     { path: '', redirectTo: 'home', pathMatch: 'full' },
     {
@@ -23,6 +24,12 @@ export const routes: Routes = [
                 canActivate: [NoAuthGuard],
                 canActivateChild: [NoAuthGuard],
                 component: LoginComponent,
+            },
+            {
+                path: 'register',
+                canActivate: [NoAuthGuard],
+                canActivateChild: [NoAuthGuard],
+                component: RegisterComponent,
             },
         ]
     },

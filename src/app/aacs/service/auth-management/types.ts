@@ -17,8 +17,8 @@ export interface RegisterReq {
     userName: string;
     password: string;
     email: string;
-    phoneNumber?: string;
-    fullName?: string;
+    phoneNumber?: string | null;
+    fullName?: string | null;
 }
 export interface LoginReq {
     userName: string;
