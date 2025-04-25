@@ -1,90 +1,82 @@
 <div class="flex-1 h-full w-full bg-slate-100 flex justify-center items-center">
     <div class="flex flex-col sm:max-w-md w-full bg-white rounded-md shadow-md p-6">
-      <form [formGroup]="registerForm"  (ngSubmit)="onSubmit()" class="flex flex-col gap-4">
-        <!-- AVATAR -->
-        <div class="flex justify-center">
-          <img
-            src="../../../../assets/logo.png"
-            alt="Avatar"
-            class="w-20 h-20 rounded-full object-cover"
-          />
-        </div>
-  
-        <!-- TITLE -->
-        <div class="text-center text-2xl font-semibold">
-          {{ 'auth.login' | transloco }}
-        </div>
-        <!-- Fullname -->
-        <div>
-          <cm-input
-            formControlName="fullName"
-            [label]="'auth.fullname' | transloco"
-            [placeholder]="'auth.fullname' | transloco"
-            type="text"
-            [errors]="registerForm.get('fullName')?.touched ? registerForm.errors?.['fullName'] : null"
-          ></cm-input>
-        </div>
-  
-        <!-- INPUT: USERNAME -->
-      
-          <cm-input
-            formControlName="userName"            
-            [label]="'auth.username' | transloco"
-            [placeholder]="'auth.username' | transloco"
-            [required]="true"
-            type="text"
-            [errors]="registerForm.get('userName')?.touched ? registerForm.errors?.['userName'] : null"
-          ></cm-input>
-        
-  
-        <!-- INPUT: PASSWORD -->
-      
-          <cm-input
-            formControlName="password"
-            [label]="'auth.password' | transloco"
-            [placeholder]="'auth.password' | transloco"
-            type="secret"
-            [showSecretToggle]="false"
-            [required]="true"
-            [errors]="registerForm.get('password')?.touched ? registerForm.errors?.['password'] : null"
-          ></cm-input>
-        
-        <!-- INPUT EMAIL -->
-      
-          <cm-input
-            formControlName="email"
-            [label]="'auth.email' | transloco"
-            [placeholder]="'auth.email' | transloco"
-            type="text"
-            [required]="true"
-            [errors]="registerForm.get('email')?.touched ? registerForm.errors?.['email'] : null"
-          ></cm-input>
-          <cm-input
-          formControlName="phoneNumber"
-          [label]="'auth.phoneNumber' | transloco"
-          [placeholder]="'auth.phoneNumber' | transloco"
-          type="text"
-          [errors]="registerForm.get('phoneNumber')?.touched ? registerForm.errors?.['phoneNumber'] : null"
-        ></cm-input>
-        
-        <!-- LOGIN BUTTON -->
-        <button
-        [disabled]="registerForm.invalid || isLoading"
-        [ngClass]="{ 'opacity-50 cursor-not-allowed': registerForm.invalid }"
-        type="submit"
-        class="w-full bg-primary hover:opacity-90 text-white font-semibold py-2 rounded"
-        >
-          {{ 'auth.register' | transloco }}
-        </button>
-  
-        <!-- REGISTER -->
-        <p class="text-sm text-center text-gray-500">
-          {{ 'auth.alreadyHaveAccount' | transloco }}
-          <a href="/login" class="text-primary hover:underline">{{
-            'auth.login' | transloco
-          }}</a>
-        </p>
-      </form>
+        <form [formGroup]="registerForm" (ngSubmit)="onSubmit()" class="flex flex-col gap-4">
+            <!-- AVATAR -->
+            <div class="flex justify-center">
+                <img src="../../../../assets/logo.png" alt="Avatar" class="w-20 h-20 rounded-full object-cover" />
+            </div>
+
+            <!-- TITLE -->
+            <div class="text-center text-2xl font-semibold">
+                {{ 'system.auth.login' | transloco }}
+            </div>
+            <!-- Fullname -->
+            <div>
+                <cm-input
+                    formControlName="fullName"
+                    [label]="'system.auth.fullname' | transloco"
+                    [placeholder]="'system.auth.fullname' | transloco"
+                    type="text"
+                    [errors]="registerForm.get('fullName')?.touched ? registerForm.errors?.['fullName'] : null"
+                ></cm-input>
+            </div>
+
+            <!-- INPUT: USERNAME -->
+
+            <cm-input
+                formControlName="userName"
+                [label]="'system.auth.username' | transloco"
+                [placeholder]="'system.auth.username' | transloco"
+                [required]="true"
+                type="text"
+                [errors]="registerForm.get('userName')?.touched ? registerForm.errors?.['userName'] : null"
+            ></cm-input>
+
+            <!-- INPUT: PASSWORD -->
+
+            <cm-input
+                formControlName="password"
+                [label]="'system.auth.password' | transloco"
+                [placeholder]="'system.auth.password' | transloco"
+                type="secret"
+                [showSecretToggle]="false"
+                [required]="true"
+                [errors]="registerForm.get('password')?.touched ? registerForm.errors?.['password'] : null"
+            ></cm-input>
+
+            <!-- INPUT EMAIL -->
+
+            <cm-input
+                formControlName="email"
+                [label]="'system.auth.email' | transloco"
+                [placeholder]="'system.auth.email' | transloco"
+                type="text"
+                [required]="true"
+                [errors]="registerForm.get('email')?.touched ? registerForm.errors?.['email'] : null"
+            ></cm-input>
+            <cm-input
+                formControlName="phoneNumber"
+                [label]="'system.auth.phoneNumber' | transloco"
+                [placeholder]="'system.auth.phoneNumber' | transloco"
+                type="text"
+                [errors]="registerForm.get('phoneNumber')?.touched ? registerForm.errors?.['phoneNumber'] : null"
+            ></cm-input>
+
+            <!-- LOGIN BUTTON -->
+            <button
+                [disabled]="registerForm.invalid || isLoading"
+                [ngClass]="{ 'opacity-50 cursor-not-allowed': registerForm.invalid }"
+                type="submit"
+                class="w-full bg-primary hover:opacity-90 text-white font-semibold py-2 rounded"
+            >
+                {{ 'system.auth.register' | transloco }}
+            </button>
+
+            <!-- REGISTER -->
+            <p class="text-sm text-center text-gray-500">
+                {{ 'system.auth.alreadyHaveAccount' | transloco }}
+                <a href="/login" class="text-primary hover:underline">{{ 'system.auth.login' | transloco }}</a>
+            </p>
+        </form>
     </div>
-  </div>
-  
+</div>

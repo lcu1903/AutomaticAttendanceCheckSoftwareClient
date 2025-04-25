@@ -1,12 +1,11 @@
 import { Routes } from '@angular/router';
+import { AuthGuard } from './core/auth/guard/auth.guard';
+import { NoAuthGuard } from './core/auth/guard/noAuth.guard';
+import { PageGuard } from './core/auth/guard/page.guard';
 import { AppLayout } from './layout/component/app.layout';
 import { LoginComponent } from './module/auth/login/login.component';
-import { NoAuthGuard } from './core/auth/guard/noAuth.guard';
-import { AuthGuard } from './core/auth/guard/auth.guard';
-import { EmptyComponent } from './layout/component/empty.component';
-import { PageGuard } from './core/auth/guard/page.guard';
-import { HomeComponent } from './module/home/home.component';
 import { RegisterComponent } from './module/auth/register/register.component';
+import { HomeComponent } from './module/home/home.component';
 export const routes: Routes = [
     { path: '', redirectTo: 'home', pathMatch: 'full' },
     {
@@ -16,7 +15,6 @@ export const routes: Routes = [
         component: AppLayout,
         data: {
             layout: 'empty',
-
         },
         children: [
             {
@@ -31,7 +29,7 @@ export const routes: Routes = [
                 canActivateChild: [NoAuthGuard],
                 component: RegisterComponent,
             },
-        ]
+        ],
     },
 
     {
@@ -49,7 +47,6 @@ export const routes: Routes = [
                 canActivateChild: [PageGuard],
                 component: HomeComponent,
             },
-        ]
+        ],
     },
-
 ];

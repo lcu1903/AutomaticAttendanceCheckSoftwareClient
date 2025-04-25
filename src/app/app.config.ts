@@ -8,22 +8,25 @@ import { provideHttpClient, withFetch } from '@angular/common/http';
 import { provideTransloco } from './base-components/transloco/transloco.provider';
 
 export const appConfig: ApplicationConfig = {
-  providers: [provideZoneChangeDetection({ eventCoalescing: true }),
-  provideRouter(routes, withInMemoryScrolling({ anchorScrolling: 'enabled', scrollPositionRestoration: 'enabled' }), withEnabledBlockingInitialNavigation()),
-  provideHttpClient(withFetch()),
-  provideAnimationsAsync(),
-  provideTransloco(),
-  importProvidersFrom(RouterModule.forRoot(routes, {
-    preloadingStrategy: PreloadAllModules
-  })),
-  providePrimeNG({
-    theme: {
-      preset: Aura,
-      options: {
-        name: 'primeng',
-        order: 'tailwind-base, primeng, tailwind-utilities'
-      }
-    }
-  })
-  ]
+    providers: [
+        provideZoneChangeDetection({ eventCoalescing: true }),
+        provideRouter(routes, withInMemoryScrolling({ anchorScrolling: 'enabled', scrollPositionRestoration: 'enabled' }), withEnabledBlockingInitialNavigation()),
+        provideHttpClient(withFetch()),
+        provideAnimationsAsync(),
+        provideTransloco(),
+        importProvidersFrom(
+            RouterModule.forRoot(routes, {
+                preloadingStrategy: PreloadAllModules,
+            }),
+        ),
+        providePrimeNG({
+            theme: {
+                preset: Aura,
+                options: {
+                    name: 'primeng',
+                    order: 'tailwind-base, primeng, tailwind-utilities',
+                },
+            },
+        }),
+    ],
 };

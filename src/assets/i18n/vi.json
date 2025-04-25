@@ -1,27 +1,34 @@
 {
-    "auth": {
-        "login": "Đăng nhập",
-        "username": "Tên người dùng",
-        "password": "Mật khẩu",
-        "remember": "Ghi nhớ đăng nhập",
-        "forgot": "Quên mật khẩu",
-        "noAccount": "Chưa có tài khoản?",
-        "register": "Đăng ký",
-        "alreadyHaveAccount": "Đã có tài khoản?",
-        "fullname": "Họ và tên",
-        "email": "Email",
-        "phoneNumber": "Số điện thoại"
-    },
-    "message":{
-        "loginSuccess":"Đăng nhập thành công",
-        "loginFailed":"Đăng nhập thất bại",
-        "logoutSuccess":"Đăng xuất thành công",
-        "logoutFailed":"Đăng xuất thất bại",
-        "registerSuccess":"Đăng ký thành công",
-        "registerFailed":"Đăng ký thất bại"
-    },
-    "error" :{
-        "required":"Bắt buộc",
-        "invalidEmail":"Email không hợp lệ"
+    "system": {
+        "auth": {
+            "login": "Đăng nhập",
+            "username": "Tên người dùng",
+            "password": "Mật khẩu",
+            "remember": "Ghi nhớ đăng nhập",
+            "forgot": "Quên mật khẩu",
+            "noAccount": "Chưa có tài khoản?",
+            "register": "Đăng ký",
+            "alreadyHaveAccount": "Đã có tài khoản?",
+            "fullname": "Họ và tên",
+            "email": "Email",
+            "phoneNumber": "Số điện thoại"
+        },
+        "message": {
+            "loginSuccess": "Đăng nhập thành công",
+            "loginFailed": "Đăng nhập thất bại",
+            "logoutSuccess": "Đăng xuất thành công",
+            "logoutFailed": "Đăng xuất thất bại",
+            "registerSuccess": "Đăng ký thành công",
+            "registerFailed": "Đăng ký thất bại",
+            "systemPageCreateFailed": "Tạo trang thất bại",
+            "systemPageNotFound": "Không tìm thấy trang",
+            "systemPageDeleteFailed": "Xóa trang thất bại",
+            "systemPageUpdateFailed": "Cập nhật trang thất bại"
+        },
+        "error": {
+            "required": "Bắt buộc",
+            "invalidEmail": "Email không hợp lệ"
+        },
+        "ERROR": "LỖI"
     }
 }
