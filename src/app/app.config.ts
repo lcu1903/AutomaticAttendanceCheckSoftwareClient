@@ -6,6 +6,7 @@ import Aura from '@primeng/themes/aura';
 import { routes } from './app.routes';
 import { provideHttpClient, withFetch } from '@angular/common/http';
 import { provideTransloco } from './base-components/transloco/transloco.provider';
+import { provideAuth } from './core/auth/auth.provider';
 
 export const appConfig: ApplicationConfig = {
     providers: [
@@ -19,6 +20,7 @@ export const appConfig: ApplicationConfig = {
                 preloadingStrategy: PreloadAllModules,
             }),
         ),
+        provideAuth(),
         providePrimeNG({
             theme: {
                 preset: Aura,

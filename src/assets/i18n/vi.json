@@ -1,5 +1,6 @@
 {
     "system": {
+        "default": "Hệ thống",
         "auth": {
             "login": "Đăng nhập",
             "username": "Tên người dùng",
@@ -14,6 +15,7 @@
             "phoneNumber": "Số điện thoại"
         },
         "message": {
+            "success": "Thành công",
             "loginSuccess": "Đăng nhập thành công",
             "loginFailed": "Đăng nhập thất bại",
             "logoutSuccess": "Đăng xuất thành công",
@@ -29,6 +31,35 @@
             "required": "Bắt buộc",
             "invalidEmail": "Email không hợp lệ"
         },
+        "page": "Cấu hình trang",
+        "pageName": "Tên trang",
+        "pageUrl": "URL trang",
+        "pageIcon": "Biểu tượng trang",
         "ERROR": "LỖI"
+    },
+    "common": {
+        "title": "Tiêu đề",
+        "success": "Thành công",
+        "loading": "Đang tải...",
+        "noData": "Không có dữ liệu",
+        "search": "Tìm kiếm",
+        "add": "Thêm",
+        "edit": "Chỉnh sửa",
+        "delete": "Xóa",
+        "view": "Xem",
+        "save": "Lưu",
+        "cancel": "Hủy",
+        "confirm": "Xác nhận",
+        "yes": "Có",
+        "no": "Không",
+        "close": "Đóng",
+        "back": "Quay lại",
+        "next": "Tiếp theo",
+        "unSaveChanges": "Có thay đổi chưa được lưu",
+        "confirmUnSaveChanges": "Bạn có chắc chắn muốn hủy?",
+        "message": {
+            "invalidUrl": "URL không hợp lệ"
+        },
+        "confirmDelete": "Bạn có chắc chắn muốn xóa?"
     }
 }

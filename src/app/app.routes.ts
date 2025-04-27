@@ -47,6 +47,11 @@ export const routes: Routes = [
                 canActivateChild: [PageGuard],
                 component: HomeComponent,
             },
+            {
+                path: '',
+                canActivateChild: [PageGuard],
+                loadChildren: () => import('./module/system/system.module').then((m) => m.SystemModule),
+            },
         ],
     },
 ];

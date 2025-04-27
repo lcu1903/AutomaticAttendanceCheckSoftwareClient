@@ -76,7 +76,7 @@ export class LoginComponent implements OnInit, OnDestroy {
                     const redirectURL = this._activatedRoute.snapshot.queryParamMap.get('redirectURL') || '/home';
                     // Navigate to the redirect url
                     this._router.navigateByUrl(redirectURL);
-                    this._messagePopupService.show(PopupType.SUCCESS, null, 'message.loginSuccess');
+                    this._messagePopupService.show(PopupType.SUCCESS, null, 'system.message.loginSuccess');
                 } else {
                     this._messagePopupService.show(PopupType.ERROR, null, res.errors?.join(', ').toString());
                     this.loginForm.enable();

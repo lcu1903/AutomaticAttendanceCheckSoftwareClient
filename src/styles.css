@@ -8,17 +8,20 @@
 @layer tailwind-base, primeng, tailwind-utilities;
 
 @layer tailwind-base {
-  @tailwind base;
+    @tailwind base;
 }
 
 @layer tailwind-utilities {
-  @tailwind components;
-  @tailwind utilities;
+    @tailwind components;
+    @tailwind utilities;
 }
 @layer primeng {
-  :root {
-    --p-primary-color: #ff9800 !important; /* Màu cam */ 
-    --p-primary-contrast-color: #ffffff !important;
-    --p-content-hover-background: #facc7f  !important; /* Màu nền khi hover */
-  }
+    :root {
+        --p-primary-color: #ff9800 !important; /* Màu cam */
+        --p-primary-contrast-color: #ffffff !important;
+        --p-content-hover-background: #facc7f !important; /* Màu nền khi hover */
+    }
+    .bg-card {
+        background-color: #ffffff !important; /* Màu nền của thẻ */
+    }
 }

@@ -18,9 +18,9 @@ export class MessagePopupService {
     show(type: PopupType, title?: string | null, content?: string) {
         this.messageService.add({
             severity: type,
-            summary: this.translocoService.translate(title ?? ''),
-            detail: this.translocoService.translate(content ?? ''),
-            life: 1000,
+            summary: this.translocoService.translate(title ?? 'system.message.success'),
+            detail: this.translocoService.translate(content ?? '1'),
+            life: 2000,
         });
     }
 }

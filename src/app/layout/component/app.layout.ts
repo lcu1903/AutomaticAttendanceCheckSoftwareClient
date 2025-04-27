@@ -6,7 +6,7 @@ import { AppTopbar } from './app.topbar';
 import { AppSidebar } from './app.sidebar';
 import { AppFooter } from './app.footer';
 import { LayoutService } from '../service/layout.service';
-import { EmptyComponent } from "./empty.component";
+import { EmptyComponent } from './empty.component';
 
 @Component({
     selector: 'app-layout',
@@ -16,25 +16,24 @@ import { EmptyComponent } from "./empty.component";
         <ng-container *ngIf="layout == 'empty'">
             <app-empty></app-empty>
         </ng-container>
-        
-        
+
         <ng-container *ngIf="layout == 'normal'">
             <app-sidebar></app-sidebar>
             <app-topbar></app-topbar>
             <div class="layout-main-container">
-                <div class="layout-main bg-red-500">
+                <div class="layout-main bg-slate-200">
                     <router-outlet></router-outlet>
                 </div>
                 <app-footer></app-footer>
             </div>
             <div class="layout-mask animate-fadein"></div>
         </ng-container>
-    </div> `
+    </div> `,
 })
 export class AppLayout {
     overlayMenuOpenSubscription: Subscription;
 
-    layout: string = 'normal'
+    layout: string = 'normal';
 
     menuOutsideClickListener: any;
 
@@ -46,7 +45,7 @@ export class AppLayout {
         public layoutService: LayoutService,
         public renderer: Renderer2,
         public activatedRouter: ActivatedRoute,
-        public router: Router
+        public router: Router,
     ) {
         this.activatedRouter.data.subscribe((data) => {
             if (data['layout']) {
@@ -111,7 +110,7 @@ export class AppLayout {
             'layout-static': this.layoutService.layoutConfig().menuMode === 'static',
             'layout-static-inactive': this.layoutService.layoutState().staticMenuDesktopInactive && this.layoutService.layoutConfig().menuMode === 'static',
             'layout-overlay-active': this.layoutService.layoutState().overlayMenuActive,
-            'layout-mobile-active': this.layoutService.layoutState().staticMenuMobileActive
+            'layout-mobile-active': this.layoutService.layoutState().staticMenuMobileActive,
         };
     }
 

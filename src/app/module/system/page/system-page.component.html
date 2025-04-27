@@ -1,0 +1,38 @@
+<div class="rounded-md m-4 p-4 flex justify-evenly gap-4">
+    <div class="w-screen-40 rounded-md shadow bg-card p-2">
+        <p-tree [loading]="isLoading" [value]="treeRes" (onNodeSelect)="onNodeSelect($event)" selectionMode="single" [(selection)]="selectedPage"></p-tree>
+    </div>
+    <form [formGroup]="systemPageForm" (ngSubmit)="onSubmit()" class="w-screen-40 rounded-md shadow bg-card min-h-screen-60 flex flex-col p-4 gap-4">
+        <div class="text-2xl font-semibold border-b text-primary rounded-t-md pb-4 flex items-center">
+            <div>{{ 'system.page' | transloco }}</div>
+            <div class="flex justify-end flex-1 gap-2">
+                <p-button [severity]="'danger'" [disabled]="type == 'add' || (selectedPage?.children?.length ?? 0) > 0" (onClick)="onDeletePage()" label="{{ 'common.delete' | transloco }}" />
+                <p-button [disabled]="type == 'add' || selectedPage == null" (onClick)="onAddPage()" label="{{ 'common.add' | transloco }}" />
+            </div>
+        </div>
+        <div class="flex flex-col gap-4">
+            <!-- inputs -->
+            <div>
+                <!-- name -->
+                <cm-input [disabled]="type == 'null'" formControlName="pageName" [label]="'system.pageName'"></cm-input>
+            </div>
+            <div>
+                <!-- url -->
+                <cm-input
+                    [disabled]="type == 'null'"
+                    formControlName="pageUrl"
+                    [label]="'system.pageUrl'"
+                    [errors]="systemPageForm.get('pageUrl')?.touched ? systemPageForm.errors?.['pageUrl'] : null"
+                ></cm-input>
+            </div>
+            <div>
+                <!-- icon -->
+                <cm-input [disabled]="type == 'null'" formControlName="pageIcon" [label]="'system.pageIcon'"></cm-input>
+            </div>
+        </div>
+        <div class="flex flex-row-reverse gap-2">
+            <p-button type="submit" [disabled]="isLoading || systemPageForm.invalid" class="" label="{{ 'common.save' | transloco }}" />
+            <p-button (onClick)="onCancel()" [severity]="'contrast'" [disabled]="isLoading" class="" label="{{ 'common.cancel' | transloco }}" />
+        </div>
+    </form>
+</div>

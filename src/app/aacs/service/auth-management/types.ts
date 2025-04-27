@@ -1,4 +1,4 @@
-import { UserRes } from "../users/types";
+import { UserRes } from '../users/types';
 
 export interface LoginRes {
     token?: TokenRes;

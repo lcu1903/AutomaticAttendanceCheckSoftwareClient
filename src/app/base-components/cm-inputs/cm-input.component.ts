@@ -13,11 +13,13 @@ import { InputGroupAddonModule } from 'primeng/inputgroupaddon';
     standalone: true,
     imports: [ReactiveFormsModule, FormsModule, CommonModule, IconFieldModule, InputIconModule, TranslocoModule, InputTextModule, ButtonModule, InputGroupModule, InputGroupAddonModule],
     templateUrl: './cm-input.component.html',
-    providers: [{
-        provide: NG_VALUE_ACCESSOR,
-        useExisting: forwardRef(() => CmInputComponent),
-        multi: true,
-    }]
+    providers: [
+        {
+            provide: NG_VALUE_ACCESSOR,
+            useExisting: forwardRef(() => CmInputComponent),
+            multi: true,
+        },
+    ],
 })
 export class CmInputComponent implements ControlValueAccessor {
     @Input() type: string = 'text';
@@ -28,16 +30,14 @@ export class CmInputComponent implements ControlValueAccessor {
     @Input() showSecretToggle = false;
     @Input() required = false;
     @Input() errors: string | null = null;
+    @Input() disabled = false;
     value: any = '';
-    constructor() {
-
-
-    }
-    onChange: (value: any) => void = () => { };
-    onTouched: () => void = () => { };
+    constructor() {}
+    onChange: (value: any) => void = () => {};
+    onTouched: () => void = () => {};
 
     writeValue(obj: any): void {
-        this.value = obj;
+        this.value = obj === undefined || obj === null ? '' : obj;
     }
 
     registerOnChange(fn: any): void {
