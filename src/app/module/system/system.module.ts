@@ -19,10 +19,12 @@ import { SystemPositionsComponent } from './position/system-positions.component'
 import { SystemDepartmentsCreateEditPopupComponent } from './department/system-departments-create-edit-popup.component';
 import { CmSelectComponent } from '../../base-components/cm-select/cm-select.component';
 import { SystemPositionsCreateEditPopupComponent } from './position/system-positions-create-edit-popup.component';
+import { SystemUsersListComponent } from './users/users-list.component';
 @NgModule({
     declarations: [
         SystemPageComponent,
         SystemUsersComponent,
+        SystemUsersListComponent,
         SystemDepartmentsComponent,
         SystemDepartmentsCreateEditPopupComponent,
         SystemPositionsComponent,

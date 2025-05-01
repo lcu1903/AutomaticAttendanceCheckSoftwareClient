@@ -5,7 +5,14 @@
         <p-inputgroup-addon *ngIf="preIcon != null">
             <p-inputicon [styleClass]="preIcon" />
         </p-inputgroup-addon>
-        <input [disabled]="disabled" pInputText [placeholder]="placeholder ?? '' | transloco" [value]="value" (input)="onInput($event)" (blur)="onTouched()" />
+        <input
+            [disabled]="disabled"
+            pInputText
+            [placeholder]="placeholder ?? '' | transloco"
+            [value]="value"
+            (input)="onInput($event)"
+            (blur)="onTouched()"
+        />
         <p-inputgroup-addon *ngIf="postIcon">
             <p-inputicon [styleClass]="postIcon" />
         </p-inputgroup-addon>
@@ -30,6 +37,30 @@
         />
         <p-inputgroup-addon>
             <p-button (click)="onShowSecretToggle()" icon="{{ showSecretToggle ? 'pi pi-eye' : 'pi pi-eye-slash' }}" [rounded]="true" [text]="true" />
+        </p-inputgroup-addon>
+    </p-inputgroup>
+    <small *ngIf="errors" class="ml-2 text-red-500 text-sm mt-1">
+        {{ errors | transloco }}
+    </small>
+</div>
+<div *ngIf="type == 'number'">
+    <label *ngIf="label">{{ label | transloco }}</label>
+    <ng-container *ngIf="required"> <span class="text-red-600"> *</span></ng-container>
+    <p-inputgroup class="mt-2 h-11">
+        <p-inputgroup-addon *ngIf="preIcon != null">
+            <p-inputicon [styleClass]="preIcon" />
+        </p-inputgroup-addon>
+        <input
+            [disabled]="disabled"
+            pInputText
+            [placeholder]="placeholder ?? '' | transloco"
+            [value]="value"
+            (input)="onInput($event)"
+            (blur)="onTouched()"
+            type="number"
+        />
+        <p-inputgroup-addon *ngIf="postIcon">
+            <p-inputicon [styleClass]="postIcon" />
         </p-inputgroup-addon>
     </p-inputgroup>
     <small *ngIf="errors" class="ml-2 text-red-500 text-sm mt-1">

@@ -21,6 +21,7 @@ export class SystemPageComponent implements OnInit, OnDestroy {
         .object({
             pageName: z.string().nullable(),
             pageIcon: z.string().nullable(),
+            pageOrder: z.number().min(1, 'system.error.required').nullable(),
         })
         .refine(() => {
             if (this.selectedPage == null) {
@@ -62,6 +63,7 @@ export class SystemPageComponent implements OnInit, OnDestroy {
                 pageUrl: [''],
                 pageIcon: [''],
                 parentId: [''],
+                pageOrder: 0,
             },
             {
                 validators: zodValidator(this.systemPageSchema),
@@ -133,6 +135,7 @@ export class SystemPageComponent implements OnInit, OnDestroy {
                 pageUrl: this.selectedPage?.data?.pageUrl,
                 pageIcon: this.selectedPage?.data?.pageIcon,
                 parentId: this.selectedPage?.data?.parentId,
+                pageOrder: this.selectedPage?.data?.pageOrder,
             });
         } else {
             this.type = 'add';
@@ -142,6 +145,7 @@ export class SystemPageComponent implements OnInit, OnDestroy {
                 pageUrl: null,
                 pageIcon: null,
                 parentId: this.newNode?.data?.parentId,
+                pageOrder: this.newNode?.data?.pageOrder,
             });
         }
         console.log('Selected Node:', this.selectedPage);
@@ -211,12 +215,11 @@ export class SystemPageComponent implements OnInit, OnDestroy {
                 pageUrl: '',
                 pageIcon: '',
                 parentId: this.selectedPage?.data?.pageId,
+                pageOrder: this.systemPageRes.length + 1,
             },
             label: '',
             icon: 'pi pi-plus',
         };
-        console.log(this.newNode);
-
         if (this.selectedPage) {
             this.newNode.data!.parentId = this.selectedPage?.data?.pageId;
             //add new node to the selected node
@@ -224,7 +227,14 @@ export class SystemPageComponent implements OnInit, OnDestroy {
             this.selectedPage.children = [...this.selectedPage.children, this.newNode];
         }
         this.selectedPage = this.newNode;
-        this.systemPageForm.reset();
+        this.systemPageForm.patchValue({
+            pageId: null,
+            pageName: null,
+            pageUrl: null,
+            pageIcon: null,
+            parentId: this.selectedPage?.data?.parentId,
+            pageOrder: this.selectedPage?.data?.pageOrder,
+        });
     }
     onCancel() {
         this._confirmationPopupService.showConfirm(

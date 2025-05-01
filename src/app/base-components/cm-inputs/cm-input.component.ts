@@ -11,7 +11,18 @@ import { InputGroupAddonModule } from 'primeng/inputgroupaddon';
 @Component({
     selector: 'cm-input',
     standalone: true,
-    imports: [ReactiveFormsModule, FormsModule, CommonModule, IconFieldModule, InputIconModule, TranslocoModule, InputTextModule, ButtonModule, InputGroupModule, InputGroupAddonModule],
+    imports: [
+        ReactiveFormsModule,
+        FormsModule,
+        CommonModule,
+        IconFieldModule,
+        InputIconModule,
+        TranslocoModule,
+        InputTextModule,
+        ButtonModule,
+        InputGroupModule,
+        InputGroupAddonModule,
+    ],
     templateUrl: './cm-input.component.html',
     providers: [
         {
@@ -56,11 +67,23 @@ export class CmInputComponent implements ControlValueAccessor {
 
     onInput(event: Event): void {
         const input = event.target as HTMLInputElement;
-        this.value = input.value;
-        this.model = input.value;
-        this.modelChange.emit(this.model);
-        this.onChange(this.value);
+        if (this.type === 'number') {
+            let number = parseFloat(input.value);
+            if (isNaN(number)) {
+                number = 0;
+            }
+            this.value = number;
+            this.model = number;
+            this.modelChange.emit(this.model);
+            this.onChange(this.value);
+        } else {
+            this.value = input.value;
+            this.model = input.value;
+            this.modelChange.emit(this.model);
+            this.onChange(this.value);
+        }
     }
+
     onShowSecretToggle(): void {
         this.showSecretToggle = !this.showSecretToggle;
     }

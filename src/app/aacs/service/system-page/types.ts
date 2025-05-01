@@ -4,12 +4,14 @@ export interface SystemPageRes {
     pageUrl?: string;
     pageIcon?: string;
     parentId?: string;
+    pageOrder?: number;
 }
 export interface SystemPageCreateReq {
     pageName?: string;
     pageUrl?: string;
     pageIcon?: string;
     parentId?: string;
+    pageOrder?: number;
 }
 export interface SystemPageUpdateReq {
     pageId: string;
@@ -17,6 +19,7 @@ export interface SystemPageUpdateReq {
     pageUrl?: string;
     pageIcon?: string;
     parentId?: string;
+    pageOrder?: number;
 }
 export interface SystemPageTreeRes {
     pageId: string;

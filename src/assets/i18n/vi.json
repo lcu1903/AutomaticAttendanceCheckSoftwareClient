@@ -49,7 +49,9 @@
         "departments": "Phòng ban",
         "positions": "Chức vụ",
         "departmentName": "Tên phòng ban",
-        "positionName": "Tên chức vụ"
+        "positionName": "Tên chức vụ",
+        "users": "Người dùng",
+        "userManagement": "Quản lý người dùng"
     },
     "common": {
         "title": "Tiêu đề",
@@ -86,6 +88,11 @@
         "description": "Mô tả",
         "action": "Chức năng",
         "status": "Trạng thái",
-        "parentName": "Cấp trên"
+        "parentName": "Cấp trên",
+        "fullName": "Họ và tên",
+        "email": "Email",
+        "phone": "Số điện thoại",
+        "address": "Địa chỉ",
+        "order": "Thứ tự"
     }
 }
