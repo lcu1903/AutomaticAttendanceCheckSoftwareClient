@@ -1,5 +1,5 @@
 import { CommonModule } from '@angular/common';
-import { Component, forwardRef, input, Input, Optional, Self } from '@angular/core';
+import { Component, EventEmitter, forwardRef, input, Input, Optional, Output, Self } from '@angular/core';
 import { ControlValueAccessor, NG_VALUE_ACCESSOR, FormsModule, NgControl, FormControl, AbstractControl, ReactiveFormsModule } from '@angular/forms';
 import { TranslocoModule } from '@jsverse/transloco';
 import { IconFieldModule } from 'primeng/iconfield';
@@ -31,6 +31,8 @@ export class CmInputComponent implements ControlValueAccessor {
     @Input() required = false;
     @Input() errors: string | null = null;
     @Input() disabled = false;
+    @Output() modelChange: EventEmitter<any> = new EventEmitter<any>();
+    @Input() model: any = null;
     value: any = '';
     constructor() {}
     onChange: (value: any) => void = () => {};
@@ -55,6 +57,8 @@ export class CmInputComponent implements ControlValueAccessor {
     onInput(event: Event): void {
         const input = event.target as HTMLInputElement;
         this.value = input.value;
+        this.model = input.value;
+        this.modelChange.emit(this.model);
         this.onChange(this.value);
     }
     onShowSecretToggle(): void {

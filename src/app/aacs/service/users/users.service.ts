@@ -1,16 +1,14 @@
-import { HttpClient } from "@angular/common/http";
-import { Injectable } from "@angular/core";
-import { Observable, Subject } from "rxjs";
-import { Response } from "../../../core/response.types";
-import { UserCreateReq, UserRes, UserUpdateReq } from "./types";
+import { HttpClient } from '@angular/common/http';
+import { Injectable } from '@angular/core';
+import { Observable, Subject } from 'rxjs';
+import { Response } from '../../../core/response.types';
+import { UserCreateReq, UserRes, UserUpdateReq } from './types';
 
 @Injectable({
-    providedIn: "root"
+    providedIn: 'root',
 })
 export class UserService {
-    constructor(
-        private readonly _httpClient: HttpClient
-    ) { }
+    constructor(private readonly _httpClient: HttpClient) {}
     private _user: Subject<UserRes> = new Subject<UserRes>();
 
     set user(value: UserRes) {

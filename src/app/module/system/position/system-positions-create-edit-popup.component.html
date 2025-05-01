@@ -1,0 +1,44 @@
+<form style="padding: 0" class="w-screen-40 h-screen-40 flex flex-col gap-4" (ngSubmit)="onSave()" [formGroup]="positionForm">
+    <!-- Header -->
+    <div></div>
+    <!-- Content -->
+    <div class="flex flex-1 flex-col gap-4 border-t-2 py-4">
+        <cm-input
+            formControlName="positionName"
+            [label]="'system.positionName' | transloco"
+            [required]="true"
+            type="text"
+            [errors]="positionForm.get('positionName')?.touched ? positionForm.errors?.['positionName'] : null"
+        ></cm-input>
+        <cm-input
+            formControlName="description"
+            [label]="'common.description' | transloco"
+            type="text"
+            [errors]="positionForm.get('description')?.touched ? positionForm.errors?.['description'] : null"
+        ></cm-input>
+        <cm-select
+            formControlName="positionParentId"
+            [label]="'common.parentName' | transloco"
+            [options]="positions"
+            [required]="false"
+            [errors]="positionForm.get('positionParentId')?.touched ? positionForm.errors?.['positionParentId'] : null"
+            [disabled]="isLoading"
+        ></cm-select>
+    </div>
+    <!-- Footer -->
+    <div class="flex justify-end gap-2 border-t-2 py-4">
+        <p-button
+            [severity]="'secondary'"
+            label="{{ 'common.cancel' | transloco }}"
+            (onClick)="onClose()"
+            [disabled]="isLoading"
+            [style]="{ width: '100px' }"
+        ></p-button>
+        <p-button
+            [disabled]="positionForm.invalid || isLoading"
+            type="submit"
+            label="{{ 'common.save' | transloco }}"
+            [style]="{ width: '100px' }"
+        ></p-button>
+    </div>
+</form>

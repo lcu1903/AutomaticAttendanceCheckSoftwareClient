@@ -22,24 +22,41 @@
             "logoutFailed": "Đăng xuất thất bại",
             "registerSuccess": "Đăng ký thành công",
             "registerFailed": "Đăng ký thất bại",
+            "pleaseLoginAgain": "Vui lòng đăng nhập lại",
             "systemPageCreateFailed": "Tạo trang thất bại",
             "systemPageNotFound": "Không tìm thấy trang",
             "systemPageDeleteFailed": "Xóa trang thất bại",
-            "systemPageUpdateFailed": "Cập nhật trang thất bại"
+            "systemPageUpdateFailed": "Cập nhật trang thất bại",
+            "systemDepartmentCreateFailed": "Tạo phòng ban thất bại",
+            "systemDepartmentNotFound": "Không tìm thấy phòng ban",
+            "systemDepartmentDeleteFailed": "Xóa phòng ban thất bại",
+            "systemDepartmentUpdateFailed": "Cập nhật phòng ban thất bại",
+            "systemPositionCreateFailed": "Tạo chức vụ thất bại",
+            "systemPositionNotFound": "Không tìm thấy chức vụ",
+            "systemPositionDeleteFailed": "Xóa chức vụ thất bại",
+            "systemPositionUpdateFailed": "Cập nhật chức vụ thất bại"
         },
         "error": {
             "required": "Bắt buộc",
-            "invalidEmail": "Email không hợp lệ"
+            "invalidEmail": "Email không hợp lệ",
+            "refreshTokenExpired": "Refresh Token đã hết hạn"
         },
         "page": "Cấu hình trang",
         "pageName": "Tên trang",
         "pageUrl": "URL trang",
         "pageIcon": "Biểu tượng trang",
-        "ERROR": "LỖI"
+        "ERROR": "LỖI",
+        "departments": "Phòng ban",
+        "positions": "Chức vụ",
+        "departmentName": "Tên phòng ban",
+        "positionName": "Tên chức vụ"
     },
     "common": {
         "title": "Tiêu đề",
         "success": "Thành công",
+        "addSuccess": "Thêm thành công",
+        "deleteSuccess": "Xóa thành công",
+        "updateSuccess": "Cập nhật thành công",
         "loading": "Đang tải...",
         "noData": "Không có dữ liệu",
         "search": "Tìm kiếm",
@@ -58,8 +75,17 @@
         "unSaveChanges": "Có thay đổi chưa được lưu",
         "confirmUnSaveChanges": "Bạn có chắc chắn muốn hủy?",
         "message": {
-            "invalidUrl": "URL không hợp lệ"
+            "invalidUrl": "URL không hợp lệ",
+            "unsavedChanges": "Có thay đổi chưa được lưu",
+            "unsavedChangesConfirm": "Bạn có chắc chắn muốn hủy?"
         },
-        "confirmDelete": "Bạn có chắc chắn muốn xóa?"
+        "showing": "Đang hiển thị",
+        "of": "của",
+        "confirmDelete": "Bạn có chắc chắn muốn xóa?",
+        "name": "Tên",
+        "description": "Mô tả",
+        "action": "Chức năng",
+        "status": "Trạng thái",
+        "parentName": "Cấp trên"
     }
 }

@@ -1,0 +1,79 @@
+<div *ngIf="type === 'single'">
+    <label *ngIf="label">{{ label | transloco }}</label>
+    <ng-container *ngIf="required"> <span class="text-red-600"> *</span></ng-container>
+
+    <p-inputgroup class="mt-2 h-11">
+        <p-inputgroup-addon *ngIf="preIcon != null">
+            <p-inputicon [styleClass]="preIcon" />
+        </p-inputgroup-addon>
+
+        <p-select
+            appendTo="body"
+            [options]="options"
+            [optionValue]="'id'"
+            [optionLabel]="'name'"
+            [emptyMessage]="'common.noData' | transloco"
+            [emptyFilterMessage]="'common.noData' | transloco"
+            [placeholder]="placeholder ?? '' | transloco"
+            [disabled]="disabled"
+            [ngModel]="value"
+            (onChange)="onSelectChange($event.value)"
+            (onBlur)="onTouched()"
+            [filter]="true"
+            class="w-full"
+        >
+            <ng-template #selectedItem let-selectedOption>
+                <div class="" *ngIf="selectedOption">
+                    {{ selectedOption.name }}
+                </div>
+            </ng-template>
+            <ng-template let-option #item>
+                <div class="">
+                    {{ option.name }}
+                </div>
+            </ng-template>
+        </p-select>
+    </p-inputgroup>
+
+    <small *ngIf="errors" class="ml-2 text-red-500 text-sm mt-1">
+        {{ errors | transloco }}
+    </small>
+</div>
+
+<div *ngIf="type === 'multi'">
+    <label *ngIf="label">{{ label | transloco }}</label>
+    <ng-container *ngIf="required"> <span class="text-red-600"> *</span></ng-container>
+
+    <p-inputgroup class="mt-2 h-11">
+        <p-inputgroup-addon *ngIf="preIcon != null">
+            <p-inputicon [styleClass]="preIcon" />
+        </p-inputgroup-addon>
+
+        <p-multiselect
+            appendTo="body"
+            [options]="options"
+            [placeholder]="placeholder ?? '' | transloco"
+            [disabled]="disabled"
+            [ngModel]="value"
+            (onChange)="onSelectChange($event.value)"
+            (onBlur)="onTouched()"
+            [filter]="true"
+            class="w-full"
+        >
+            <ng-template #selectedItem let-selectedOption>
+                <div class="flex items-center gap-2" *ngIf="selectedOption">
+                    <div>{{ selectedOption.name }}</div>
+                </div>
+            </ng-template>
+            <ng-template let-option #item>
+                <div class="flex items-center gap-2">
+                    <div>{{ option.name }}</div>
+                </div>
+            </ng-template>
+        </p-multiselect>
+    </p-inputgroup>
+
+    <small *ngIf="errors" class="ml-2 text-red-500 text-sm mt-1">
+        {{ errors | transloco }}
+    </small>
+</div>
