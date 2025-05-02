@@ -4,6 +4,7 @@ import { SystemUsersComponent } from './users/users.component';
 import { SystemDepartmentsComponent } from './department/system-departments.component';
 import { SystemPositionsComponent } from './position/system-positions.component';
 import { SystemUsersListComponent } from './users/users-list.component';
+import { SystemUsersCreateEditComponent } from './users/users-create-edit.component';
 
 export const SystemRoutes: Route[] = [
     {
@@ -17,6 +18,14 @@ export const SystemRoutes: Route[] = [
             {
                 path: '',
                 component: SystemUsersListComponent,
+            },
+            {
+                path: 'create',
+                component: SystemUsersCreateEditComponent,
+            },
+            {
+                path: 'edit/:id',
+                component: SystemUsersCreateEditComponent,
             },
         ],
     },

@@ -15,7 +15,24 @@ export interface CmSelectOption {
 @Component({
     selector: 'cm-select',
     standalone: true,
-    imports: [CommonModule, FormsModule, ReactiveFormsModule, TranslocoModule, InputGroupModule, InputGroupAddonModule, InputIconModule, SelectModule, MultiSelectModule],
+    styles: [
+        `
+            ::ng-deep .p-select-clear-icon {
+                position: static !important;
+            }
+        `,
+    ],
+    imports: [
+        CommonModule,
+        FormsModule,
+        ReactiveFormsModule,
+        TranslocoModule,
+        InputGroupModule,
+        InputGroupAddonModule,
+        InputIconModule,
+        SelectModule,
+        MultiSelectModule,
+    ],
     templateUrl: './cm-select.component.html',
     providers: [
         {

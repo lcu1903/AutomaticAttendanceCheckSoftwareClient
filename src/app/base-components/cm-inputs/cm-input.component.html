@@ -67,3 +67,37 @@
         {{ errors | transloco }}
     </small>
 </div>
+<div *ngIf="type == 'datePicker'" class="flex flex-col">
+    <label *ngIf="label">{{ label | transloco }}</label>
+    <ng-container *ngIf="required"> <span class="text-red-600"> *</span></ng-container>
+    <p-datepicker
+        class="mt-2 h-11"
+        size="large"
+        [(ngModel)]="value"
+        [showIcon]="true"
+        (onSelect)="onSelectDate($event)"
+        inputId="buttondisplay"
+        [showOnFocus]="false"
+    />
+    <small *ngIf="errors" class="ml-2 text-red-500 text-sm mt-1">
+        {{ errors | transloco }}
+    </small>
+</div>
+<div *ngIf="type == 'dateTimePicker'" class="flex flex-col">
+    <label *ngIf="label">{{ label | transloco }}</label>
+    <ng-container *ngIf="required"> <span class="text-red-600"> *</span></ng-container>
+    <p-datepicker
+        class="mt-2 h-11"
+        [(ngModel)]="value"
+        [showIcon]="true"
+        size="large"
+        inputId="buttondisplay"
+        [showOnFocus]="false"
+        [showTime]="true"
+        (onSelect)="onSelectDate($event)"
+        [hourFormat]="'24'"
+    />
+    <small *ngIf="errors" class="ml-2 text-red-500 text-sm mt-1">
+        {{ errors | transloco }}
+    </small>
+</div>

@@ -1,4 +1,4 @@
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable, Subject } from 'rxjs';
 import { Response } from '../../../core/response.types';
@@ -18,8 +18,8 @@ export class UserService {
         return this._user.asObservable();
     }
 
-    getAllUsers() {
-        return this._httpClient.get<Response<UserRes[]>>(`api/users`);
+    getAllUsers(filter?: { textSearch?: string; departmentIds?: string[]; positionIds?: string[] }) {
+        return this._httpClient.get<Response<UserRes[]>>(`api/users`, { params: filter });
     }
 
     getUserById(userId: string) {
@@ -36,5 +36,8 @@ export class UserService {
 
     deleteUser(userId: string) {
         return this._httpClient.delete<Response<boolean>>(`api/users/${userId}`);
+    }
+    deleteRange(userIds: string[]) {
+        return this._httpClient.delete<Response<boolean>>(`api/users/delete-range`, { body: userIds });
     }
 }

@@ -2,10 +2,16 @@
     <!-- Topbar -->
     <div class="border-t border-b">
         <div class="flex justify-between items-center p-4 bg-card">
-            <div class="text-2xl font-semibold">{{ 'system.positions' | transloco }}</div>
+            <div class="text-4xl font-semibold">{{ 'system.positions' | transloco }}</div>
             <div class="flex gap-2">
                 <p-button [disabled]="isLoading" (onClick)="onAddPosition()" label="{{ 'common.add' | transloco }}" />
-                <p-button *ngIf="selectedPositions.length > 0" [severity]="'danger'" [disabled]="isLoading" (onClick)="onDeletePosition()" label="{{ 'common.delete' | transloco }}" />
+                <p-button
+                    *ngIf="selectedPositions.length > 0"
+                    [severity]="'danger'"
+                    [disabled]="isLoading"
+                    (onClick)="onDeletePosition()"
+                    label="{{ 'common.delete' | transloco }}"
+                />
             </div>
         </div>
     </div>
@@ -14,7 +20,13 @@
         <!-- Card -->
         <div class="bg-white flex flex-col gap-4">
             <div class="flex justify-between">
-                <cm-input [(ngModel)]="filter.textSearch" [placeholder]="'common.search' | transloco" [preIcon]="'pi pi-search'" [style]="{ width: '300px' }" (modelChange)="onSearch()"></cm-input>
+                <cm-input
+                    [(ngModel)]="filter.textSearch"
+                    [placeholder]="'common.search' | transloco"
+                    [preIcon]="'pi pi-search'"
+                    [style]="{ width: '300px' }"
+                    (modelChange)="onSearch()"
+                ></cm-input>
             </div>
             <!-- Table -->
             <p-table

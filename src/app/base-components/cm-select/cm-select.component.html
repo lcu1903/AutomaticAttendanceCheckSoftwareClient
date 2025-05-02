@@ -9,6 +9,7 @@
 
         <p-select
             appendTo="body"
+            [showClear]="true"
             [options]="options"
             [optionValue]="'id'"
             [optionLabel]="'name'"
@@ -20,7 +21,7 @@
             (onChange)="onSelectChange($event.value)"
             (onBlur)="onTouched()"
             [filter]="true"
-            class="w-full"
+            class="flex items-center"
         >
             <ng-template #selectedItem let-selectedOption>
                 <div class="" *ngIf="selectedOption">
@@ -51,6 +52,7 @@
 
         <p-multiselect
             appendTo="body"
+            [showClear]="true"
             [options]="options"
             [placeholder]="placeholder ?? '' | transloco"
             [disabled]="disabled"

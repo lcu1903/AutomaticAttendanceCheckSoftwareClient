@@ -20,11 +20,16 @@ import { SystemDepartmentsCreateEditPopupComponent } from './department/system-d
 import { CmSelectComponent } from '../../base-components/cm-select/cm-select.component';
 import { SystemPositionsCreateEditPopupComponent } from './position/system-positions-create-edit-popup.component';
 import { SystemUsersListComponent } from './users/users-list.component';
+import { FileUploadModule } from 'primeng/fileupload';
+import { SystemUsersCreateEditComponent } from './users/users-create-edit.component';
+import { DatePickerModule } from 'primeng/datepicker';
+
 @NgModule({
     declarations: [
         SystemPageComponent,
         SystemUsersComponent,
         SystemUsersListComponent,
+        SystemUsersCreateEditComponent,
         SystemDepartmentsComponent,
         SystemDepartmentsCreateEditPopupComponent,
         SystemPositionsComponent,
@@ -45,6 +50,8 @@ import { SystemUsersListComponent } from './users/users-list.component';
         PaginatorModule,
         InputTextModule,
         CmSelectComponent,
+        FileUploadModule,
+        DatePickerModule,
     ],
     providers: [],
 })

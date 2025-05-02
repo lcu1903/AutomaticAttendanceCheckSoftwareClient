@@ -1,0 +1,56 @@
+<form class="flex flex-col gap-4 flex-1 h-full" (ngSubmit)="onSave()" [formGroup]="userForm">
+    <!-- header -->
+    <div class="border-t border-b">
+        <div class="flex justify-between items-center p-4 bg-card">
+            <div *ngIf="action == 'create'" class="text-4xl font-semibold">{{ 'common.create' | transloco }}</div>
+            <div *ngIf="action == 'edit'" class="text-4xl font-semibold">{{ 'common.edit' | transloco }}</div>
+            <div class="flex gap-2">
+                <p-button [severity]="'contrast'" [disabled]="isLoading" (onClick)="onBack()" label="{{ 'common.back' | transloco }}" />
+                <p-button [disabled]="isLoading" type="submit" label="{{ 'common.save' | transloco }}" />
+            </div>
+        </div>
+    </div>
+    <!-- content -->
+    <div class="flex flex-col flex-1 mx-4 shadow rounded-md bg-white p-4 gap-4">
+        <div class="border-b-2 pb-4">
+            <span class="text-2xl font-bold">{{ 'common.information' | transloco }}</span>
+        </div>
+        <div class="bg-white flex flex-col gap-4">
+            <div class="flex gap-4">
+                <cm-input
+                    [disabled]="isLoading"
+                    formControlName="fullName"
+                    [label]="'common.fullName' | transloco"
+                    [errors]="userForm.get('fullName')?.touched ? userForm.errors?.['fullName'] : null"
+                ></cm-input>
+                <cm-input
+                    [disabled]="isLoading"
+                    formControlName="userName"
+                    [label]="'common.userName' | transloco"
+                    [errors]="userForm.get('userName')?.touched ? userForm.errors?.['userName'] : null"
+                ></cm-input>
+                <cm-input [disabled]="isLoading" formControlName="email" [label]="'common.email' | transloco"></cm-input>
+                <cm-input [disabled]="isLoading" formControlName="phoneNumber" [label]="'common.phone' | transloco"></cm-input>
+            </div>
+            <div class="flex gap-4">
+                <cm-select
+                    [label]="'system.departments'"
+                    class="min-w-screen-15"
+                    formControlName="departmentId"
+                    [placeholder]="'common.chooseDepartment' | transloco"
+                    [options]="departments"
+                ></cm-select>
+                <cm-select
+                    [label]="'system.positions'"
+                    class="min-w-screen-15"
+                    formControlName="positionId"
+                    [placeholder]="'common.choosePosition' | transloco"
+                    [options]="positions"
+                ></cm-select>
+            </div>
+            <div class="flex gap-4">
+                <cm-input type="datePicker" [disabled]="isLoading" formControlName="birthdate" [label]="'common.birthday' | transloco"></cm-input>
+            </div>
+        </div>
+    </div>
+</form>
