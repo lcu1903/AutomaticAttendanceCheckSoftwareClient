@@ -1,0 +1,41 @@
+<form style="padding: 0" class="w-screen-40 h-screen-40 flex flex-col gap-4" (ngSubmit)="onSave()" [formGroup]="subjectForm">
+    <!-- Header -->
+    <!-- Content -->
+    <div class="flex flex-1 flex-col gap-4 border-t-2 py-4">
+        <cm-input
+            formControlName="subjectCode"
+            [label]="'aacs.subjectCode' | transloco"
+            type="text"
+            [required]="true"
+            [errors]="subjectForm.get('subjectCode')?.touched ? subjectForm.errors?.['subjectCode'] : null"
+        ></cm-input>
+        <cm-input
+            formControlName="subjectName"
+            [label]="'aacs.subjectName' | transloco"
+            type="text"
+            [errors]="subjectForm.get('subjectName')?.touched ? subjectForm.errors?.['subjectName'] : null"
+        ></cm-input>
+        <cm-input
+            formControlName="subjectCredits"
+            [label]="'aacs.credits' | transloco"
+            type="number"
+            [errors]="subjectForm.get('subjectCredits')?.touched ? subjectForm.errors?.['subjectCredits'] : null"
+        ></cm-input>
+    </div>
+    <!-- Footer -->
+    <div class="flex justify-end gap-2 border-t-2 py-4">
+        <p-button
+            [severity]="'secondary'"
+            label="{{ 'common.cancel' | transloco }}"
+            (onClick)="onClose()"
+            [disabled]="isLoading"
+            [style]="{ width: '100px' }"
+        ></p-button>
+        <p-button
+            [disabled]="subjectForm.invalid || isLoading"
+            type="submit"
+            label="{{ 'common.save' | transloco }}"
+            [style]="{ width: '100px' }"
+        ></p-button>
+    </div>
+</form>

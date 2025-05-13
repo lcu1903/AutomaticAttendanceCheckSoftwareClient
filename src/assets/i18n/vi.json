@@ -115,7 +115,8 @@
         "userName": "Tên đăng nhập",
         "avatar": "Ảnh đại diện",
         "startDate": "Ngày bắt đầu",
-        "endDate": "Ngày kết thúc"
+        "endDate": "Ngày kết thúc",
+        "mustBePositive": "Phải lớn hơn 0"
     },
     "viLocale": {
         "firstDayOfWeek": 1,
@@ -156,6 +157,10 @@
     "aacs.teacher": "Giảng viên",
     "aacs.semester": "Học kỳ",
     "aacs.semesterName": "Tên học kỳ",
+    "aacs.subject": "Môn học",
+    "aacs.subjectCode": "Mã môn học",
+    "aacs.subjectName": "Tên môn học",
+    "aacs.credits": "Số tín chỉ",
     "aacs": {
         "message": {
             "studentNotFound": "Không tìm thấy sinh viên",
@@ -176,7 +181,12 @@
             "semesterNotFound": "Không tìm thấy học kỳ",
             "semesterCreateFailed": "Tạo học kỳ thất bại",
             "semesterUpdateFailed": "Cập nhật học kỳ thất bại",
-            "semesterDeleteFailed": "Xóa học kỳ thất bại"
+            "semesterDeleteFailed": "Xóa học kỳ thất bại",
+            "subjectCodeAlreadyExists": "Mã môn học đã tồn tại",
+            "subjectNotFound": "Không tìm thấy môn học",
+            "subjectCreateFailed": "Tạo môn học thất bại",
+            "subjectUpdateFailed": "Cập nhật môn học thất bại",
+            "subjectDeleteFailed": "Xóa môn học thất bại"
         }
     }
 }
