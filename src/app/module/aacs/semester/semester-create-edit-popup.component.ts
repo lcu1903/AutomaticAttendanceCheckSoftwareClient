@@ -1,32 +1,31 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { DialogService, DynamicDialogComponent, DynamicDialogRef } from 'primeng/dynamicdialog';
 import { finalize, Subject, takeUntil } from 'rxjs';
-import { ClassCreateReq, ClassRes } from '../../../aacs/service/class/types';
+import { SemesterCreateReq, SemesterRes } from '../../../aacs/service/semester/types';
 import { z } from 'zod';
 import { FormBuilder, FormGroup } from '@angular/forms';
 import { ConfirmationPopupService } from '../../../base-components/confirmation-popup/confirmation-popup.component';
 import { TranslocoService } from '@jsverse/transloco';
 import { zodValidator } from '../../../utils/validation.utils';
-import { ClassService } from '../../../aacs/service/class/class.service';
+import { SemesterService } from '../../../aacs/service/semester/semester.service';
 import { CmSelectOption } from '../../../base-components/cm-select/cm-select.component';
 import { SystemDepartmentService } from '../../../aacs/service/system-department/system-department.service';
 import { get } from 'lodash';
 import { UserService } from '../../../aacs/service/users/users.service';
 import { MessagePopupService, PopupType } from '../../../base-components/message-popup/message-popup.component';
 import moment from 'moment';
-import { TeacherService } from '../../../aacs/service/teacher/teachers.service';
 
 @Component({
-    selector: 'classes-popup',
+    selector: 'semester-popup',
     standalone: false,
-    templateUrl: './classes-create-edit-popup.component.html',
+    templateUrl: './semester-create-edit-popup.component.html',
 })
-export class ClassCreateEditPopupComponent implements OnInit, OnDestroy {
+export class SemesterCreateEditPopupComponent implements OnInit, OnDestroy {
     private readonly _unsubscribeAll = new Subject<any>();
     isLoading: boolean = false;
     instance: DynamicDialogComponent | undefined;
 
-    class: ClassRes | null = null;
+    semester: SemesterRes | null = null;
     teachers: CmSelectOption[] = [];
     departments: CmSelectOption[] = [];
     actionEnum: 'create' | 'edit' = 'create';
@@ -36,42 +35,34 @@ export class ClassCreateEditPopupComponent implements OnInit, OnDestroy {
         private readonly _formBuilder: FormBuilder,
         private readonly _translocoService: TranslocoService,
         private readonly _confirmationPopupService: ConfirmationPopupService,
-        private readonly _classService: ClassService,
+        private readonly _semesterService: SemesterService,
         private readonly _systemDepartmentService: SystemDepartmentService,
         private readonly _messagePopupService: MessagePopupService,
-        private readonly _teacherService: TeacherService,
         private readonly _userService: UserService,
     ) {
         this.instance = this.dialogService.getInstance(this.ref);
-        const data = this.instance?.data as { class: ClassRes | null };
+        const data = this.instance?.data as { semester: SemesterRes | null };
         if (data) {
-            this.class = data.class;
-            this.actionEnum = this.class ? 'edit' : 'create';
+            this.semester = data.semester;
+            this.actionEnum = this.semester ? 'edit' : 'create';
         }
     }
-    classForm!: FormGroup;
-    createEditClassSchema: z.ZodType<ClassCreateReq> = z.object({
-        className: z.string().min(1, 'system.error.required'),
-        classCode: z.string().min(1, 'system.error.required'),
+    semesterForm!: FormGroup;
+    createEditSemesterSchema: z.ZodType<SemesterCreateReq> = z.object({
+        semesterName: z.string().min(1, 'system.error.required'),
     });
     ngOnInit(): void {
-        this.classForm = this._formBuilder.group(
+        this.semesterForm = this._formBuilder.group(
             {
-                className: this.class?.className || '',
-                classCode: this.class?.classCode || '',
-                classId: this.class?.classId,
-                schoolYearStart: this.class?.schoolYearStart ? moment(this.class?.schoolYearStart).toDate() : null,
-                schoolYearEnd: this.class?.schoolYearEnd ? moment(this.class?.schoolYearEnd).toDate() : null,
-                room: this.class?.room,
-                departmentId: this.class?.departmentId,
-                headTeacherId: this.class?.headTeacherId,
+                semesterId: this.semester?.semesterId,
+                semesterName: this.semester?.semesterName || '',
+                startDate: this.semester?.startDate ? moment(this.semester?.startDate).toDate() : null,
+                endDate: this.semester?.endDate ? moment(this.semester?.endDate).toDate() : null,
             },
             {
-                validators: zodValidator(this.createEditClassSchema),
+                validators: zodValidator(this.createEditSemesterSchema),
             },
         );
-        this.getDepartments();
-        this.getTeachers();
     }
     ngOnDestroy(): void {
         this._unsubscribeAll.next(null);
@@ -104,14 +95,14 @@ export class ClassCreateEditPopupComponent implements OnInit, OnDestroy {
         );
     }
     onSave() {
-        if (!this.classForm.valid) {
-            this.classForm.markAllAsTouched();
+        if (!this.semesterForm.valid) {
+            this.semesterForm.markAllAsTouched();
             return;
         }
         this.isLoading = true;
-        const formValue = this.classForm.getRawValue();
+        const formValue = this.semesterForm.getRawValue();
         if (this.actionEnum === 'create') {
-            this._classService
+            this._semesterService
                 .create(formValue)
                 .pipe(
                     takeUntil(this._unsubscribeAll),
@@ -127,9 +118,9 @@ export class ClassCreateEditPopupComponent implements OnInit, OnDestroy {
             return;
         }
         if (this.actionEnum === 'edit') {
-            let classId = this.class!.classId!;
-            this._classService
-                .update(classId, { ...formValue, classId: classId })
+            let semesterId = this.semester!.semesterId!;
+            this._semesterService
+                .update(semesterId, { ...formValue, semesterId: semesterId })
                 .pipe(
                     takeUntil(this._unsubscribeAll),
                     finalize(() => {
@@ -143,21 +134,5 @@ export class ClassCreateEditPopupComponent implements OnInit, OnDestroy {
                 });
             return;
         }
-    }
-    getTeachers() {
-        this._teacherService
-            .getAll()
-            .pipe(
-                takeUntil(this._unsubscribeAll),
-                finalize(() => {
-                    this.isLoading = false;
-                }),
-            )
-            .subscribe((res) => {
-                this.teachers = res.data.map((item) => ({
-                    id: item.userId!,
-                    name: item.user?.fullName ?? '',
-                }));
-            });
     }
 }

@@ -63,6 +63,11 @@ export const routes: Routes = [
                 canActivateChild: [PageGuard],
                 loadChildren: () => import('./module/aacs/student/student.module').then((m) => m.StudentModule),
             },
+            {
+                path: '',
+                canActivateChild: [PageGuard],
+                loadChildren: () => import('./module/aacs/semester/semester.module').then((m) => m.SemesterModule),
+            },
         ],
     },
 ];

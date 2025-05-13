@@ -1,0 +1,41 @@
+<form style="padding: 0" class="w-screen-40 h-screen-20 flex flex-col gap-4" (ngSubmit)="onSave()" [formGroup]="semesterForm">
+    <!-- Header -->
+    <!-- Content -->
+    <div class="flex flex-1 gap-4 border-t-2 py-4">
+        <cm-input
+            formControlName="semesterName"
+            [label]="'aacs.semesterName' | transloco"
+            [required]="true"
+            type="text"
+            [errors]="semesterForm.get('semesterName')?.touched ? semesterForm.errors?.['semesterName'] : null"
+        ></cm-input>
+        <cm-input
+            formControlName="startDate"
+            [label]="'common.startDate' | transloco"
+            placeholder="{{ 'aacs.from' | transloco }}"
+            type="datePicker"
+        ></cm-input>
+        <cm-input
+            [label]="'common.endDate' | transloco"
+            formControlName="endDate"
+            placeholder="{{ 'aacs.to' | transloco }}"
+            type="datePicker"
+        ></cm-input>
+    </div>
+    <!-- Footer -->
+    <div class="flex justify-end gap-2 border-t-2 py-4">
+        <p-button
+            [severity]="'secondary'"
+            label="{{ 'common.cancel' | transloco }}"
+            (onClick)="onClose()"
+            [disabled]="isLoading"
+            [style]="{ width: '100px' }"
+        ></p-button>
+        <p-button
+            [disabled]="semesterForm.invalid || isLoading"
+            type="submit"
+            label="{{ 'common.save' | transloco }}"
+            [style]="{ width: '100px' }"
+        ></p-button>
+    </div>
+</form>
