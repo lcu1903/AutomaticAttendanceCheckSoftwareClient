@@ -52,6 +52,17 @@ export const routes: Routes = [
                 canActivateChild: [PageGuard],
                 loadChildren: () => import('./module/system/system.module').then((m) => m.SystemModule),
             },
+            { path: '', canActivateChild: [PageGuard], loadChildren: () => import('./module/aacs/class/class.module').then((m) => m.ClassModule) },
+            {
+                path: '',
+                canActivateChild: [PageGuard],
+                loadChildren: () => import('./module/aacs/teacher/teacher.module').then((m) => m.TeacherModule),
+            },
+            {
+                path: '',
+                canActivateChild: [PageGuard],
+                loadChildren: () => import('./module/aacs/student/student.module').then((m) => m.StudentModule),
+            },
         ],
     },
 ];

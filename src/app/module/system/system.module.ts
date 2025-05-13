@@ -52,6 +52,7 @@ import { DatePickerModule } from 'primeng/datepicker';
         CmSelectComponent,
         FileUploadModule,
         DatePickerModule,
+        FileUploadModule,
     ],
     providers: [],
 })

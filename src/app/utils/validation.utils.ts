@@ -17,7 +17,6 @@ export function zodValidator(schema: ZodSchema<any>): ValidatorFn {
 
             // Map each error: the first path element is used as control key.
             result.error.errors.forEach((err) => {
-                console.log(err);
 
                 const key = err.path[0] || 'form';
                 errors[key] = err.message;

@@ -267,7 +267,7 @@ export class SystemPageComponent implements OnInit, OnDestroy {
                         )
                         .subscribe((res) => {
                             if (res.success) {
-                                this._messagePopupService.show(PopupType.SUCCESS, null, 'common.success');
+                                this._messagePopupService.show(PopupType.SUCCESS, null, 'common.deleteSuccess');
                                 this.getSystemPageRes();
                             }
                         });

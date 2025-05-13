@@ -1,4 +1,4 @@
-<form class="flex flex-col gap-4 flex-1 h-full" (ngSubmit)="onSave()" [formGroup]="userForm">
+<form class="flex flex-col gap-4 flex-1 h-full" (ngSubmit)="onSave()" [formGroup]="studentForm">
     <!-- header -->
     <div class="border-t border-b">
         <div class="flex justify-between items-center p-4 bg-card">
@@ -34,7 +34,7 @@
                         >
                         </p-fileupload>
                         <p-button
-                            *ngIf="userForm.get('imageUrl')?.value"
+                            *ngIf="studentForm.get('imageUrl')?.value"
                             (onClick)="onRemoveImage()"
                             [severity]="'danger'"
                             [icon]="'pi pi-trash'"
@@ -42,8 +42,8 @@
                         ></p-button>
                     </div>
                     <img
-                        *ngIf="userForm.get('imageUrl')?.value"
-                        [src]="userForm.get('imageUrl')?.value"
+                        *ngIf="studentForm.get('imageUrl')?.value"
+                        [src]="studentForm.get('imageUrl')?.value"
                         class="object-contain max-h-screen-20 max-w-screen-20 p-2 border-2 rounded-md"
                     />
                 </div>
@@ -54,19 +54,28 @@
                     formControlName="fullName"
                     [label]="'common.fullName' | transloco"
                     [required]="true"
-                    [errors]="userForm.get('fullName')?.touched ? userForm.errors?.['fullName'] : null"
+                    [errors]="studentForm.get('fullName')?.touched ? studentForm.errors?.['fullName'] : null"
                 ></cm-input>
                 <cm-input
                     [disabled]="isLoading"
                     formControlName="userName"
                     [label]="'common.userName' | transloco"
                     [required]="true"
-                    [errors]="userForm.get('userName')?.touched ? userForm.errors?.['userName'] : null"
+                    [errors]="studentForm.get('userName')?.touched ? studentForm.errors?.['userName'] : null"
                 ></cm-input>
             </div>
             <div class="flex gap-4">
                 <cm-input [disabled]="isLoading" formControlName="email" [label]="'common.email' | transloco"></cm-input>
                 <cm-input [disabled]="isLoading" formControlName="phoneNumber" [label]="'common.phone' | transloco"></cm-input>
+            </div>
+            <div class="flex gap-4">
+                <cm-input [required]="true" formControlName="studentCode" [label]="'aacs.studentCode' | transloco"></cm-input>
+                <cm-select
+                    [label]="'aacs.studentClass'"
+                    formControlName="classId"
+                    [placeholder]="'aacs.chooseClass' | transloco"
+                    [options]="classes"
+                ></cm-select>
             </div>
             <div class="flex gap-4">
                 <cm-select
@@ -82,19 +91,7 @@
                     [options]="positions"
                 ></cm-select>
             </div>
-            <div class="flex gap-4">
-                <cm-input [disabled]="true" formControlName="studentCode" [label]="'aacs.studentCode' | transloco"></cm-input>
-                <cm-input [disabled]="true" formControlName="teacherCode" [label]="'aacs.teacherCode' | transloco"></cm-input>
-            </div>
-            <div class="flex gap-4">
-                <cm-select
-                    [label]="'aacs.studentClass'"
-                    [disabled]="true"
-                    formControlName="classId"
-                    [placeholder]="'aacs.chooseClass' | transloco"
-                    [options]="classes"
-                ></cm-select>
-            </div>
+
             <div class="flex gap-4">
                 <cm-input type="datePicker" [disabled]="isLoading" formControlName="birthdate" [label]="'common.birthday' | transloco"></cm-input>
             </div>

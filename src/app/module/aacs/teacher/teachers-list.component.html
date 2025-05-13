@@ -2,14 +2,14 @@
     <!-- Topbar -->
     <div class="border-t border-b">
         <div class="flex justify-between items-center p-4 bg-card">
-            <div class="text-4xl font-semibold">{{ 'system.users' | transloco }}</div>
+            <div class="text-4xl font-semibold">{{ 'aacs.teacher' | transloco }}</div>
             <div class="flex gap-2">
-                <p-button [disabled]="isLoading" (onClick)="onAddUser()" label="{{ 'common.add' | transloco }}" />
+                <p-button [disabled]="isLoading" (onClick)="onAddTeacher()" label="{{ 'common.add' | transloco }}" />
                 <p-button
-                    *ngIf="selectedUsers.length > 0"
+                    *ngIf="selectedTeachers.length > 0"
                     [severity]="'danger'"
                     [disabled]="isLoading"
-                    (onClick)="onDeleteRangeUser()"
+                    (onClick)="onDeleteRangeTeacher()"
                     label="{{ 'common.delete' | transloco }}"
                 />
             </div>
@@ -22,7 +22,7 @@
             <div class="flex gap-4">
                 <cm-input
                     [(ngModel)]="filter.textSearch"
-                    [placeholder]="'common.searchByFullName' | transloco"
+                    [placeholder]="'common.searchByFullNameOrTeacherCode' | transloco"
                     [preIcon]="'pi pi-search'"
                     [style]="{ width: '300px' }"
                     (modelChange)="onSearch()"
@@ -47,7 +47,7 @@
             <!-- Table -->
             <p-table
                 #dt
-                [value]="users"
+                [value]="teachers"
                 [paginator]="true"
                 [tableStyle]="{ 'min-width': '700px' }"
                 [rows]="10"
@@ -56,7 +56,7 @@
                 [loading]="isLoading"
                 [stripedRows]="true"
                 [showCurrentPageReport]="true"
-                [(selection)]="selectedUsers"
+                [(selection)]="selectedTeachers"
                 showGridlines="true"
                 currentPageReportTemplate="{{ 'common.showing' | transloco }} {first} - {last} {{ 'common.of' | transloco }} {totalRecords}"
             >
@@ -65,6 +65,7 @@
                         <th [width]="'1%'">
                             <p-tableHeaderCheckbox [disabled]="isLoading"></p-tableHeaderCheckbox>
                         </th>
+                        <th [width]="'15%'">{{ 'aacs.teacherCode' | transloco }}</th>
                         <th [width]="'15%'">{{ 'common.fullName' | transloco }}</th>
                         <th [width]="'15%'">{{ 'common.email' | transloco }}</th>
                         <th [width]="'15%'">{{ 'common.phone' | transloco }}</th>
@@ -74,20 +75,21 @@
                         <th [width]="'5%'"></th>
                     </tr>
                 </ng-template>
-                <ng-template pTemplate="body" let-user let-columns="columns">
+                <ng-template pTemplate="body" let-teacher let-columns="columns">
                     <tr>
                         <td>
-                            <p-tableCheckbox [value]="user" />
+                            <p-tableCheckbox [value]="teacher" />
                         </td>
-                        <td>{{ user.fullName }}</td>
-                        <td>{{ user.email }}</td>
-                        <td>{{ user.phoneNumber }}</td>
-                        <!-- <td>{{ user.address }}</td> -->
-                        <td>{{ user.departmentName }}</td>
-                        <td>{{ user.positionName }}</td>
+                        <td>{{ teacher.teacherCode }}</td>
+                        <td>{{ teacher.user.fullName }}</td>
+                        <td>{{ teacher.user.email }}</td>
+                        <td>{{ teacher.user.phoneNumber }}</td>
+                        <!-- <td>{{ teacher.address }}</td> -->
+                        <td>{{ teacher.user.departmentName }}</td>
+                        <td>{{ teacher.user.positionName }}</td>
                         <td class="flex justify-center gap-2">
-                            <p-button icon="pi pi-pen-to-square" (onClick)="onEditUser(user)" />
-                            <p-button [severity]="'danger'" icon="pi pi-trash" (onClick)="onDeleteUser(user)" />
+                            <p-button icon="pi pi-pen-to-square" (onClick)="onEditTeacher(teacher)" />
+                            <p-button [severity]="'danger'" icon="pi pi-trash" (onClick)="onDeleteTeacher(teacher)" />
                         </td>
                     </tr>
                 </ng-template>

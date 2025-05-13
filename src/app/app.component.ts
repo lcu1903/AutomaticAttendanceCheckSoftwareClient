@@ -12,7 +12,7 @@ import { TranslocoService } from '@jsverse/transloco';
     selector: 'app-root',
     standalone: true,
     imports: [RouterOutlet, ToastModule, ConfirmDialogModule],
-    providers: [MessagePopupService, MessageService, ConfirmationService, ConfirmationPopupService, DialogService],
+    providers: [ConfirmationService, ConfirmationPopupService, DialogService],
     template: `<router-outlet></router-outlet> <p-toast></p-toast> <p-confirmdialog />`,
 })
 export class AppComponent implements OnInit {

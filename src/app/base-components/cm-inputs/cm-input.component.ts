@@ -43,7 +43,7 @@ export class CmInputComponent implements ControlValueAccessor {
     @Input() postIcon: string | null = null;
     @Input() showSecretToggle = false;
     @Input() required = false;
-    @Input() errors: string | null = null;
+    @Input() errors: string | undefined | null = null;
     @Input() disabled = false;
     @Output() modelChange: EventEmitter<any> = new EventEmitter<any>();
     @Input() model: Date | Moment | string | number | null = null;

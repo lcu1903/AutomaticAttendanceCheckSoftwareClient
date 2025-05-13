@@ -40,4 +40,10 @@ export class UserService {
     deleteRange(userIds: string[]) {
         return this._httpClient.delete<Response<boolean>>(`api/users/delete-range`, { body: userIds });
     }
+    getTeacher() {
+        return this._httpClient.get<Response<UserRes[]>>(`api/users/teachers`);
+    }
+    getStudent() {
+        return this._httpClient.get<Response<UserRes[]>>(`api/users/students`);
+    }
 }

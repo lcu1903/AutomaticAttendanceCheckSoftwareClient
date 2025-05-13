@@ -44,3 +44,15 @@ export function buildDynamicTree<T extends Record<string, any>>(
 
     return roots;
 }
+export function trimFormValues<T>(values: T): T {
+    const trimmed: any = {};
+    for (const key in values) {
+        if (typeof values[key] === 'string') {
+            const val = values[key].trim();
+            trimmed[key] = val === '' ? null : val;
+        } else {
+            trimmed[key] = values[key];
+        }
+    }
+    return trimmed;
+}

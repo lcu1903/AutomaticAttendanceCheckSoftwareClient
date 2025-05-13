@@ -1,25 +1,25 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { debounceTime, finalize, Subject, takeUntil } from 'rxjs';
-import { SystemPositionService } from '../../../aacs/service/system-position/system-position.service';
-import { SystemPositionRes } from '../../../aacs/service/system-position/types';
 import { ConfirmationPopupService } from '../../../base-components/confirmation-popup/confirmation-popup.component';
 import { TranslocoService } from '@jsverse/transloco';
 import { DialogService } from 'primeng/dynamicdialog';
 import { MessagePopupService, PopupType } from '../../../base-components/message-popup/message-popup.component';
-import { SystemPositionsCreateEditPopupComponent } from './system-positions-create-edit-popup.component';
+import { ClassService } from '../../../aacs/service/class/class.service';
+import { ClassRes } from '../../../aacs/service/class/types';
+import { ClassCreateEditPopupComponent } from './classes-create-edit-popup.component';
 
 @Component({
-    selector: 'system-positions',
+    selector: 'classes',
     standalone: false,
-    templateUrl: './system-positions.component.html',
+    templateUrl: './classes.component.html',
 })
-export class SystemPositionsComponent implements OnInit, OnDestroy {
+export class ClassesComponent implements OnInit, OnDestroy {
     private readonly _unsubscribeAll = new Subject<any>();
     private readonly _debounce = new Subject<void>();
-    positions: SystemPositionRes[] = [];
-    selectedPositions: SystemPositionRes[] = [];
+    class: ClassRes[] = [];
+    selectedClass: ClassRes[] = [];
     constructor(
-        private readonly _systemPositionService: SystemPositionService,
+        private readonly _classService: ClassService,
         private readonly _confirmationPopupService: ConfirmationPopupService,
         private readonly _translocoService: TranslocoService,
         private readonly _dialogService: DialogService,
@@ -32,9 +32,9 @@ export class SystemPositionsComponent implements OnInit, OnDestroy {
     };
     isLoading = false;
     ngOnInit(): void {
-        this.getAllPositions();
+        this.getAllClass();
         this._debounce.pipe(takeUntil(this._unsubscribeAll), debounceTime(300)).subscribe((value) => {
-            this.getAllPositions();
+            this.getAllClass();
         });
     }
 
@@ -42,9 +42,9 @@ export class SystemPositionsComponent implements OnInit, OnDestroy {
         this._unsubscribeAll.next(null);
         this._unsubscribeAll.complete();
     }
-    getAllPositions() {
+    getAllClass() {
         this.isLoading = true;
-        this._systemPositionService
+        this._classService
             .getAll(this.filter)
             .pipe(
                 takeUntil(this._unsubscribeAll),
@@ -53,55 +53,55 @@ export class SystemPositionsComponent implements OnInit, OnDestroy {
                 }),
             )
             .subscribe((res) => {
-                this.positions = res.data;
+                this.class = res.data;
             });
     }
-    onDeletePosition() {
+    onDeleteClass() {
         this._confirmationPopupService.showConfirm(
             this._translocoService.translate('common.delete'),
             this._translocoService.translate('common.confirmDelete'),
             () => {
-                let selectedIds = this.selectedPositions.map((item) => item.positionId);
-                this._systemPositionService.deleteRange(selectedIds).subscribe((res) => {
+                let selectedIds = this.selectedClass.map((item) => item.classId);
+                this._classService.deleteRange(selectedIds).subscribe((res) => {
                     if (res.data) {
+                        this.getAllClass();
                         this._messagePopupService.show(PopupType.SUCCESS, null, 'common.deleteSuccess');
-                        this.getAllPositions();
                     }
                 });
             },
             () => {},
         );
     }
-    onAddPosition() {
-        let ref = this._dialogService.open(SystemPositionsCreateEditPopupComponent, {
-            header: this._translocoService.translate('system.positions'),
+    onAddClass() {
+        let ref = this._dialogService.open(ClassCreateEditPopupComponent, {
+            header: this._translocoService.translate('aacs.studentClass'),
             modal: true,
             data: {
-                position: null,
+                class: null,
             } as {
-                position: SystemPositionRes | null;
+                class: ClassRes | null;
             },
         });
         ref.onClose.subscribe((res) => {
             if (res) {
-                this.getAllPositions();
+                this.getAllClass();
                 this._messagePopupService.show(PopupType.SUCCESS, null, 'common.addSuccess');
             }
         });
     }
-    onEditPosition(position: SystemPositionRes) {
-        let ref = this._dialogService.open(SystemPositionsCreateEditPopupComponent, {
-            header: this._translocoService.translate('system.positions'),
+    onEditClass(classRoom: ClassRes) {
+        let ref = this._dialogService.open(ClassCreateEditPopupComponent, {
+            header: this._translocoService.translate('aacs.studentClass'),
             modal: true,
             data: {
-                position: position,
+                class: classRoom,
             } as {
-                position: SystemPositionRes | null;
+                class: ClassRes | null;
             },
         });
         ref.onClose.subscribe((res) => {
             if (res) {
-                this.getAllPositions();
+                this.getAllClass();
                 this._messagePopupService.show(PopupType.SUCCESS, null, 'common.updateSuccess');
             }
         });

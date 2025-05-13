@@ -6,6 +6,7 @@ import { AuthService } from './auth.service';
 import { AuthUtils } from './auth.utils';
 import { isNullOrWhiteSpace } from '../../utils/validation.utils';
 import { TranslateParams, TranslocoService } from '@jsverse/transloco';
+import { MessageService } from 'primeng/api';
 let isRefreshing = false;
 /**
  * Intercept
@@ -17,6 +18,7 @@ export const authInterceptor = (req: HttpRequest<unknown>, next: HttpHandlerFn):
     const authService = inject(AuthService);
     const router = inject(Router);
     const translocoService = inject(TranslocoService);
+    const messageService = inject(MessageService);
 
     let refreshTokenSubject: BehaviorSubject<any> = new BehaviorSubject<any>(null);
 
@@ -29,10 +31,9 @@ export const authInterceptor = (req: HttpRequest<unknown>, next: HttpHandlerFn):
         /* for Node.js Express back-end */
         return request.clone({
             headers: request.headers.set('Authorization', 'Bearer ' + authService.accessToken),
-            params: removeNullValuesFromQueryParams(request.params)
-
-        });;
-    }
+            params: removeNullValuesFromQueryParams(request.params),
+        });
+    };
     // Request
     //
     // If the access token didn't expire, add the Authorization header.
@@ -45,7 +46,7 @@ export const authInterceptor = (req: HttpRequest<unknown>, next: HttpHandlerFn):
         newReq = addTokenHeader(req, authService.accessToken);
     }
     newReq = newReq.clone({
-        params: removeNullValuesFromQueryParams(newReq.params)
+        params: removeNullValuesFromQueryParams(newReq.params),
     });
     // const handle400Error = (error: HttpErrorResponse) => {
     //     let listError = error.error.errors.map(e => {
@@ -68,31 +69,24 @@ export const authInterceptor = (req: HttpRequest<unknown>, next: HttpHandlerFn):
     // }
 
     const handle400Error = (error: HttpErrorResponse) => {
-        let listError = error.error.errors.filter((e: { key: string }) => !isNullOrWhiteSpace(e.key))
+        let listError = error.error.errors
+            .filter((e: { key: string }) => !isNullOrWhiteSpace(e.key))
             .map((e: { key: string; description: string }) => {
                 if (e.description == '_' || isNullOrWhiteSpace(e.description)) {
                     e.description = '';
                 }
                 return {
                     translatedKey: translocoService.translate(e.key),
-                    translatedDescription: translocoService.translate(e.description)
+                    translatedDescription: translocoService.translate(e.description),
                 };
-            })
+            });
         if (listError.length) {
-            // fuseConfirmationService.open({
-            //     title: listError.map(e => e.translatedKey).join(', '),
-            //     message: listError.map(e => e.translatedDescription).join(', '),
-            //     icon: {
-            //         name: 'heroicons_outline:information-circle',
-            //         color: 'error'
-            //     },
-            //     actions: {
-            //         confirm: { show: false },
-            //         cancel: { show: false }
-            //     },
-            //     dismissible: true,
-            //     showXIcon: false
-            // })
+            messageService.add({
+                severity: 'error',
+                summary: listError.map((e: { translatedKey: string; translatedDescription: string }) => e.translatedKey).join(', '),
+                detail: listError.map((e: { translatedKey: string; translatedDescription: string }) => e.translatedDescription).join(', '),
+                life: 2000,
+            });
         } else {
             // fuseConfirmationService.open({
             //     title: 'message.invalidData',
@@ -108,7 +102,7 @@ export const authInterceptor = (req: HttpRequest<unknown>, next: HttpHandlerFn):
             //     dismissible: true
             // })
         }
-    }
+    };
     const handle401Error = (request: HttpRequest<any>, next: HttpHandlerFn) => {
         if (!isRefreshing) {
             isRefreshing = true;
@@ -118,7 +112,7 @@ export const authInterceptor = (req: HttpRequest<unknown>, next: HttpHandlerFn):
 
             if (token)
                 return authService.signInUsingToken().pipe(
-                    switchMap((token: { accessToken: string, refreshToken: string }) => {
+                    switchMap((token: { accessToken: string; refreshToken: string }) => {
                         isRefreshing = false;
                         refreshTokenSubject.next(token.accessToken);
 
@@ -128,43 +122,33 @@ export const authInterceptor = (req: HttpRequest<unknown>, next: HttpHandlerFn):
                         isRefreshing = false;
                         authService.signOut();
                         return throwError(err);
-                    })
+                    }),
                 );
-
         }
         return refreshTokenSubject.pipe(
-            filter(token => token !== null),
+            filter((token) => token !== null),
             take(1),
-            switchMap((token) => next(addTokenHeader(request, token)))
+            switchMap((token) => next(addTokenHeader(request, token))),
         );
-
-    }
+    };
     // Response
     return next(newReq).pipe(
-
         catchError((error) => {
-
             // Catch "401 Unauthorized" responses
             if (error instanceof HttpErrorResponse && error.status === 401) {
                 return handle401Error(req, next);
-            }
-
-            else if (error instanceof HttpErrorResponse && error.status === 400) {
+            } else if (error instanceof HttpErrorResponse && error.status === 400) {
                 handle400Error(error);
-
-            }
-            else if (error instanceof HttpErrorResponse && error.status === 498) {
-
-                authService.signOut().subscribe(resp => {
+            } else if (error instanceof HttpErrorResponse && error.status === 498) {
+                authService.signOut().subscribe((resp) => {
                     router.navigate(['sign-in']);
                 });
-
             }
             // Catch "409 Conflict" responses
             else if (error instanceof HttpErrorResponse && error.status === 409) {
                 let listError = error.error.errors.map((e: TranslateParams) => {
                     return translocoService.translate(e);
-                })
+                });
 
                 // fuseConfirmationService.open({
                 //     title: listError.join(', '),
@@ -207,8 +191,6 @@ export const authInterceptor = (req: HttpRequest<unknown>, next: HttpHandlerFn):
 
             // }
             else if (error instanceof HttpErrorResponse && error.status >= 500) {
-
-
                 // fuseConfirmationService.open({
                 //     title: 'Lỗi lưu dữ liệu',
                 //     message: 'Vui lòng thử lại sau!',
@@ -221,9 +203,7 @@ export const authInterceptor = (req: HttpRequest<unknown>, next: HttpHandlerFn):
                 //             show: false
                 //         }
                 //     }
-
                 // })
-
             }
 
             return throwError(error);
@@ -241,4 +221,4 @@ const removeNullValuesFromQueryParams = (params: HttpParams) => {
     });
 
     return params;
-}
+};

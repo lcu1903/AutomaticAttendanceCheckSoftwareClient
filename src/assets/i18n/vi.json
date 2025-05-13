@@ -36,12 +36,14 @@
             "systemPositionDeleteFailed": "Xóa chức vụ thất bại",
             "systemPositionUpdateFailed": "Cập nhật chức vụ thất bại",
             "userDeleteFailed": "Xóa người dùng thất bại",
-            "userNotFound": "Không tìm thấy người dùng"
+            "userNotFound": "Không tìm thấy người dùng",
+            "pleaseCheckAgain": "Vui lòng kiểm tra lại"
         },
         "error": {
             "required": "Bắt buộc",
             "invalidEmail": "Email không hợp lệ",
-            "refreshTokenExpired": "Refresh Token đã hết hạn"
+            "refreshTokenExpired": "Refresh Token đã hết hạn",
+            "userNotFound": "Không tìm thấy người dùng"
         },
         "page": "Cấu hình trang",
         "pageName": "Tên trang",
@@ -56,7 +58,12 @@
         "userManagement": "Quản lý người dùng"
     },
     "common": {
+        "saveSuccess": "Lưu thành công",
         "title": "Tiêu đề",
+        "uploaded": "Đã tải lên",
+        "upload": "Tải lên",
+        "chooseFile": "Chọn tệp",
+        "dragAndDrop": "Kéo hoặc thả tệp vào đây ",
         "success": "Thành công",
         "addSuccess": "Thêm thành công",
         "deleteSuccess": "Xóa thành công",
@@ -97,13 +104,16 @@
         "address": "Địa chỉ",
         "order": "Thứ tự",
         "searchByFullName": "Tìm kiếm theo họ và tên",
+        "searchByFullNameOrStudentCode": "Tìm kiếm theo tên hoặc mã sinh viên",
+        "searchByFullNameOrTeacherCode": "Tìm kiếm theo tên hoặc mã giảng viên",
         "chooseDepartment": "Chọn phòng ban",
         "choosePosition": "Chọn chức vụ",
         "create": "Tạo mới",
         "update": "Cập nhật",
         "information": "Thông tin chung",
         "birthday": "Ngày sinh",
-        "userName": "Tên đăng nhập"
+        "userName": "Tên đăng nhập",
+        "avatar": "Ảnh đại diện"
     },
     "viLocale": {
         "firstDayOfWeek": 1,
@@ -128,5 +138,37 @@
         "today": "Hôm nay",
         "clear": "Xóa",
         "dateFormat": "dd/mm/yy"
+    },
+    "aacs.studentCode": "Mã sinh viên",
+    "aacs.teacherCode": "Mã giảng viên",
+    "aacs.studentName": "Tên sinh viên",
+    "aacs.studentClass": "Lớp học",
+    "aacs.chooseClass": "Chọn lớp",
+    "aacs.education": "Đào tạo",
+    "aacs.classCode": "Mã lớp học",
+    "aacs.className": "Tên lớp học",
+    "aacs.mainRoom": "Phòng học chính",
+    "aacs.headTeacher": "Giáo viên chủ nhiệm",
+    "aacs.schoolYear": "Niên khóa",
+    "aacs.student": "Sinh viên",
+    "aacs.teacher": "Giảng viên",
+    "aacs": {
+        "message": {
+            "studentNotFound": "Không tìm thấy sinh viên",
+            "studentCodeAlreadyExists": "Mã sinh viên đã tồn tại",
+            "studentCreateFailed": "Tạo sinh viên thất bại",
+            "studentUpdateFailed": "Cập nhật sinh viên thất bại",
+            "studentDeleteFailed": "Xóa sinh viên thất bại",
+            "teacherNotFound": "Không tìm thấy giảng viên",
+            "teacherCodeAlreadyExists": "Mã giảng viên đã tồn tại",
+            "teacherCreateFailed": "Tạo giảng viên thất bại",
+            "teacherUpdateFailed": "Cập nhật giảng viên thất bại",
+            "teacherDeleteFailed": "Xóa giảng viên thất bại",
+            "classRoomCreateFailed": "Tạo lớp học thất bại",
+            "classRoomNotFound": "Không tìm thấy lớp học",
+            "classRoomDeleteFailed": "Xóa lớp học thất bại",
+            "classRoomUpdateFailed": "Cập nhật lớp học thất bại",
+            "classRoomCodeAlreadyExists": "Mã lớp học đã tồn tại"
+        }
     }
 }

@@ -1,19 +1,19 @@
-<div *ngIf="type === 'text'">
-    <label *ngIf="label">{{ label | transloco }}</label>
+<div *ngIf="type === 'text'" class="min-w-screen-15">
+    <label class="text-surface-500 font-semibold" *ngIf="label">{{ label | transloco }}</label>
     <ng-container *ngIf="required"> <span class="text-red-600"> *</span></ng-container>
     <p-inputgroup class="mt-2 h-11">
         <p-inputgroup-addon *ngIf="preIcon != null">
             <p-inputicon [styleClass]="preIcon" />
         </p-inputgroup-addon>
         <input
-            [disabled]="disabled"
             pInputText
+            [disabled]="disabled"
             [placeholder]="placeholder ?? '' | transloco"
             [value]="value"
             (input)="onInput($event)"
             (blur)="onTouched()"
         />
-        <p-inputgroup-addon *ngIf="postIcon">
+        <p-inputgroup-addon *ngIf="postIcon != null">
             <p-inputicon [styleClass]="postIcon" />
         </p-inputgroup-addon>
     </p-inputgroup>
@@ -21,14 +21,14 @@
         {{ errors | transloco }}
     </small>
 </div>
-<div *ngIf="type === 'secret'">
-    <label *ngIf="label">{{ label | transloco }}</label>
+<div *ngIf="type === 'secret'" class="min-w-screen-15">
+    <label class="text-surface-500 font-semibold" *ngIf="label">{{ label | transloco }}</label>
     <ng-container *ngIf="required"> <span class="text-red-600"> *</span></ng-container>
 
     <p-inputgroup class="mt-2 h-11">
         <input
-            [disabled]="disabled"
             pInputText
+            [disabled]="disabled"
             [type]="showSecretToggle ? 'text' : 'password'"
             [placeholder]="placeholder | transloco"
             [value]="value"
@@ -43,16 +43,16 @@
         {{ errors | transloco }}
     </small>
 </div>
-<div *ngIf="type == 'number'">
-    <label *ngIf="label">{{ label | transloco }}</label>
+<div *ngIf="type == 'number'" class="min-w-screen-15">
+    <label class="text-surface-500 font-semibold" *ngIf="label">{{ label | transloco }}</label>
     <ng-container *ngIf="required"> <span class="text-red-600"> *</span></ng-container>
     <p-inputgroup class="mt-2 h-11">
         <p-inputgroup-addon *ngIf="preIcon != null">
             <p-inputicon [styleClass]="preIcon" />
         </p-inputgroup-addon>
         <input
-            [disabled]="disabled"
             pInputText
+            [disabled]="disabled"
             [placeholder]="placeholder ?? '' | transloco"
             [value]="value"
             (input)="onInput($event)"
@@ -68,12 +68,14 @@
     </small>
 </div>
 <div *ngIf="type == 'datePicker'" class="flex flex-col">
-    <label *ngIf="label">{{ label | transloco }}</label>
+    <label class="text-surface-500 font-semibold" *ngIf="label">{{ label | transloco }}</label>
     <ng-container *ngIf="required"> <span class="text-red-600"> *</span></ng-container>
     <p-datepicker
         class="mt-2 h-11"
-        size="large"
         [(ngModel)]="value"
+        [disabled]="disabled"
+        appendTo="body"
+        size="large"
         [showIcon]="true"
         (onSelect)="onSelectDate($event)"
         inputId="buttondisplay"
@@ -83,12 +85,14 @@
         {{ errors | transloco }}
     </small>
 </div>
-<div *ngIf="type == 'dateTimePicker'" class="flex flex-col">
-    <label *ngIf="label">{{ label | transloco }}</label>
+<div *ngIf="type == 'dateTimePicker'" class="flex flex-col min-w-screen-15">
+    <label class="text-surface-500 font-semibold" *ngIf="label">{{ label | transloco }}</label>
     <ng-container *ngIf="required"> <span class="text-red-600"> *</span></ng-container>
     <p-datepicker
         class="mt-2 h-11"
         [(ngModel)]="value"
+        [disabled]="disabled"
+        appendTo="body"
         [showIcon]="true"
         size="large"
         inputId="buttondisplay"

@@ -1,0 +1,63 @@
+<form style="padding: 0" class="w-screen-40 h-screen-40 flex flex-col gap-4" (ngSubmit)="onSave()" [formGroup]="classForm">
+    <!-- Header -->
+    <!-- Content -->
+    <div class="flex flex-1 flex-col gap-4 border-t-2 py-4">
+        <div class="grid grid-cols-2 gap-4">
+            <cm-input
+                formControlName="classCode"
+                [label]="'aacs.classCode' | transloco"
+                [required]="true"
+                type="text"
+                [errors]="classForm.get('classCode')?.touched ? classForm.errors?.['classCode'] : null"
+            ></cm-input>
+            <cm-input
+                formControlName="className"
+                [label]="'aacs.className' | transloco"
+                [required]="true"
+                type="text"
+                [errors]="classForm.get('className')?.touched ? classForm.errors?.['className'] : null"
+            ></cm-input>
+            <cm-input formControlName="room" [label]="'aacs.mainRoom' | transloco" type="text"></cm-input>
+            <cm-select
+                formControlName="headTeacherId"
+                [label]="'aacs.headTeacher' | transloco"
+                [options]="teachers"
+                optionValue="id"
+                optionLabel="name"
+            ></cm-select>
+            <cm-select
+                formControlName="departmentId"
+                [label]="'system.departments' | transloco"
+                [options]="departments"
+                optionValue="id"
+                optionLabel="name"
+            ></cm-select>
+            <div class="flex gap-2 items-end">
+                <cm-input
+                    formControlName="schoolYearStart"
+                    [label]="'aacs.schoolYear' | transloco"
+                    placeholder="{{ 'aacs.from' | transloco }}"
+                    type="datePicker"
+                    class="w-1/2"
+                ></cm-input>
+                <cm-input formControlName="schoolYearEnd" placeholder="{{ 'aacs.to' | transloco }}" type="datePicker" class="w-1/2"></cm-input>
+            </div>
+        </div>
+    </div>
+    <!-- Footer -->
+    <div class="flex justify-end gap-2 border-t-2 py-4">
+        <p-button
+            [severity]="'secondary'"
+            label="{{ 'common.cancel' | transloco }}"
+            (onClick)="onClose()"
+            [disabled]="isLoading"
+            [style]="{ width: '100px' }"
+        ></p-button>
+        <p-button
+            [disabled]="classForm.invalid || isLoading"
+            type="submit"
+            label="{{ 'common.save' | transloco }}"
+            [style]="{ width: '100px' }"
+        ></p-button>
+    </div>
+</form>

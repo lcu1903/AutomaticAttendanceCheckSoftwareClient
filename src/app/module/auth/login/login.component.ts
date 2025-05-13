@@ -23,8 +23,8 @@ export class LoginComponent implements OnInit, OnDestroy {
     private readonly _unsubscribeAll: Subject<any> = new Subject<any>();
     isLoading: boolean = false;
     loginSchema: z.ZodType<LoginReq> = z.object({
-        userName: z.string().min(1, { message: 'error.required' }),
-        password: z.string().min(1, { message: 'error.required' }),
+        userName: z.string().min(1, { message: 'system.error.required' }),
+        password: z.string().min(1, { message: 'system.error.required' }),
     });
     loginForm!: FormGroup;
     constructor(

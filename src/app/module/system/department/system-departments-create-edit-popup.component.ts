@@ -9,6 +9,7 @@ import { TranslocoService } from '@jsverse/transloco';
 import { zodValidator } from '../../../utils/validation.utils';
 import { SystemDepartmentService } from '../../../aacs/service/system-department/system-department.service';
 import { CmSelectOption } from '../../../base-components/cm-select/cm-select.component';
+import { MessagePopupService, PopupType } from '../../../base-components/message-popup/message-popup.component';
 
 @Component({
     selector: 'system-departments-popup',
@@ -30,6 +31,7 @@ export class SystemDepartmentsCreateEditPopupComponent implements OnInit, OnDest
         private readonly _translocoService: TranslocoService,
         private readonly _confirmationPopupService: ConfirmationPopupService,
         private readonly _departmentService: SystemDepartmentService,
+        private readonly _messagePopupService: MessagePopupService,
     ) {
         this.instance = this.dialogService.getInstance(this.ref);
         const data = this.instance?.data as { department: SystemDepartmentRes | null };
@@ -108,7 +110,7 @@ export class SystemDepartmentsCreateEditPopupComponent implements OnInit, OnDest
                 )
                 .subscribe((res) => {
                     if (res.data) {
-                        this.isLoading = false;
+                        this._messagePopupService.show(PopupType.SUCCESS, null, 'common.saveSuccess');
                         this.ref.close(res.data);
                     }
                 });
@@ -126,6 +128,7 @@ export class SystemDepartmentsCreateEditPopupComponent implements OnInit, OnDest
                 )
                 .subscribe((res) => {
                     if (res.data) {
+                        this._messagePopupService.show(PopupType.SUCCESS, null, 'common.saveSuccess');
                         this.ref.close(res.data);
                     }
                 });

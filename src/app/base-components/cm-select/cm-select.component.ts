@@ -71,10 +71,6 @@ export class CmSelectComponent implements ControlValueAccessor {
         this.onTouched = fn;
     }
 
-    setDisabledState(isDisabled: boolean): void {
-        this.disabled = isDisabled;
-    }
-
     onSelectChange(value: CmSelectOption): void {
         console.log('Selected value:', value);
 

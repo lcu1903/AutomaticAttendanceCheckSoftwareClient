@@ -3,8 +3,6 @@ import { TranslocoService } from '@jsverse/transloco';
 import { Subject, takeUntil, debounceTime, finalize } from 'rxjs';
 import { SystemDepartmentService } from '../../../aacs/service/system-department/system-department.service';
 import { SystemPositionService } from '../../../aacs/service/system-position/system-position.service';
-import { UserCreateReq, UserRes, UserUpdateReq } from '../../../aacs/service/users/types';
-import { UserService } from '../../../aacs/service/users/users.service';
 import { CmSelectOption } from '../../../base-components/cm-select/cm-select.component';
 import { ConfirmationPopupService } from '../../../base-components/confirmation-popup/confirmation-popup.component';
 import { MessagePopupService, PopupType } from '../../../base-components/message-popup/message-popup.component';
@@ -18,26 +16,28 @@ import moment from 'moment';
 import { ClassService } from '../../../aacs/service/class/class.service';
 import { StorageService } from '../../../aacs/service/storage/storage.service';
 import { trimFormValues } from '../../../utils/app.utils';
+import { TeacherService } from '../../../aacs/service/teacher/teachers.service';
+import { TeacherRes, TeacherCreateReq, TeacherUpdateReq } from '../../../aacs/service/teacher/types';
 export interface UploadEvent {
     originalEvent: Event;
     files: File[];
 }
 @Component({
-    selector: 'system-user-create-edit',
+    selector: 'teacher-create-edit',
     standalone: false,
-    templateUrl: './users-create-edit.component.html',
+    templateUrl: './teacher-create-edit.component.html',
 })
-export class SystemUsersCreateEditComponent implements OnDestroy, OnInit {
+export class TeachersCreateEditComponent implements OnDestroy, OnInit {
     private readonly _unsubscribeAll = new Subject<any>();
-    user: UserRes | null = null;
+    teacher: TeacherRes | null = null;
     departments: CmSelectOption[] = [];
     positions: CmSelectOption[] = [];
     classes: CmSelectOption[] = [];
     isLoading = false;
-    userId: string | null = null;
+    teacherId: string | null = null;
     action: 'create' | 'edit' = 'create';
     constructor(
-        private readonly _systemUserService: UserService,
+        private readonly _teacherService: TeacherService,
         private readonly _confirmationPopupService: ConfirmationPopupService,
         private readonly _translocoService: TranslocoService,
         private readonly _messagePopupService: MessagePopupService,
@@ -50,40 +50,40 @@ export class SystemUsersCreateEditComponent implements OnDestroy, OnInit {
         private readonly _storageService: StorageService,
     ) {
         this._activatedRoute.params.subscribe((params) => {
-            this.userId = params['id'];
-            if (this.userId) {
+            this.teacherId = params['id'];
+            if (this.teacherId) {
                 this.action = 'edit';
-                this.getUserById(this.userId);
+                this.getTeacherById(this.teacherId);
             } else {
                 this.action = 'create';
             }
         });
     }
-    userSchema: z.ZodSchema<UserCreateReq> = z.object({
-        userName: z.string().min(1, 'system.error.required'),
+    teacherSchema: z.ZodSchema<TeacherCreateReq> = z.object({
+        teacherCode: z.string().min(1, 'system.error.required'),
         fullName: z.string().min(1, 'system.error.required'),
+        userName: z.string().min(1, 'system.error.required'),
     });
-    userForm!: FormGroup;
+    teacherForm!: FormGroup;
     ngOnInit(): void {
         this.getDepartments();
         this.getPositions();
         this.getClasses();
-        this.userForm = this._formBuilder.group(
+        this.teacherForm = this._formBuilder.group(
             {
-                userName: [''],
+                teacherCode: [''],
+                classId: [null],
                 fullName: [''],
                 email: [null],
                 phoneNumber: [null],
                 departmentId: [null],
                 positionId: [null],
                 birthdate: [null],
-                studentCode: [null],
-                classId: [null],
-                teacherCode: [null],
                 imageUrl: [null],
+                userName: [''],
             },
             {
-                validators: zodValidator(this.userSchema),
+                validators: zodValidator(this.teacherSchema),
             },
         );
     }
@@ -92,10 +92,10 @@ export class SystemUsersCreateEditComponent implements OnDestroy, OnInit {
         this._unsubscribeAll.next(null);
         this._unsubscribeAll.complete();
     }
-    getUserById(userId: string) {
+    getTeacherById(teacherId: string) {
         this.isLoading = true;
-        this._systemUserService
-            .getUserById(userId)
+        this._teacherService
+            .getById(teacherId)
             .pipe(
                 takeUntil(this._unsubscribeAll),
                 finalize(() => {
@@ -103,19 +103,18 @@ export class SystemUsersCreateEditComponent implements OnDestroy, OnInit {
                 }),
             )
             .subscribe((res) => {
-                this.user = res.data;
-                this.userForm.patchValue({
-                    userName: this.user?.userName,
-                    fullName: this.user?.fullName,
-                    email: this.user?.email,
-                    phoneNumber: this.user?.phoneNumber,
-                    departmentId: this.user?.departmentId,
-                    positionId: this.user?.positionId,
-                    studentCode: this.user?.studentCode,
-                    classId: this.user?.classId,
-                    teacherCode: this.user?.teacherCode,
-                    birthdate: this.user?.birthdate ? moment(this.user?.birthdate).toDate() : null,
-                    imageUrl: this.user?.imageUrl,
+                this.teacher = res.data;
+                this.teacherForm.patchValue({
+                    fullName: this.teacher?.user?.fullName,
+                    email: this.teacher?.user?.email,
+                    phoneNumber: this.teacher?.user?.phoneNumber,
+                    departmentId: this.teacher?.user?.departmentId,
+                    positionId: this.teacher?.user?.positionId,
+                    teacherCode: this.teacher?.teacherCode,
+                    birthdate: this.teacher?.user?.birthdate ? moment(this.teacher?.user?.birthdate).toDate() : null,
+                    imageUrl: this.teacher?.user?.imageUrl,
+                    userName: this.teacher?.user?.userName,
+                    userId: this.teacher?.user?.userId,
                 });
             });
     }
@@ -160,60 +159,57 @@ export class SystemUsersCreateEditComponent implements OnDestroy, OnInit {
             this._translocoService.translate('common.message.unsavedChanges'),
             this._translocoService.translate('common.message.unsavedChangesConfirm'),
             () => {
-                this._router.navigate(['/users']);
+                this._router.navigate(['/teachers']);
             },
             () => {},
         );
     }
     onSave() {
-        if (this.userForm.invalid) {
-            this.userForm.markAllAsTouched();
+        if (this.teacherForm.invalid) {
+            this.teacherForm.markAllAsTouched();
             return;
         }
-        this.userForm.patchValue({
-            ...trimFormValues(this.userForm.value),
+        this.teacherForm.patchValue({
+            ...trimFormValues(this.teacherForm.value),
         });
-        console.log('Form value:', this.userForm.value);
+        console.log('Form value:', this.teacherForm.value);
 
         if (this.action === 'create') {
-            let user: UserCreateReq = {
-                userName: this.userForm.value.userName,
-                fullName: this.userForm.value.fullName,
-                email: this.userForm.value.email,
-                phoneNumber: this.userForm.value.phoneNumber,
-                departmentId: this.userForm.value.departmentId,
-                positionId: this.userForm.value.positionId,
-                birthdate: this.userForm.value.birthdate,
-                studentCode: this.userForm.value.studentCode,
-                classId: this.userForm.value.classId,
-                teacherCode: this.userForm.value.teacherCode,
-                imageUrl: this.userForm.value.imageUrl,
+            let teacher: TeacherCreateReq = {
+                fullName: this.teacherForm.value.fullName,
+                email: this.teacherForm.value.email,
+                phoneNumber: this.teacherForm.value.phoneNumber,
+                departmentId: this.teacherForm.value.departmentId,
+                positionId: this.teacherForm.value.positionId,
+                birthdate: this.teacherForm.value.birthdate,
+                teacherCode: this.teacherForm.value.teacherCode,
+                imageUrl: this.teacherForm.value.imageUrl,
+                userName: this.teacherForm.value.userName,
             };
-            this._systemUserService.createUser(user).subscribe((res) => {
+            this._teacherService.create(teacher).subscribe((res) => {
                 if (res.data) {
                     this._messagePopupService.show(PopupType.SUCCESS, null, 'common.saveSuccess');
-                    this._router.navigate(['/users']);
+                    this._router.navigate(['/teachers']);
                 }
             });
         } else {
-            let user: UserUpdateReq = {
-                userId: this.userId!,
-                userName: this.userForm.value.userName,
-                fullName: this.userForm.value.fullName,
-                email: this.userForm.value.email,
-                phoneNumber: this.userForm.value.phoneNumber,
-                departmentId: this.userForm.value.departmentId,
-                positionId: this.userForm.value.positionId,
-                birthdate: this.userForm.value.birthdate,
-                imageUrl: this.userForm.value.imageUrl,
-                studentCode: this.userForm.value.studentCode,
-                classId: this.userForm.value.classId,
-                teacherCode: this.userForm.value.teacherCode,
+            let teacher: TeacherUpdateReq = {
+                teacherId: this.teacherId!,
+                fullName: this.teacherForm.value.fullName,
+                email: this.teacherForm.value.email,
+                phoneNumber: this.teacherForm.value.phoneNumber,
+                departmentId: this.teacherForm.value.departmentId,
+                positionId: this.teacherForm.value.positionId,
+                birthdate: this.teacherForm.value.birthdate,
+                imageUrl: this.teacherForm.value.imageUrl,
+                teacherCode: this.teacherForm.value.teacherCode,
+                userName: this.teacherForm.value.userName,
+                userId: this.teacher?.userId!,
             };
-            this._systemUserService.updateUser(this.userId!, user).subscribe((res) => {
+            this._teacherService.update(this.teacherId!, teacher).subscribe((res) => {
                 if (res.data) {
                     this._messagePopupService.show(PopupType.SUCCESS, null, 'common.saveSuccess');
-                    this._router.navigate(['/users']);
+                    this._router.navigate(['/teachers']);
                 }
             });
         }
@@ -244,7 +240,7 @@ export class SystemUsersCreateEditComponent implements OnDestroy, OnInit {
             this._storageService.upload(formData).subscribe((res) => {
                 if (res.data) {
                     this._messagePopupService.show(PopupType.SUCCESS, null, 'common.uploaded');
-                    this.userForm.patchValue({
+                    this.teacherForm.patchValue({
                         imageUrl: res.data,
                     });
                 }
@@ -252,7 +248,7 @@ export class SystemUsersCreateEditComponent implements OnDestroy, OnInit {
         }
     }
     onRemoveImage() {
-        this.userForm.patchValue({
+        this.teacherForm.patchValue({
             imageUrl: null,
         });
     }

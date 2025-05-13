@@ -22,9 +22,9 @@ export class RegisterComponent implements OnInit, OnDestroy {
     private readonly _unsubscribeAll: Subject<any> = new Subject<any>();
     isLoading: boolean = false;
     registerSchema: z.ZodType<RegisterReq> = z.object({
-        userName: z.string().min(1, { message: 'error.required' }),
-        password: z.string().min(1, { message: 'error.required' }),
-        email: z.string().email({ message: 'error.invalidEmail' }).min(1, { message: 'error.required' }),
+        userName: z.string().min(1, { message: 'system.error.required' }),
+        password: z.string().min(1, { message: 'system.error.required' }),
+        email: z.string().email({ message: 'error.invalidEmail' }).min(1, { message: 'system.error.required' }),
         phoneNumber: z.string().optional().nullable(),
         fullName: z.string().optional().nullable(),
     });
