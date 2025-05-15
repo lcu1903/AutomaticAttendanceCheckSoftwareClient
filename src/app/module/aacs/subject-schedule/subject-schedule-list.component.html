@@ -1,0 +1,99 @@
+<div class="flex flex-col gap-4 flex-1 h-full">
+    <!-- Topbar -->
+    <div class="border-t border-b">
+        <div class="flex justify-between items-center p-4 bg-card">
+            <div class="text-4xl font-semibold">{{ 'aacs.subjectSchedule' | transloco }}</div>
+            <div class="flex gap-2">
+                <p-button [disabled]="isLoading" (onClick)="onAddSubjectSchedule()" label="{{ 'common.add' | transloco }}" />
+                <p-button
+                    *ngIf="selectedSubjectSchedules.length > 0"
+                    [severity]="'danger'"
+                    [disabled]="isLoading"
+                    (onClick)="onDeleteRangeSubjectSchedule()"
+                    label="{{ 'common.delete' | transloco }}"
+                />
+            </div>
+        </div>
+    </div>
+    <!-- Content -->
+    <div class="flex flex-col flex-1 mx-4 shadow rounded-md bg-white p-4">
+        <!-- Card -->
+        <div class="bg-white flex flex-col gap-4">
+            <div class="flex gap-4">
+                <cm-input
+                    [(ngModel)]="filter.textSearch"
+                    [placeholder]="'aacs.plhder.searchByCodeSubjectCodeOrSubjectName' | transloco"
+                    [preIcon]="'pi pi-search'"
+                    [style]="{ width: '300px' }"
+                    (modelChange)="onSearch()"
+                ></cm-input>
+                <cm-select
+                    class="min-w-screen-15"
+                    [(ngModel)]="filter.classIds"
+                    [placeholder]="'aacs.plhder.chooseClass' | transloco"
+                    [options]="classes"
+                    [style]="{ width: '200px' }"
+                    (modelChange)="onSearch()"
+                ></cm-select>
+                <cm-select
+                    class="min-w-screen-15"
+                    [(ngModel)]="filter.semesterIds"
+                    [placeholder]="'aacs.plhder.chooseSemester' | transloco"
+                    [options]="semesters"
+                    [style]="{ width: '200px' }"
+                    (modelChange)="onSearch()"
+                ></cm-select>
+            </div>
+            <!-- Table -->
+            <p-table
+                #dt
+                [value]="subjectSchedules"
+                [paginator]="true"
+                [tableStyle]="{ 'min-width': '700px' }"
+                [rows]="10"
+                [rowsPerPageOptions]="[10, 25, 50]"
+                [paginator]="true"
+                [loading]="isLoading"
+                [stripedRows]="true"
+                [showCurrentPageReport]="true"
+                [(selection)]="selectedSubjectSchedules"
+                showGridlines="true"
+                currentPageReportTemplate="{{ 'common.showing' | transloco }} {first} - {last} {{ 'common.of' | transloco }} {totalRecords}"
+            >
+                <ng-template pTemplate="header">
+                    <tr>
+                        <th [width]="'1%'">
+                            <p-tableHeaderCheckbox [disabled]="isLoading"></p-tableHeaderCheckbox>
+                        </th>
+                        <th [width]="'15%'">{{ 'aacs.subjectScheduleCode' | transloco }}</th>
+                        <th [width]="'15%'">{{ 'aacs.subjectName' | transloco }}</th>
+                        <th [width]="'15%'">{{ 'aacs.subjectCode' | transloco }}</th>
+                        <th [width]="'15%'">{{ 'aacs.semesterName' | transloco }}</th>
+                        <th [width]="'15%'">{{ 'aacs.className' | transloco }}</th>
+                        <th [width]="'15%'">{{ 'aacs.teacherName' | transloco }}</th>
+                        <th [width]="'15%'">{{ 'aacs.classRoom' | transloco }}</th>
+                        <th [width]="'5%'"></th>
+                    </tr>
+                </ng-template>
+                <ng-template pTemplate="body" let-subjectSchedule let-columns="columns">
+                    <tr>
+                        <td>
+                            <p-tableCheckbox [value]="subjectSchedule" />
+                        </td>
+                        <td>{{ subjectSchedule.subjectScheduleCode }}</td>
+                        <td>{{ subjectSchedule.subject.subjectName }}</td>
+                        <td>{{ subjectSchedule.subject.subjectCode }}</td>
+                        <td>{{ subjectSchedule.semester.semesterName }}</td>
+                        <td>{{ subjectSchedule.class.className }}</td>
+                        <td>{{ subjectSchedule.teacher.user.fullName }}</td>
+                        <td>{{ subjectSchedule.roomNumber }}</td>
+                        <td class="flex justify-center gap-2">
+                            <p-button icon="pi pi-pen-to-square" (onClick)="onEditSubjectSchedule(subjectSchedule)" />
+                            <p-button [severity]="'danger'" icon="pi pi-trash" (onClick)="onDeleteSubjectSchedule(subjectSchedule)" />
+                        </td>
+                    </tr>
+                </ng-template>
+            </p-table>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,104 @@
+<form class="flex flex-col gap-4 flex-1 h-full" (ngSubmit)="onSave()" [formGroup]="subjectScheduleForm">
+    <!-- header -->
+    <div class="border-t border-b">
+        <div class="flex justify-between items-center p-4 bg-card">
+            <div *ngIf="action == 'create'" class="text-4xl font-semibold">{{ 'common.create' | transloco }}</div>
+            <div *ngIf="action == 'edit'" class="text-4xl font-semibold">{{ 'common.edit' | transloco }}</div>
+            <div class="flex gap-2">
+                <p-button [severity]="'contrast'" [disabled]="isLoading" (onClick)="onBack()" label="{{ 'common.back' | transloco }}" />
+                <p-button [disabled]="isLoading" type="submit" label="{{ 'common.save' | transloco }}" />
+            </div>
+        </div>
+    </div>
+    <!-- content -->
+    <div class="flex flex-col flex-1 mx-4 shadow rounded-md bg-white p-4 gap-4">
+        <div class="border-b-2 pb-4">
+            <span class="text-2xl font-bold">{{ 'common.information' | transloco }}</span>
+        </div>
+        <div class="bg-white flex flex-col gap-4">
+            <div class="flex gap-4">
+                <cm-input
+                    [disabled]="isLoading"
+                    formControlName="subjectScheduleCode"
+                    [label]="'aacs.subjectScheduleCode' | transloco"
+                    [required]="true"
+                    [errors]="subjectScheduleForm.get('subjectScheduleCode')?.touched ? subjectScheduleForm.errors?.['subjectScheduleCode'] : null"
+                ></cm-input>
+            </div>
+            <div class="flex gap-4">
+                <cm-select
+                    [disabled]="isLoading"
+                    formControlName="subjectId"
+                    [label]="'aacs.subject' | transloco"
+                    [options]="subjects"
+                    optionValue="subjectId"
+                    optionLabel="subjectName"
+                    [placeholder]="'aacs.plhder.chooseSubject' | transloco"
+                ></cm-select>
+                <cm-select
+                    [disabled]="isLoading"
+                    formControlName="semesterId"
+                    [label]="'aacs.semester' | transloco"
+                    [options]="semesters"
+                    [required]="true"
+                    optionValue="semesterId"
+                    optionLabel="semesterName"
+                    [placeholder]="'aacs.plhder.chooseSemester' | transloco"
+                    [errors]="subjectScheduleForm.get('semesterId')?.touched ? subjectScheduleForm.errors?.['semesterId'] : null"
+                ></cm-select>
+            </div>
+            <div class="flex gap-4">
+                <cm-select
+                    [disabled]="isLoading"
+                    formControlName="teacherId"
+                    [label]="'aacs.teacher' | transloco"
+                    [options]="teachers"
+                    optionValue="teacherId"
+                    optionLabel="fullName"
+                    [placeholder]="'aacs.plhder.chooseTeacher' | transloco"
+                ></cm-select>
+                <cm-select
+                    [disabled]="isLoading"
+                    formControlName="teachingAssistant"
+                    [label]="'aacs.teachingAssistant' | transloco"
+                    [options]="teachers"
+                    optionValue="teacherId"
+                    optionLabel="fullName"
+                    [placeholder]="'aacs.plhder.chooseTeachingAssistant' | transloco"
+                ></cm-select>
+            </div>
+            <div class="flex gap-4">
+                <cm-input [disabled]="isLoading" formControlName="roomNumber" [label]="'aacs.classRoom' | transloco"></cm-input>
+                <cm-select
+                    [disabled]="isLoading"
+                    formControlName="classId"
+                    [label]="'aacs.studentClass' | transloco"
+                    [options]="classes"
+                    optionValue="classId"
+                    optionLabel="className"
+                    [placeholder]="'aacs.plhder.chooseClass' | transloco"
+                ></cm-select>
+            </div>
+            <div class="flex gap-4">
+                <cm-input
+                    [required]="true"
+                    type="datePicker"
+                    [disabled]="isLoading"
+                    formControlName="startDate"
+                    [label]="'common.startDate' | transloco"
+                ></cm-input>
+                <cm-input
+                    [required]="true"
+                    type="datePicker"
+                    [disabled]="isLoading"
+                    formControlName="endDate"
+                    [label]="'common.endDate' | transloco"
+                    [errors]="subjectScheduleForm.get('endDate')?.touched ? subjectScheduleForm.errors?.['endDate'] : null"
+                ></cm-input>
+            </div>
+            <div class="flex gap-4">
+                <cm-input type="textArea" [disabled]="isLoading" formControlName="note" [label]="'common.note' | transloco"></cm-input>
+            </div>
+        </div>
+    </div>
+</form>

@@ -10,6 +10,7 @@ import { InputGroupModule } from 'primeng/inputgroup';
 import { InputGroupAddonModule } from 'primeng/inputgroupaddon';
 import { DatePickerModule } from 'primeng/datepicker';
 import moment, { Moment } from 'moment';
+import { TextareaModule } from 'primeng/textarea';
 @Component({
     selector: 'cm-input',
     standalone: true,
@@ -25,6 +26,7 @@ import moment, { Moment } from 'moment';
         InputGroupModule,
         InputGroupAddonModule,
         DatePickerModule,
+        TextareaModule,
     ],
     templateUrl: './cm-input.component.html',
     providers: [
