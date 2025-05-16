@@ -119,7 +119,10 @@
         "startDate": "Ngày bắt đầu",
         "endDate": "Ngày kết thúc",
         "mustBePositive": "Phải lớn hơn 0",
-        "note": "Ghi chú"
+        "note": "Ghi chú",
+        "common": "Chung",
+        "startTime": "Thời gian bắt đầu",
+        "endTime": "Thời gian kết thúc"
     },
     "viLocale": {
         "firstDayOfWeek": 1,
@@ -169,6 +172,12 @@
     "aacs.teacherName": "Tên giảng viên",
     "aacs.classRoom": "Phòng học",
     "aacs.teachingAssistant": "Trợ giảng",
+    "aacs.changeSchedule": "Thay đổi lịch học",
+    "aacs.schedule": "Lịch học",
+    "aacs.scheduleDate": "Ngày học",
+    "aacs.addScheduleDate": "Thêm ngày học",
+    "aacs.classSize": "Sĩ số",
+    "aacs.editSchedule": "Chỉnh sửa lịch học",
     "aacs": {
         "message": {
             "studentNotFound": "Không tìm thấy sinh viên",
@@ -194,7 +203,11 @@
             "subjectNotFound": "Không tìm thấy môn học",
             "subjectCreateFailed": "Tạo môn học thất bại",
             "subjectUpdateFailed": "Cập nhật môn học thất bại",
-            "subjectDeleteFailed": "Xóa môn học thất bại"
+            "subjectDeleteFailed": "Xóa môn học thất bại",
+            "subjectStarted": "Môn học đã bắt đầu",
+            "subjectScheduleCreateFailed": "Tạo thời khóa biểu thất bại",
+            "subjectScheduleDetailNotFound": "Không tìm thấy chi tiết thời khóa biểu",
+            "scheduleStarted": "Buổi học đã bắt đầu"
         },
         "plhder": {
             "searchBySubjectCodeOrSubjectName": "Tìm kiếm theo mã hoặc tên môn học",

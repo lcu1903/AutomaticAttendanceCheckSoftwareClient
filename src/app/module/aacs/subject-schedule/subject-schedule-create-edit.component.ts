@@ -1,26 +1,21 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
+import { FormBuilder, FormGroup } from '@angular/forms';
+import { ActivatedRoute, Router } from '@angular/router';
 import { TranslocoService } from '@jsverse/transloco';
-import { Subject, takeUntil, debounceTime, finalize } from 'rxjs';
-import { SystemDepartmentService } from '../../../aacs/service/system-department/system-department.service';
-import { SystemPositionService } from '../../../aacs/service/system-position/system-position.service';
+import moment from 'moment';
+import { finalize, Subject, takeUntil } from 'rxjs';
+import { z } from 'zod';
+import { ClassService } from '../../../aacs/service/class/class.service';
+import { SemesterService } from '../../../aacs/service/semester/semester.service';
+import { SubjectScheduleService } from '../../../aacs/service/subject-schedule/subject-schedule.service';
+import { SubjectScheduleCreateReq, SubjectScheduleRes, SubjectScheduleUpdateReq } from '../../../aacs/service/subject-schedule/types';
+import { SubjectService } from '../../../aacs/service/subject/subject.service';
+import { TeacherService } from '../../../aacs/service/teacher/teachers.service';
 import { CmSelectOption } from '../../../base-components/cm-select/cm-select.component';
 import { ConfirmationPopupService } from '../../../base-components/confirmation-popup/confirmation-popup.component';
 import { MessagePopupService, PopupType } from '../../../base-components/message-popup/message-popup.component';
-import { SystemDepartmentRes } from '../../../aacs/service/system-department/types';
-import { SystemPositionRes } from '../../../aacs/service/system-position/types';
-import { ActivatedRoute, Router } from '@angular/router';
-import { z, ZodSchema } from 'zod';
-import { FormBuilder, FormGroup } from '@angular/forms';
-import { zodValidator } from '../../../utils/validation.utils';
-import moment from 'moment';
-import { ClassService } from '../../../aacs/service/class/class.service';
-import { StorageService } from '../../../aacs/service/storage/storage.service';
 import { trimFormValues } from '../../../utils/app.utils';
-import { SubjectScheduleService } from '../../../aacs/service/subject-schedule/subject-schedule.service';
-import { SubjectScheduleRes, SubjectScheduleCreateReq, SubjectScheduleUpdateReq } from '../../../aacs/service/subject-schedule/types';
-import { TeacherService } from '../../../aacs/service/teacher/teachers.service';
-import { SemesterService } from '../../../aacs/service/semester/semester.service';
-import { SubjectService } from '../../../aacs/service/subject/subject.service';
+import { zodValidator } from '../../../utils/validation.utils';
 export interface UploadEvent {
     originalEvent: Event;
     files: File[];
@@ -128,7 +123,7 @@ export class SubjectSchedulesCreateEditComponent implements OnDestroy, OnInit {
             this._translocoService.translate('common.message.unsavedChanges'),
             this._translocoService.translate('common.message.unsavedChangesConfirm'),
             () => {
-                this._router.navigate(['/subject-schedules']);
+                this._router.navigate(['/subject-schedules/', this.subjectScheduleId]);
             },
             () => {},
         );
@@ -164,7 +159,7 @@ export class SubjectSchedulesCreateEditComponent implements OnDestroy, OnInit {
             this._subjectScheduleService.create(subjectSchedule).subscribe((res) => {
                 if (res.data) {
                     this._messagePopupService.show(PopupType.SUCCESS, null, 'common.saveSuccess');
-                    this._router.navigate(['/subject-schedules']);
+                    this._router.navigate(['/subject-schedules', res.data.subjectScheduleId]);
                 }
             });
         } else {
@@ -184,7 +179,7 @@ export class SubjectSchedulesCreateEditComponent implements OnDestroy, OnInit {
             this._subjectScheduleService.update(this.subjectScheduleId!, subjectSchedule).subscribe((res) => {
                 if (res.data) {
                     this._messagePopupService.show(PopupType.SUCCESS, null, 'common.saveSuccess');
-                    this._router.navigate(['/subject-schedules']);
+                    this._router.navigate(['/subject-schedules', res.data.subjectScheduleId]);
                 }
             });
         }

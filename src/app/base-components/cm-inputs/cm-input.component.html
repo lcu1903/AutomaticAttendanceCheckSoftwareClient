@@ -88,8 +88,10 @@
     </small>
 </div>
 <div *ngIf="type == 'dateTimePicker'" class="flex flex-col min-w-screen-15">
-    <label class="text-surface-500 font-semibold" *ngIf="label">{{ label | transloco }}</label>
-    <ng-container *ngIf="required"> <span class="text-red-600"> *</span></ng-container>
+    <div>
+        <label class="text-surface-500 font-semibold" *ngIf="label">{{ label | transloco }}</label>
+        <ng-container *ngIf="required"> <span class="text-red-600"> *</span></ng-container>
+    </div>
     <p-datepicker
         class="mt-2 h-11"
         [(ngModel)]="value"
@@ -110,7 +112,30 @@
 <div *ngIf="type == 'textArea'" class="flex flex-col min-w-screen-15 min-h-screen-15">
     <label class="text-surface-500 font-semibold" *ngIf="label">{{ label | transloco }}</label>
     <ng-container *ngIf="required"> <span class="text-red-600"> *</span></ng-container>
-    <textarea pTextarea class="" rows="5" cols="100" [(ngModel)]="value" [disabled]="disabled" inputId="buttondisplay"> </textarea>
+    <textarea pTextarea class="" rows="5" cols="100" [value]="value" (input)="onInput($event)" [disabled]="disabled" inputId="buttondisplay">
+    </textarea>
+    <small *ngIf="errors" class="ml-2 text-red-500 text-sm mt-1">
+        {{ errors | transloco }}
+    </small>
+</div>
+<div *ngIf="type == 'timePicker'" class="flex flex-col min-w-screen-15">
+    <div>
+        <label class="text-surface-500 font-semibold" *ngIf="label">{{ label | transloco }}</label>
+        <ng-container *ngIf="required"> <span class="text-red-600"> *</span></ng-container>
+    </div>
+    <p-datepicker
+        class="mt-2 h-11"
+        [(ngModel)]="value"
+        [disabled]="disabled"
+        appendTo="body"
+        [showIcon]="true"
+        size="large"
+        inputId="buttondisplay"
+        [showOnFocus]="false"
+        [timeOnly]="true"
+        (onSelect)="onSelectDate($event)"
+        [hourFormat]="'24'"
+    />
     <small *ngIf="errors" class="ml-2 text-red-500 text-sm mt-1">
         {{ errors | transloco }}
     </small>

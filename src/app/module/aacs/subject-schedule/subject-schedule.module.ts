@@ -17,9 +17,18 @@ import { SubjectScheduleComponent } from './subject-schedule.component';
 import { SubjectScheduleRoutes } from './subject-schedule.route';
 import { SubjectSchedulesCreateEditComponent } from './subject-schedule-create-edit.component';
 import { SubjectSchedulesListComponent } from './subject-schedule-list.component';
+import { SubjectSchedulesDetailComponent } from './subject-schedule-detail.component';
+import { TabsModule } from 'primeng/tabs';
+import { SubjectSchedulesDetailCreateEditPopupComponent } from './subject-schedule-detail-create-edit-popup.component';
 
 @NgModule({
-    declarations: [SubjectScheduleComponent, SubjectSchedulesCreateEditComponent, SubjectSchedulesListComponent],
+    declarations: [
+        SubjectScheduleComponent,
+        SubjectSchedulesCreateEditComponent,
+        SubjectSchedulesListComponent,
+        SubjectSchedulesDetailComponent,
+        SubjectSchedulesDetailCreateEditPopupComponent,
+    ],
     imports: [
         RouterModule.forChild(SubjectScheduleRoutes),
         CmInputComponent,
@@ -37,6 +46,7 @@ import { SubjectSchedulesListComponent } from './subject-schedule-list.component
         FileUploadModule,
         DatePickerModule,
         FileUploadModule,
+        TabsModule,
     ],
     providers: [],
 })

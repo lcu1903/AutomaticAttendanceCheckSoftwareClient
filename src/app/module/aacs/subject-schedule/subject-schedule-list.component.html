@@ -80,7 +80,11 @@
                         <td>
                             <p-tableCheckbox [value]="subjectSchedule" />
                         </td>
-                        <td>{{ subjectSchedule.subjectScheduleCode }}</td>
+                        <td>
+                            <div (click)="onViewSubjectSchedule(subjectSchedule)" class="hover:underline text-primary cursor-pointer">
+                                {{ subjectSchedule.subjectScheduleCode }}
+                            </div>
+                        </td>
                         <td>{{ subjectSchedule.subject.subjectName }}</td>
                         <td>{{ subjectSchedule.subject.subjectCode }}</td>
                         <td>{{ subjectSchedule.semester.semesterName }}</td>

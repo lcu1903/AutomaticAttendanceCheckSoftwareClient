@@ -20,6 +20,7 @@ export interface SubjectScheduleRes {
     subject?: SubjectRes;
     teacher?: TeacherRes;
     teachingAssistantNavigation?: TeacherRes;
+    subjectScheduleDetails?: SubjectScheduleDetailRes[];
 }
 export interface SubjectScheduleCreateReq {
     subjectScheduleCode: string;
@@ -45,4 +46,33 @@ export interface SubjectScheduleUpdateReq {
     endDate?: string;
     note?: string;
     classId?: string;
+}
+export interface SubjectScheduleDetailRes {
+    subjectScheduleDetailId: string;
+    subjectScheduleId?: string;
+    scheduleDate: string;
+    startTime: string;
+    endTime: string;
+    note?: string;
+}
+export interface SubjectScheduleDetailCreateReq {
+    subjectScheduleId?: string;
+    scheduleDate: string;
+    startTime: string;
+    endTime: string;
+    note?: string;
+}
+export interface SubjectScheduleDetailUpdateReq {
+    subjectScheduleDetailId: string;
+    subjectScheduleId?: string;
+    scheduleDate: string;
+    startTime: string;
+    endTime: string;
+    note?: string;
+}
+export interface SubjectScheduleDetailChangeScheduleReq {
+    subjectScheduleId: string;
+    startTime: string;
+    endTime: string;
+    listScheduleDate: string[];
 }

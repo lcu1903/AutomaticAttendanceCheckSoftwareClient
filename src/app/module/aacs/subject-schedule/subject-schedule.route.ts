@@ -2,6 +2,7 @@ import { Route } from '@angular/router';
 import { SubjectSchedulesListComponent } from './subject-schedule-list.component';
 import { SubjectScheduleComponent } from './subject-schedule.component';
 import { SubjectSchedulesCreateEditComponent } from './subject-schedule-create-edit.component';
+import { SubjectSchedulesDetailComponent } from './subject-schedule-detail.component';
 
 export const SubjectScheduleRoutes: Route[] = [
     {
@@ -11,6 +12,10 @@ export const SubjectScheduleRoutes: Route[] = [
             {
                 path: '',
                 component: SubjectSchedulesListComponent,
+            },
+            {
+                path: ':id',
+                component: SubjectSchedulesDetailComponent,
             },
             {
                 path: 'create',

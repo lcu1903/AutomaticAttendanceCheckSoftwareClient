@@ -141,4 +141,7 @@ export class SubjectSchedulesListComponent implements OnDestroy, OnInit {
     onSearch() {
         this._debounce.next();
     }
+    onViewSubjectSchedule(subjectSchedule: SubjectScheduleRes) {
+        this._router.navigate(['/subject-schedules/', subjectSchedule.subjectScheduleId]);
+    }
 }

@@ -1,0 +1,48 @@
+<form style="padding: 0" class="w-screen-50 h-screen-60 flex flex-col gap-4" (ngSubmit)="onSave()" [formGroup]="subjectScheduleDetailForm">
+    <!-- Header -->
+    <!-- Content -->
+    <div class="flex flex-1 flex-col gap-4 border-t-2 py-4">
+        <cm-input
+            [required]="true"
+            formControlName="scheduleDate"
+            [label]="'aacs.scheduleDate' | transloco"
+            type="datePicker"
+            [errors]="subjectScheduleDetailForm.get('scheduleDate')?.touched ? subjectScheduleDetailForm.errors?.['scheduleDate'] : null"
+        ></cm-input>
+    </div>
+    <div class="flex flex-1 gap-4 py-4">
+        <cm-input
+            [required]="true"
+            formControlName="startTime"
+            [label]="'common.startTime' | transloco"
+            type="timePicker"
+            [errors]="subjectScheduleDetailForm.get('startTime')?.touched ? subjectScheduleDetailForm.errors?.['startTime'] : null"
+        ></cm-input>
+        <cm-input
+            [required]="true"
+            formControlName="endTime"
+            [label]="'common.endTime' | transloco"
+            type="timePicker"
+            [errors]="subjectScheduleDetailForm.get('endTime')?.touched ? subjectScheduleDetailForm.errors?.['endTime'] : null"
+        ></cm-input>
+    </div>
+    <div class="flex flex-1 gap-4 py-4">
+        <cm-input formControlName="note" [label]="'common.note' | transloco" type="textArea"></cm-input>
+    </div>
+    <!-- Footer -->
+    <div class="flex justify-end gap-2 border-t-2 py-4">
+        <p-button
+            [severity]="'secondary'"
+            label="{{ 'common.cancel' | transloco }}"
+            (onClick)="onClose()"
+            [disabled]="isLoading"
+            [style]="{ width: '100px' }"
+        ></p-button>
+        <p-button
+            [disabled]="subjectScheduleDetailForm.invalid || isLoading"
+            type="submit"
+            label="{{ 'common.save' | transloco }}"
+            [style]="{ width: '100px' }"
+        ></p-button>
+    </div>
+</form>
