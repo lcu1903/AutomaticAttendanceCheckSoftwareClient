@@ -174,13 +174,14 @@ export class SubjectSchedulesDetailComponent implements OnDestroy, OnInit {
     }
     onDeleteRangeStudent() {
         let req = this.selectedStudents.map((item) => {
-            return item.subjectScheduleStudentId;
+            return item.studentId;
         });
+
         this._confirmationPopupService.showConfirm(
             this._translocoService.translate('common.delete'),
             this._translocoService.translate('common.confirmDelete'),
             () => {
-                this._subjectScheduleStudentService.deleteRange(req).subscribe((res) => {
+                this._subjectScheduleService.removeStudents(this.subjectScheduleId!, req).subscribe((res) => {
                     if (res.data) {
                         this.getById(this.subjectScheduleId!);
                         this._messagePopupService.show(PopupType.SUCCESS, null, 'common.deleteSuccess');

@@ -10,12 +10,13 @@ export interface UserRes {
     positionId?: string;
     positionName?: string;
     studentCode?: string;
+    studentId?: string;
     teacherCode?: string;
+    teacherId?: string;
     classId?: string;
     className?: string;
     birthdate?: string;
 }
-
 export interface UserCreateReq {
     userName: string;
     email?: string;

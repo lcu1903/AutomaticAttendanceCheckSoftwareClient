@@ -61,4 +61,7 @@ export class SubjectScheduleService {
     ): Observable<Response<SubjectScheduleDetailRes>> {
         return this.http.put<Response<SubjectScheduleDetailRes>>(`${this.apiUrl}/${subjectScheduleId}/detail/${subjectScheduleDetailId}`, req);
     }
+    removeStudents(subjectScheduleId: string, studentIds: string[]): Observable<Response<boolean>> {
+        return this.http.delete<Response<boolean>>(`${this.apiUrl}/${subjectScheduleId}/remove-students`, { body: studentIds });
+    }
 }

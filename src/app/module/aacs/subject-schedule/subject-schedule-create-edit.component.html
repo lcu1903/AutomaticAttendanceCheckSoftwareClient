@@ -6,7 +6,7 @@
             <div *ngIf="action == 'edit'" class="text-4xl font-semibold">{{ 'common.edit' | transloco }}</div>
             <div class="flex gap-2">
                 <p-button [severity]="'contrast'" [disabled]="isLoading" (onClick)="onBack()" label="{{ 'common.back' | transloco }}" />
-                <p-button [disabled]="isLoading" type="submit" label="{{ 'common.save' | transloco }}" />
+                <p-button [disabled]="isLoading || subjectScheduleForm.invalid" type="submit" label="{{ 'common.save' | transloco }}" />
             </div>
         </div>
     </div>
@@ -86,6 +86,7 @@
                     [disabled]="isLoading"
                     formControlName="startDate"
                     [label]="'common.startDate' | transloco"
+                    [errors]="subjectScheduleForm.get('startDate')?.touched ? subjectScheduleForm.errors?.['startDate'] : null"
                 ></cm-input>
                 <cm-input
                     [required]="true"

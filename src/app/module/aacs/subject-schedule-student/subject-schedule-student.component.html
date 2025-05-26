@@ -4,29 +4,114 @@
         <div class="flex gap-4">
             <cm-select [placeholder]="'aacs.semester'" [options]="semesters" [(ngModel)]="semesterId"></cm-select>
             <cm-select [placeholder]="'aacs.studentClass'" [options]="classes" [(ngModel)]="classId"></cm-select>
+            <div class="flex gap-2 pt-2 items-center">
+                <p-toggleswitch class="pt-1" [(ngModel)]="showRegisteredSchedules" (onChange)="onShowRegisteredSchedules()" />
+                <label class="text-surface-500 font-semibold">{{ 'aacs.showRegisteredSchedules' | transloco }}</label>
+            </div>
         </div>
-        <div>
-            <p-button
-                [label]="'common.search' | transloco"
-                icon="pi pi-search"
-                (click)="getSchedule()"
-                [disabled]="!semesterId || !classId"
-            ></p-button>
+        <div class="flex gap-2">
+            <p-button *ngIf="setOfCheckedSchedules.length > 0" [label]="'common.register' | transloco" (click)="onRegisterSchedules()"></p-button>
+            <p-button [label]="'common.search' | transloco" (click)="getSchedule()" [disabled]="!semesterId || !classId"></p-button>
         </div>
     </div>
     <!-- Content -->
-    <div class="flex flex-col gap-4">
+    <div class="flex flex-col gap-4" *ngIf="!showRegisteredSchedules">
         <ng-container *ngFor="let schedule of subjectSchedules">
-            <div class="h-screen-10 bg-card rounded-md shadow p-2 flex items-center justify-between">
+            <div
+                [ngClass]="{
+                    'bg-primary-50': setOfRegisteredSchedules.includes(schedule.subjectScheduleId),
+                    'bg-card': !setOfRegisteredSchedules.includes(schedule.subjectScheduleId),
+                }"
+                class="max-h-screen-10 rounded-md shadow p-4 flex items-center gap-10 flex-1"
+            >
                 <div>
-                    <div>{{ 'aacs.subjectCode' | transloco }} : {{ schedule.subjectCode }}</div>
-                    <div>{{ 'aacs.subjectName' | transloco }} : {{ schedule.subjectName }}</div>
+                    <div>
+                        <span class="text-surface-500 font-semibold">{{ 'aacs.subjectCode' | transloco }}</span> : {{ schedule.subjectCode }}
+                    </div>
+                    <div>
+                        <span class="text-surface-500 font-semibold">{{ 'aacs.subjectName' | transloco }}</span> : {{ schedule.subjectName }}
+                    </div>
                 </div>
                 <div>
-                    <div>{{ 'aacs.schedule' | transloco }} : {{ schedule.className }}</div>
-                    <div>{{ 'aacs.semester' | transloco }} : {{ schedule.semesterName }}</div>
+                    <div>
+                        <span class="text-surface-500 font-semibold">{{ 'aacs.studentClass' | transloco }}</span> : {{ schedule.className }}
+                    </div>
+                    <div>
+                        <span class="text-surface-500 font-semibold">{{ 'aacs.semester' | transloco }}</span> : {{ schedule.semesterName }}
+                    </div>
+                </div>
+                <div (click)="onShowSchedule(schedule.subjectScheduleId)" class="cursor-pointer">
+                    <span class="underline text-primary">{{ 'aacs.schedule' | transloco }}</span>
+                    <ng-container *ngIf="schedule.subjectScheduleId == scheduleIdCalendar">
+                        <ng-container
+                            *ngTemplateOutlet="scheduleTemplate; context: { scheduleDetail: schedule.subjectScheduleDetails }"
+                        ></ng-container>
+                    </ng-container>
+                </div>
+                <div class="flex-1">
+                    <p-checkbox
+                        [disabled]="setOfRegisteredSchedules.includes(schedule.subjectScheduleId)"
+                        [value]="schedule.subjectScheduleId"
+                        class="flex justify-end"
+                        [(ngModel)]="setOfCheckedSchedules"
+                        (onChange)="onCheckSchedule(schedule.subjectScheduleId)"
+                    />
+                </div>
+            </div>
+        </ng-container>
+    </div>
+    <div class="flex flex-col gap-4" *ngIf="showRegisteredSchedules">
+        <ng-container *ngFor="let schedule of selectedSchedules">
+            <div class="max-h-screen-10 bg-primary-50 rounded-md shadow p-4 flex items-center gap-10 flex-1">
+                <div>
+                    <div>
+                        <span class="text-surface-500 font-semibold">{{ 'aacs.subjectCode' | transloco }}</span> : {{ schedule.subjectCode }}
+                    </div>
+                    <div>
+                        <span class="text-surface-500 font-semibold">{{ 'aacs.subjectName' | transloco }}</span> : {{ schedule.subjectName }}
+                    </div>
+                </div>
+                <div>
+                    <div>
+                        <span class="text-surface-500 font-semibold">{{ 'aacs.studentClass' | transloco }}</span> : {{ schedule.className }}
+                    </div>
+                    <div>
+                        <span class="text-surface-500 font-semibold">{{ 'aacs.semester' | transloco }}</span> : {{ schedule.semesterName }}
+                    </div>
+                </div>
+                <div (click)="onShowSchedule(schedule.subjectScheduleId)" class="cursor-pointer">
+                    <span class="underline text-primary">{{ 'aacs.schedule' | transloco }}</span>
+                    <ng-container *ngTemplateOutlet="scheduleTemplate; context: { scheduleDetail: schedule.subjectScheduleDetails }"></ng-container>
+                </div>
+                <div class="flex-1">
+                    <p-checkbox
+                        [disabled]="setOfRegisteredSchedules.includes(schedule.subjectScheduleId)"
+                        [value]="schedule.subjectScheduleId"
+                        class="flex justify-end"
+                        [(ngModel)]="setOfCheckedSchedules"
+                        (onChange)="onCheckSchedule(schedule.subjectScheduleId)"
+                    />
                 </div>
             </div>
         </ng-container>
     </div>
 </div>
+<ng-template #scheduleTemplate let-scheduleDetail="scheduleDetail">
+    <p-dialog [header]="'aacs.schedule' | transloco" [modal]="true" [(visible)]="visible" closable="false">
+        <div class="flex flex-col gap-6 bg-surface-100 p-4 min-w-screen-25 items-center justify-center rounded">
+            <ng-container *ngFor="let item of scheduleDetail">
+                <div class="flex gap-2 flex-1">
+                    <span
+                        ><span class="text-surface-500 font-semibold"> {{ 'common.date' | transloco }}</span
+                        >: {{ item.scheduleDate | date: 'dd/MM/yyyy' }}</span
+                    >
+                    <span>
+                        <span class="text-surface-500 font-semibold">{{ 'common.time' | transloco }}</span> :{{ item.startTime | date: 'HH:mm' }}
+                        -
+                        {{ item.endTime | date: 'HH:mm' }}
+                    </span>
+                </div>
+            </ng-container>
+        </div>
+    </p-dialog>
+</ng-template>

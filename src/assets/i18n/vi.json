@@ -86,6 +86,11 @@
         "next": "Tiếp theo",
         "unSaveChanges": "Có thay đổi chưa được lưu",
         "confirmUnSaveChanges": "Bạn có chắc chắn muốn hủy?",
+        "date": "Ngày",
+        "time": "Thời gian",
+        "weekDay": "Ngày trong tuần",
+        "register": "Đăng ký",
+        "unRegister": "Hủy đăng ký",
         "message": {
             "invalidUrl": "URL không hợp lệ",
             "unsavedChanges": "Có thay đổi chưa được lưu",
@@ -180,8 +185,10 @@
     "aacs.editSchedule": "Chỉnh sửa lịch học",
     "aacs.addStudent": "Thêm sinh viên",
     "aacs.forStudent": "Dành cho sinh viên",
-    "aacs.registerSubject": "Đăng ký học phần",
+    "aacs.registerSubject": "Đăng ký môn học",
     "aacs.chooseWeekDays": "Chọn ngày trong tuần",
+    "aacs.showRegisteredSchedules": "Hiển thị lịch đã đăng ký",
+    "aacs.confirmRegisterSubject": "Xác nhận đăng ký môn học",
     "aacs": {
         "message": {
             "studentNotFound": "Không tìm thấy sinh viên",
@@ -216,7 +223,8 @@
             "subjectScheduleStudentNotFound": "Không tìm thấy sinh viên trong thời khóa biểu",
             "subjectScheduleStudentCreateFailed": "Thêm sinh viên vào thời khóa biểu thất bại",
             "subjectScheduleStudentUpdateFailed": "Cập nhật sinh viên trong thời khóa biểu thất bại",
-            "subjectScheduleStudentAlreadyExists": "Sinh viên đã tồn tại trong thời khóa biểu"
+            "subjectScheduleStudentAlreadyExists": "Sinh viên đã tồn tại trong thời khóa biểu",
+            "subjectScheduleAlreadyExists": "Lịch học của môn này đã tồn tại trong kỳ học này với lớp này"
         },
         "plhder": {
             "searchBySubjectCodeOrSubjectName": "Tìm kiếm theo mã hoặc tên môn học",

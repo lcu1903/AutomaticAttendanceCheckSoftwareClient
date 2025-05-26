@@ -81,8 +81,8 @@ export interface SubjectScheduleDetailChangeScheduleReq {
 
 export interface SubjectScheduleStudentRes {
     subjectScheduleStudentId: string;
-    subjectScheduleId?: string;
-    studentId?: string;
-    student?: StudentRes;
+    subjectScheduleId: string;
+    studentId: string;
+    // student?: StudentRes;
     // subjectSchedule?: SubjectScheduleRes;
 }
