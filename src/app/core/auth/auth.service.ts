@@ -10,8 +10,6 @@ import { UserRes } from '../../aacs/service/users/types';
 
 @Injectable({ providedIn: 'root' })
 export class AuthService {
-    private _authenticated: boolean = false;
-
     /**
      * Constructor
      */
@@ -20,8 +18,7 @@ export class AuthService {
         private _userService: UserService,
         private readonly _accountService: AccountService,
         private _router: Router,
-    ) {
-    }
+    ) {}
 
     // -----------------------------------------------------------------------------------------------------
     // @ Accessors
@@ -46,7 +43,6 @@ export class AuthService {
         return localStorage.getItem('refreshToken') ?? '';
     }
 
-
     // -----------------------------------------------------------------------------------------------------
     // @ Public methods
     // -----------------------------------------------------------------------------------------------------
@@ -59,7 +55,7 @@ export class AuthService {
     forgotPassword(email: string): Observable<any> {
         return this._httpClient.post('api/ForgotPassword', {
             email,
-            clientURI: `https://${window.location.host}/reset-password`
+            clientURI: `https://${window.location.host}/reset-password`,
         });
     }
 
@@ -70,7 +66,6 @@ export class AuthService {
     //         `api/button-authoritys/${encodeURIComponent(controller)}/have-permission`
     //     );
     // }
-
 
     // resetPassword(password: string, email: string, token: string): Observable<any> {
     //     return this._accountService.changePassword({
@@ -88,19 +83,19 @@ export class AuthService {
      */
     signIn(credentials: LoginReq): Observable<Response<LoginRes>> {
         // Throw error, if the user is already logged in
-        if (this._authenticated) {
+        if (this.accessToken) {
             // return throwError('User is already logged in.');
             return of({} as Response<LoginRes>);
         }
 
-        return this._accountService.login(credentials)
+        return this._accountService
+            .login(credentials)
             .pipe(
                 switchMap((response: Response<LoginRes>) => {
                     this.accessToken = response.data.token!.accessToken!;
                     this.refreshToken = response.data.token!.refreshToken!;
-                    this._authenticated = true;
                     return of(response);
-                })
+                }),
             )
             .pipe(
                 switchMap((res: Response<LoginRes>) => {
@@ -108,7 +103,7 @@ export class AuthService {
                     this._userService.user = res.data.user!;
                     localStorage.setItem('user', JSON.stringify(res.data.user));
                     return of(res);
-                })
+                }),
             );
     }
     /**
@@ -120,7 +115,6 @@ export class AuthService {
         localStorage.removeItem('refreshToken');
 
         // Set the authenticated flag to false
-        this._authenticated = false;
         window.location.reload();
         // Return the observable
         return of(true);
@@ -147,17 +141,16 @@ export class AuthService {
      * Sign in using the access token
      */
     signInUsingToken(): Observable<any> {
-        return this._accountService.refresh({
-            refreshToken: this.refreshToken
-        })
+        return this._accountService
+            .refresh({
+                refreshToken: this.refreshToken,
+            })
             .pipe(
                 switchMap((response: Response<LoginRes>) => {
-                    localStorage.clear();
                     this.accessToken = response.data.token!.accessToken!;
                     this.refreshToken = response.data.token!.refreshToken!;
-                    this._authenticated = true;
                     return of(response.data.user!);
-                })
+                }),
             )
             .pipe(
                 switchMap((user: UserRes) => {
@@ -165,17 +158,16 @@ export class AuthService {
                     this._userService.user = user;
                     localStorage.setItem('user', JSON.stringify(user));
                     return of(user);
-                })
+                }),
             );
     }
-
 
     /**
      * Check the authentication status
      */
     check(): Observable<boolean> {
         // Check if the user is logged in
-        if (this._authenticated) {
+        if (this.accessToken) {
             return of(true);
         }
 
@@ -191,6 +183,4 @@ export class AuthService {
         // If the access token exists and it didn't expire, sign in using it
         return this.signInUsingToken();
     }
-
-
 }

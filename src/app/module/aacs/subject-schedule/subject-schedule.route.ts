@@ -14,16 +14,16 @@ export const SubjectScheduleRoutes: Route[] = [
                 component: SubjectSchedulesListComponent,
             },
             {
-                path: ':id',
-                component: SubjectSchedulesDetailComponent,
-            },
-            {
                 path: 'create',
                 component: SubjectSchedulesCreateEditComponent,
             },
             {
                 path: 'edit/:id',
                 component: SubjectSchedulesCreateEditComponent,
+            },
+            {
+                path: ':id',
+                component: SubjectSchedulesDetailComponent,
             },
         ],
     },

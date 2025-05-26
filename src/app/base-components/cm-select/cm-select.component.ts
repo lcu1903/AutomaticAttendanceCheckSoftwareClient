@@ -60,7 +60,7 @@ export class CmSelectComponent implements ControlValueAccessor {
     onTouched = () => {};
 
     writeValue(obj: any): void {
-        this.value = obj;
+        this.value = obj; // obj should be the id
     }
 
     registerOnChange(fn: any): void {
@@ -71,12 +71,24 @@ export class CmSelectComponent implements ControlValueAccessor {
         this.onTouched = fn;
     }
 
-    onSelectChange(value: CmSelectOption): void {
-        console.log('Selected value:', value);
-
-        this.value = value;
-        this.model = value;
-        this.modelChange.emit(value);
-        this.onChange(value);
+    onSelectChange(value: any): void {
+        if (this.type === 'multi') {
+            // value là mảng các object hoặc id
+            const ids = Array.isArray(value) ? value.map((v) => (typeof v === 'object' ? v.id : v)) : [];
+            this.value = ids;
+            this.model = ids;
+            this.modelChange.emit(ids);
+            this.onChange(ids);
+        } else {
+            // single select
+            const id = value && typeof value === 'object' ? value.id : value;
+            this.value = id;
+            this.model = id;
+            this.modelChange.emit(id);
+            this.onChange(id);
+        }
+    }
+    getSelectedNames(selectedOptions: CmSelectOption[]): string {
+        return selectedOptions?.map((o) => o.name).join(', ') ?? '';
     }
 }

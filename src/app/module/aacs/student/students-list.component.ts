@@ -37,10 +37,12 @@ export class StudentsListComponent implements OnDestroy, OnInit {
         textSearch?: string;
         departmentIds?: string[];
         positionIds?: string[];
+        classIds?: string[];
     } = {
         textSearch: undefined,
         departmentIds: undefined,
         positionIds: undefined,
+        classIds: undefined,
     };
     isLoading = false;
     ngOnInit(): void {

@@ -1,4 +1,4 @@
-<div *ngIf="type === 'single'" class="min-w-screen-15">
+<div *ngIf="type === 'single'" class="w-screen-15">
     <label class="text-surface-500 font-semibold" *ngIf="label">{{ label | transloco }}</label>
     <ng-container *ngIf="required"> <span class="text-red-600"> *</span></ng-container>
 
@@ -53,15 +53,21 @@
 
         <p-multiselect
             appendTo="body"
+            [disabled]="disabled"
             [showClear]="true"
             [options]="options"
+            [size]="'large'"
+            [optionValue]="'id'"
+            [optionLabel]="'name'"
+            [emptyMessage]="'common.noData' | transloco"
+            [emptyFilterMessage]="'common.noData' | transloco"
             [placeholder]="placeholder ?? '' | transloco"
-            [disabled]="disabled"
             [ngModel]="value"
             (onChange)="onSelectChange($event.value)"
             (onBlur)="onTouched()"
+            [maxSelectedLabels]="7"
             [filter]="true"
-            class="w-full"
+            class="flex items-center"
         >
             <ng-template #selectedItem let-selectedOption>
                 <div class="flex items-center gap-2" *ngIf="selectedOption">

@@ -12,7 +12,12 @@ export class StudentService {
 
     constructor(private http: HttpClient) {}
 
-    getAll(filter?: { textSearch?: string; departmentIds?: string[]; positionIds?: string[] }): Observable<Response<StudentRes[]>> {
+    getAll(filter?: {
+        textSearch?: string;
+        departmentIds?: string[];
+        positionIds?: string[];
+        classIds?: string[];
+    }): Observable<Response<StudentRes[]>> {
         return this.http.get<Response<StudentRes[]>>(this.apiUrl, { params: filter });
     }
 
@@ -34,5 +39,8 @@ export class StudentService {
 
     deleteRange(ids: string[]): Observable<Response<boolean>> {
         return this.http.delete<Response<boolean>>(`${this.apiUrl}/delete-range`, { body: ids });
+    }
+    getStudentByUserId(userId: string): Observable<Response<StudentRes>> {
+        return this.http.get<Response<StudentRes>>(`${this.apiUrl}/user/${userId}`);
     }
 }

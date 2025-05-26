@@ -123,7 +123,11 @@ export class SubjectSchedulesCreateEditComponent implements OnDestroy, OnInit {
             this._translocoService.translate('common.message.unsavedChanges'),
             this._translocoService.translate('common.message.unsavedChangesConfirm'),
             () => {
-                this._router.navigate(['/subject-schedules/', this.subjectScheduleId]);
+                if (this.action === 'edit') {
+                    this._router.navigate(['/subject-schedules/', this.subjectScheduleId]);
+                } else {
+                    this._router.navigate(['/subject-schedules']);
+                }
             },
             () => {},
         );

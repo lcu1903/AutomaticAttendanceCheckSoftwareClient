@@ -178,6 +178,10 @@
     "aacs.addScheduleDate": "Thêm ngày học",
     "aacs.classSize": "Sĩ số",
     "aacs.editSchedule": "Chỉnh sửa lịch học",
+    "aacs.addStudent": "Thêm sinh viên",
+    "aacs.forStudent": "Dành cho sinh viên",
+    "aacs.registerSubject": "Đăng ký học phần",
+    "aacs.chooseWeekDays": "Chọn ngày trong tuần",
     "aacs": {
         "message": {
             "studentNotFound": "Không tìm thấy sinh viên",
@@ -207,7 +211,12 @@
             "subjectStarted": "Môn học đã bắt đầu",
             "subjectScheduleCreateFailed": "Tạo thời khóa biểu thất bại",
             "subjectScheduleDetailNotFound": "Không tìm thấy chi tiết thời khóa biểu",
-            "scheduleStarted": "Buổi học đã bắt đầu"
+            "scheduleStarted": "Buổi học đã bắt đầu",
+            "subjectScheduleStudentDeleteFailed": "Xóa sinh viên khỏi thời khóa biểu thất bại",
+            "subjectScheduleStudentNotFound": "Không tìm thấy sinh viên trong thời khóa biểu",
+            "subjectScheduleStudentCreateFailed": "Thêm sinh viên vào thời khóa biểu thất bại",
+            "subjectScheduleStudentUpdateFailed": "Cập nhật sinh viên trong thời khóa biểu thất bại",
+            "subjectScheduleStudentAlreadyExists": "Sinh viên đã tồn tại trong thời khóa biểu"
         },
         "plhder": {
             "searchBySubjectCodeOrSubjectName": "Tìm kiếm theo mã hoặc tên môn học",

@@ -1,0 +1,37 @@
+<form style="padding: 0" class="w-screen-30 h-screen-35 flex flex-col gap-4" (ngSubmit)="onSave()" [formGroup]="studentRegisterForm">
+    <!-- Header -->
+    <!-- Content -->
+    <div class="flex flex-1 flex-col gap-4 border-t-2 py-4">
+        <cm-select
+            [options]="classes"
+            [required]="true"
+            formControlName="classId"
+            [(model)]="selectedClassId"
+            (modelChange)="getStudents()"
+            [label]="'aacs.chooseClass' | transloco"
+        ></cm-select>
+        <cm-select
+            formControlName="studentId"
+            [options]="students"
+            [required]="true"
+            [label]="'aacs.student' | transloco"
+            [errors]="studentRegisterForm.get('studentId')?.touched ? studentRegisterForm.errors?.['studentId'] : null"
+        ></cm-select>
+    </div>
+    <!-- Footer -->
+    <div class="flex justify-end gap-2 border-t-2 py-4">
+        <p-button
+            [severity]="'secondary'"
+            label="{{ 'common.cancel' | transloco }}"
+            (onClick)="onClose()"
+            [disabled]="isLoading"
+            [style]="{ width: '100px' }"
+        ></p-button>
+        <p-button
+            [disabled]="isLoading || studentRegisterForm.invalid"
+            type="submit"
+            label="{{ 'common.save' | transloco }}"
+            [style]="{ width: '100px' }"
+        ></p-button>
+    </div>
+</form>

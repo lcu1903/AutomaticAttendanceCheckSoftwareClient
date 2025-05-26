@@ -1,6 +1,6 @@
 import { HttpClient, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { Observable, Subject } from 'rxjs';
+import { Observable, ReplaySubject, Subject } from 'rxjs';
 import { Response } from '../../../core/response.types';
 import { UserCreateReq, UserRes, UserUpdateReq } from './types';
 
@@ -9,13 +9,16 @@ import { UserCreateReq, UserRes, UserUpdateReq } from './types';
 })
 export class UserService {
     constructor(private readonly _httpClient: HttpClient) {}
-    private _user: Subject<UserRes> = new Subject<UserRes>();
+    private _user: ReplaySubject<UserRes> = new ReplaySubject<UserRes>(1);
 
     set user(value: UserRes) {
         this._user.next(value);
     }
     get user$(): Observable<UserRes> {
         return this._user.asObservable();
+    }
+    get userInfo(): UserRes {
+        return JSON.parse(localStorage.getItem('user') ?? '') as unknown as UserRes;
     }
 
     getAllUsers(filter?: { textSearch?: string; departmentIds?: string[]; positionIds?: string[] }) {

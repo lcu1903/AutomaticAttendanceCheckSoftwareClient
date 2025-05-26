@@ -1,0 +1,32 @@
+<div class="flex flex-col gap-4 p-4">
+    <!-- Filter -->
+    <div class="flex gap-4 bg-card p-4 rounded-md shadow justify-between items-center">
+        <div class="flex gap-4">
+            <cm-select [placeholder]="'aacs.semester'" [options]="semesters" [(ngModel)]="semesterId"></cm-select>
+            <cm-select [placeholder]="'aacs.studentClass'" [options]="classes" [(ngModel)]="classId"></cm-select>
+        </div>
+        <div>
+            <p-button
+                [label]="'common.search' | transloco"
+                icon="pi pi-search"
+                (click)="getSchedule()"
+                [disabled]="!semesterId || !classId"
+            ></p-button>
+        </div>
+    </div>
+    <!-- Content -->
+    <div class="flex flex-col gap-4">
+        <ng-container *ngFor="let schedule of subjectSchedules">
+            <div class="h-screen-10 bg-card rounded-md shadow p-2 flex items-center justify-between">
+                <div>
+                    <div>{{ 'aacs.subjectCode' | transloco }} : {{ schedule.subjectCode }}</div>
+                    <div>{{ 'aacs.subjectName' | transloco }} : {{ schedule.subjectName }}</div>
+                </div>
+                <div>
+                    <div>{{ 'aacs.schedule' | transloco }} : {{ schedule.className }}</div>
+                    <div>{{ 'aacs.semester' | transloco }} : {{ schedule.semesterName }}</div>
+                </div>
+            </div>
+        </ng-container>
+    </div>
+</div>

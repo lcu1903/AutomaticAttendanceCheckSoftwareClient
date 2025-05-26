@@ -1,0 +1,46 @@
+<form style="padding: 0" class="w-screen-30 h-screen-35 flex flex-col gap-4" (ngSubmit)="onSave()" [formGroup]="changeScheduleForm">
+    <!-- Header -->
+    <!-- Content -->
+    <div class="flex flex-1 gap-4 py-4">
+        <cm-input
+            [required]="true"
+            formControlName="startTime"
+            [label]="'common.startTime' | transloco"
+            type="timePicker"
+            [errors]="changeScheduleForm.get('startTime')?.touched ? changeScheduleForm.errors?.['startTime'] : null"
+        ></cm-input>
+        <cm-input
+            [required]="true"
+            formControlName="endTime"
+            [label]="'common.endTime' | transloco"
+            type="timePicker"
+            [errors]="changeScheduleForm.get('endTime')?.touched ? changeScheduleForm.errors?.['endTime'] : null"
+        ></cm-input>
+    </div>
+    <div class="flex flex-1 flex-col gap-4 border-t-2 py-4">
+        <cm-select
+            type="multi"
+            formControlName="listScheduleDate"
+            [options]="weekDayOptions"
+            [required]="true"
+            [errors]="changeScheduleForm.get('listScheduleDate')?.touched ? changeScheduleForm.errors?.['listScheduleDate'] : null"
+            [label]="'aacs.chooseWeekDays' | transloco"
+        ></cm-select>
+    </div>
+    <!-- Footer -->
+    <div class="flex justify-end gap-2 border-t-2 py-4">
+        <p-button
+            [severity]="'secondary'"
+            label="{{ 'common.cancel' | transloco }}"
+            (onClick)="onClose()"
+            [disabled]="isLoading"
+            [style]="{ width: '100px' }"
+        ></p-button>
+        <p-button
+            [disabled]="isLoading || changeScheduleForm.invalid"
+            type="submit"
+            label="{{ 'common.save' | transloco }}"
+            [style]="{ width: '100px' }"
+        ></p-button>
+    </div>
+</form>
