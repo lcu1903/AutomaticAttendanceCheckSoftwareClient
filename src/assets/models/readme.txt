@@ -1,0 +1,1 @@
+Place the face-api.js models here. Download from https://github.com/justadudewhohacks/face-api.js-models or use the official face-api.js repo. Example files: tiny_face_detector_model-weights_manifest.json, tiny_face_detector_model-shard1, etc.

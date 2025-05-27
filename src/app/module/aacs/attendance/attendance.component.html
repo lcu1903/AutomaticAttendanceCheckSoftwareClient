@@ -1,0 +1,23 @@
+<div class="flex flex-col gap-4 p-4">
+    <h2 class="text-2xl font-semibold mb-4">Điểm danh bằng khuôn mặt</h2>
+
+    <!-- Camera View -->
+    <div class="bg-card p-4 rounded-md shadow">
+        <h3 class="text-lg font-semibold mb-2">Camera</h3>
+        <div class="flex justify-center items-center">
+            <video #videoElement autoplay muted class="border rounded-md shadow w-full max-w-screen-md"></video>
+        </div>
+    </div>
+
+    <!-- Controls -->
+    <div class="flex gap-4 mt-4">
+        <button class="bg-primary text-white px-4 py-2 rounded shadow" (click)="startFaceDetection()">Bắt đầu điểm danh</button>
+        <button class="bg-red-500 text-white px-4 py-2 rounded shadow" (click)="stopFaceDetection()">Dừng điểm danh</button>
+    </div>
+
+    <!-- Detection Status -->
+    <div class="mt-4">
+        <p *ngIf="isDetecting" class="text-green-500">Đang nhận diện khuôn mặt...</p>
+        <p *ngIf="!isDetecting" class="text-red-500">Nhận diện đã dừng.</p>
+    </div>
+</div>

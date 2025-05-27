@@ -176,6 +176,7 @@ export class SystemUsersCreateEditComponent implements OnDestroy, OnInit {
         console.log('Form value:', this.userForm.value);
 
         if (this.action === 'create') {
+            this.isLoading = true;
             let user: UserCreateReq = {
                 userName: this.userForm.value.userName,
                 fullName: this.userForm.value.fullName,
@@ -189,13 +190,22 @@ export class SystemUsersCreateEditComponent implements OnDestroy, OnInit {
                 teacherCode: this.userForm.value.teacherCode,
                 imageUrl: this.userForm.value.imageUrl,
             };
-            this._systemUserService.createUser(user).subscribe((res) => {
-                if (res.data) {
-                    this._messagePopupService.show(PopupType.SUCCESS, null, 'common.saveSuccess');
-                    this._router.navigate(['/users']);
-                }
-            });
+            this._systemUserService
+                .createUser(user)
+                .pipe(
+                    takeUntil(this._unsubscribeAll),
+                    finalize(() => {
+                        this.isLoading = false;
+                    }),
+                )
+                .subscribe((res) => {
+                    if (res.data) {
+                        this._messagePopupService.show(PopupType.SUCCESS, null, 'common.saveSuccess');
+                        this._router.navigate(['/users']);
+                    }
+                });
         } else {
+            this.isLoading = true;
             let user: UserUpdateReq = {
                 userId: this.userId!,
                 userName: this.userForm.value.userName,
@@ -210,12 +220,20 @@ export class SystemUsersCreateEditComponent implements OnDestroy, OnInit {
                 classId: this.userForm.value.classId,
                 teacherCode: this.userForm.value.teacherCode,
             };
-            this._systemUserService.updateUser(this.userId!, user).subscribe((res) => {
-                if (res.data) {
-                    this._messagePopupService.show(PopupType.SUCCESS, null, 'common.saveSuccess');
-                    this._router.navigate(['/users']);
-                }
-            });
+            this._systemUserService
+                .updateUser(this.userId!, user)
+                .pipe(
+                    takeUntil(this._unsubscribeAll),
+                    finalize(() => {
+                        this.isLoading = false;
+                    }),
+                )
+                .subscribe((res) => {
+                    if (res.data) {
+                        this._messagePopupService.show(PopupType.SUCCESS, null, 'common.saveSuccess');
+                        this._router.navigate(['/users']);
+                    }
+                });
         }
     }
     getClasses() {

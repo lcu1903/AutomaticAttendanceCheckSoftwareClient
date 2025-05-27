@@ -6,6 +6,7 @@ import { AppLayout } from './layout/component/app.layout';
 import { LoginComponent } from './module/auth/login/login.component';
 import { RegisterComponent } from './module/auth/register/register.component';
 import { HomeComponent } from './module/home/home.component';
+import { AttendanceComponent } from './module/aacs/attendance/attendance.component';
 export const routes: Routes = [
     { path: '', redirectTo: 'home', pathMatch: 'full' },
     {
@@ -83,6 +84,11 @@ export const routes: Routes = [
                 canActivateChild: [PageGuard],
                 loadChildren: () =>
                     import('./module/aacs/subject-schedule-student/subject-schedule-student.module').then((m) => m.SubjectScheduleStudentModule),
+            },
+            {
+                path: '',
+                canActivateChild: [PageGuard],
+                loadChildren: () => import('./module/aacs/attendance/attendance.module').then((m) => m.AttendanceModule),
             },
         ],
     },
