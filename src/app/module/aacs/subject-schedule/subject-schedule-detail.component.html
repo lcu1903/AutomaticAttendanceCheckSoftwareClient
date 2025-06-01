@@ -133,9 +133,9 @@
                     >
                         <ng-template pTemplate="header">
                             <tr>
-                                <th [width]="'1%'">
+                                <!-- <th [width]="'1%'">
                                     <p-tableHeaderCheckbox [disabled]="isLoading"></p-tableHeaderCheckbox>
-                                </th>
+                                </th> -->
                                 <th [width]="'20%'">{{ 'aacs.scheduleDate' | transloco }}</th>
                                 <th [width]="'20%'">{{ 'common.startTime' | transloco }}</th>
                                 <th [width]="'20%'">{{ 'common.endTime' | transloco }}</th>
@@ -146,9 +146,9 @@
                         </ng-template>
                         <ng-template pTemplate="body" let-detail let-columns="columns">
                             <tr>
-                                <td>
+                                <!-- <td>
                                     <p-tableCheckbox [value]="detail" />
-                                </td>
+                                </td> -->
                                 <td>{{ detail.scheduleDate | date: 'dd/MM/yyyy' }}</td>
                                 <td>{{ detail.startTime | date: 'HH:mm' }}</td>
                                 <td>{{ detail.endTime | date: 'HH:mm' }}</td>

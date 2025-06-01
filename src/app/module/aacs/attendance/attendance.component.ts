@@ -3,6 +3,8 @@ import * as faceapi from 'face-api.js';
 import { FaceDetectionService } from '../../../aacs/service/face-detection/face-detection.service';
 import { finalize, Subject, takeUntil } from 'rxjs';
 import { MessagePopupService, PopupType } from '../../../base-components/message-popup/message-popup.component';
+import { TranslocoService } from '@jsverse/transloco';
+import { ActivatedRoute } from '@angular/router';
 
 @Component({
     selector: 'attendance',
@@ -15,12 +17,19 @@ export class AttendanceComponent implements OnInit, AfterViewInit, OnDestroy {
     videoElement: HTMLVideoElement | null = null;
     canvasElement: HTMLCanvasElement | null = null;
     isDetecting = false;
+    subjectScheduleId: string | null = null;
     private stream: MediaStream | null = null;
     private faceDetected = false;
     constructor(
         private readonly _faceDetectionService: FaceDetectionService,
         private readonly _messagePopupService: MessagePopupService,
-    ) {}
+        private readonly _translocoService: TranslocoService,
+        private readonly _activatedRoute: ActivatedRoute,
+    ) {
+        this._activatedRoute.queryParams.pipe(takeUntil(this._unsubscribeAll$)).subscribe((params) => {
+            this.subjectScheduleId = params['subjectScheduleId'] || null;
+        });
+    }
 
     async ngOnInit(): Promise<void> {}
     ngOnDestroy(): void {
@@ -76,11 +85,12 @@ export class AttendanceComponent implements OnInit, AfterViewInit, OnDestroy {
                     this.canvasElement.width = this.videoElement!.videoWidth;
                     this.canvasElement.height = this.videoElement!.videoHeight;
                     context?.drawImage(this.videoElement!, 0, 0);
+
                     const imageData = this.canvasElement.toDataURL('image/jpeg');
                     this.isDetecting = false;
                     await new Promise<void>((resolve) => {
                         this._faceDetectionService
-                            .checkFace({ imageData, subjectScheduleId: 'a4a6eb46-7f33-4e41-9279-0e5c7df37b20' })
+                            .checkFace({ imageData, subjectScheduleId: this.subjectScheduleId! })
                             .pipe(
                                 takeUntil(this._unsubscribeAll$),
                                 finalize(() => {
@@ -93,8 +103,8 @@ export class AttendanceComponent implements OnInit, AfterViewInit, OnDestroy {
                                 if (res.data) {
                                     this._messagePopupService.show(
                                         PopupType.SUCCESS,
-                                        'Điểm danh thành công',
-                                        `Điểm danh thành công cho ${res.data?.fullName}`,
+                                        'aacs.message.attendanceCheckSuccess',
+                                        this._translocoService.translate('aacs.message.attendanceCheckedFor') + ' ' + res.data?.fullName,
                                     );
                                 }
                             });

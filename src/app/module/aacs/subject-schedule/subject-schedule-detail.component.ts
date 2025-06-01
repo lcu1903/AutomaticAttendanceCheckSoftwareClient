@@ -1,6 +1,6 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { Subject, takeUntil } from 'rxjs';
-import { SubjectScheduleDetailRes, SubjectScheduleRes, SubjectScheduleStudentRes } from '../../../aacs/service/subject-schedule/types';
+import { SubjectScheduleDetailRes, SubjectScheduleRes } from '../../../aacs/service/subject-schedule/types';
 import { SubjectScheduleService } from '../../../aacs/service/subject-schedule/subject-schedule.service';
 import { TranslocoService } from '@jsverse/transloco';
 import { ActivatedRoute, Router } from '@angular/router';
@@ -13,6 +13,7 @@ import { SubjectSchedulesAddStudentPopupComponent } from './subject-schedule-add
 import { SubjectScheduleStudentService } from '../../../aacs/service/subject-schedule-student/subject-schedule-student.service';
 import { StudentRes } from '../../../aacs/service/student/types';
 import { SubjectSchedulesChangeSchedulePopupComponent } from './subject-schedule-change-schedule-popup.component';
+import { SubjectScheduleStudentRes } from '../../../aacs/service/subject-schedule-student/types';
 
 @Component({
     selector: 'subjectSchedule-detail',
@@ -174,7 +175,7 @@ export class SubjectSchedulesDetailComponent implements OnDestroy, OnInit {
     }
     onDeleteRangeStudent() {
         let req = this.selectedStudents.map((item) => {
-            return item.studentId;
+            return item.studentId!;
         });
 
         this._confirmationPopupService.showConfirm(

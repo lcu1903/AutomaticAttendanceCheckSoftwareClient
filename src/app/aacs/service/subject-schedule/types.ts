@@ -78,11 +78,3 @@ export interface SubjectScheduleDetailChangeScheduleReq {
     endTime: string;
     listScheduleDate: string[];
 }
-
-export interface SubjectScheduleStudentRes {
-    subjectScheduleStudentId: string;
-    subjectScheduleId: string;
-    studentId: string;
-    // student?: StudentRes;
-    // subjectSchedule?: SubjectScheduleRes;
-}

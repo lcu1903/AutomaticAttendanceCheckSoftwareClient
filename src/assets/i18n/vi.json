@@ -189,6 +189,9 @@
     "aacs.chooseWeekDays": "Chọn ngày trong tuần",
     "aacs.showRegisteredSchedules": "Hiển thị lịch đã đăng ký",
     "aacs.confirmRegisterSubject": "Xác nhận đăng ký môn học",
+    "aacs.scheduleTime": "Thời gian học",
+    "aacs.checkAttendance": "Điểm danh",
+    "aacs.attendance": "Điểm danh",
     "aacs": {
         "message": {
             "studentNotFound": "Không tìm thấy sinh viên",
@@ -224,7 +227,11 @@
             "subjectScheduleStudentCreateFailed": "Thêm sinh viên vào thời khóa biểu thất bại",
             "subjectScheduleStudentUpdateFailed": "Cập nhật sinh viên trong thời khóa biểu thất bại",
             "subjectScheduleStudentAlreadyExists": "Sinh viên đã tồn tại trong thời khóa biểu",
-            "subjectScheduleAlreadyExists": "Lịch học của môn này đã tồn tại trong kỳ học này với lớp này"
+            "subjectScheduleAlreadyExists": "Lịch học của môn này đã tồn tại trong kỳ học này với lớp này",
+            "attendanceCheckSuccess": "Kiểm tra điểm danh thành công",
+            "attendanceCheckedFor": "Đã điểm danh cho",
+            "attendanceCheckFailed": "Kiểm tra điểm danh thất bại",
+            "faceRecognitionFailed": "Nhận diện khuôn mặt thất bại"
         },
         "plhder": {
             "searchBySubjectCodeOrSubjectName": "Tìm kiếm theo mã hoặc tên môn học",

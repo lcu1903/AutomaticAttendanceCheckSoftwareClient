@@ -1,21 +1,18 @@
-
-
-export interface Response<T = null>
-{
+export interface Response<T = null> {
     success: boolean;
     data: T;
-    errors?: string[]
+    errors?: string[];
 }
 
-export interface ReqPagination{
-    pageIndex: number,
-    pageSize: number
+export interface ReqPagination {
+    pageIndex: number;
+    pageSize: number;
 }
 
-export interface Pagination<T>{
-    results: T,
-    currentIndex: number,
-    total: number
+export interface Pagination<T> {
+    results: T;
+    currentIndex: number;
+    total: number;
 }
 
 export interface GenerateId {
@@ -32,5 +29,5 @@ export interface PaginationResponse<T> {
     hasNextPage: boolean;
 }
 export interface GenerateIdRes {
-    id: string
+    id: string;
 }

@@ -1,0 +1,44 @@
+<div class="flex flex-col gap-4 p-4">
+    <!-- Filter -->
+    <!-- <div class="flex gap-4 bg-card p-4 rounded-md shadow justify-between items-center"></div> -->
+    <!-- Content -->
+    <div class="flex flex-col gap-4">
+        <ng-container *ngFor="let schedule of subjectScheduleStudents">
+            <div class="max-h-screen-10 bg-card rounded-md shadow p-4 flex items-center gap-10 flex-1">
+                <div class="w-screen-20">
+                    <div>
+                        <span class="text-surface-500 font-semibold">{{ 'aacs.subjectCode' | transloco }}</span> : {{ schedule.subjectCode }}
+                    </div>
+                    <div>
+                        <span class="text-surface-500 font-semibold">{{ 'aacs.subjectName' | transloco }}</span> : {{ schedule.subjectName }}
+                    </div>
+                </div>
+                <div class="w-screen-20">
+                    <div>
+                        <span class="text-surface-500 font-semibold">{{ 'aacs.subjectScheduleCode' | transloco }}</span> :
+                        {{ schedule.subjectScheduleCode }}
+                    </div>
+                    <div>
+                        <span class="text-surface-500 font-semibold">{{ 'aacs.scheduleTime' | transloco }}</span> :
+                        {{ schedule.startTime | date: 'HH:mm:ss' }} - {{ schedule.endTime | date: 'HH:mm:ss' }}
+                    </div>
+                </div>
+                <div class="w-screen-20">
+                    <div>
+                        <span class="text-surface-500 font-semibold">{{ 'aacs.studentClass' | transloco }}</span> : {{ schedule.classRoom }}
+                    </div>
+                    <div>
+                        <span class="text-surface-500 font-semibold">{{ 'aacs.teacherName' | transloco }}</span> : {{ schedule.teacherName }}
+                    </div>
+                </div>
+                <div class="w-screen-20">
+                    <p-button
+                        [label]="'aacs.checkAttendance' | transloco"
+                        (click)="onClickCheckAttendance(schedule)"
+                        [disabled]="!schedule.isCheckable"
+                    ></p-button>
+                </div>
+            </div>
+        </ng-container>
+    </div>
+</div>

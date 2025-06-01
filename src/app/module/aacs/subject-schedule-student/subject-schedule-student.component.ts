@@ -5,12 +5,12 @@ import { SemesterService } from '../../../aacs/service/semester/semester.service
 import { StudentService } from '../../../aacs/service/student/students.service';
 import { StudentRes } from '../../../aacs/service/student/types';
 import { SubjectScheduleService } from '../../../aacs/service/subject-schedule/subject-schedule.service';
-import { SubjectScheduleRes, SubjectScheduleStudentRes } from '../../../aacs/service/subject-schedule/types';
+import { SubjectScheduleRes } from '../../../aacs/service/subject-schedule/types';
 import { UserRes } from '../../../aacs/service/users/types';
 import { UserService } from '../../../aacs/service/users/users.service';
 import { CmSelectOption } from '../../../base-components/cm-select/cm-select.component';
 import { SubjectScheduleStudentService } from '../../../aacs/service/subject-schedule-student/subject-schedule-student.service';
-import { SubjectScheduleStudentCreateReq } from '../../../aacs/service/subject-schedule-student/types';
+import { SubjectScheduleStudentCreateReq, SubjectScheduleStudentRes } from '../../../aacs/service/subject-schedule-student/types';
 import { MessagePopupService, PopupType } from '../../../base-components/message-popup/message-popup.component';
 import { TranslocoService } from '@jsverse/transloco';
 import { ConfirmationPopupService } from '../../../base-components/confirmation-popup/confirmation-popup.component';
