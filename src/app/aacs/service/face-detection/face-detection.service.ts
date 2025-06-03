@@ -6,7 +6,7 @@ import { Response } from '../../../core/response.types';
 
 export interface FaceCheckReq {
     imageData: string;
-    subjectScheduleId?: string;
+    subjectScheduleDetailId?: string;
 }
 
 @Injectable({ providedIn: 'root' })

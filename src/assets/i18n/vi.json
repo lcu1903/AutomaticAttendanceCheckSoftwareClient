@@ -95,7 +95,8 @@
             "invalidUrl": "URL không hợp lệ",
             "unsavedChanges": "Có thay đổi chưa được lưu",
             "unsavedChangesConfirm": "Bạn có chắc chắn muốn hủy?",
-            "startDateMustLessThanEndDate": "Ngày bắt đầu phải nhỏ hơn ngày kết thúc"
+            "startDateMustLessThanEndDate": "Ngày bắt đầu phải nhỏ hơn ngày kết thúc",
+            "startTimeMustLessThanEndTime": "Thời gian bắt đầu phải nhỏ hơn thời gian kết thúc"
         },
         "showing": "Đang hiển thị",
         "of": "của",
@@ -192,6 +193,10 @@
     "aacs.scheduleTime": "Thời gian học",
     "aacs.checkAttendance": "Điểm danh",
     "aacs.attendance": "Điểm danh",
+    "aacs.attendanceHistory": "Lịch sử điểm danh",
+    "aacs.attendanceTime": "Thời gian điểm danh",
+    "aacs.attendanceAbsent": "Vắng mặt",
+    "aacs.late": "Đi muộn",
     "aacs": {
         "message": {
             "studentNotFound": "Không tìm thấy sinh viên",
@@ -231,7 +236,8 @@
             "attendanceCheckSuccess": "Kiểm tra điểm danh thành công",
             "attendanceCheckedFor": "Đã điểm danh cho",
             "attendanceCheckFailed": "Kiểm tra điểm danh thất bại",
-            "faceRecognitionFailed": "Nhận diện khuôn mặt thất bại"
+            "faceRecognitionFailed": "Nhận diện khuôn mặt thất bại",
+            "scheduleDateMustBeInFuture": "Ngày học phải là ngày trong tương lai"
         },
         "plhder": {
             "searchBySubjectCodeOrSubjectName": "Tìm kiếm theo mã hoặc tên môn học",

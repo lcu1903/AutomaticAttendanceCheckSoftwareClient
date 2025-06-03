@@ -1,0 +1,102 @@
+<div class="flex flex-col gap-4 flex-1 h-full">
+    <!-- Topbar -->
+    <div class="border-t border-b">
+        <div class="flex justify-between items-center p-4 bg-card">
+            <div class="text-4xl font-semibold">{{ 'aacs.attendanceHistory' | transloco }}</div>
+        </div>
+    </div>
+    <!-- Content -->
+    <div class="flex flex-col gap-4 flex-1 mx-4 shadow rounded-md bg-white p-4">
+        <!-- Card -->
+        <div>
+            <cm-select
+                [(ngModel)]="filters.subjectId"
+                [placeholder]="'aacs.plhder.chooseSubject' | transloco"
+                [options]="subjects"
+                (modelChange)="onSearch()"
+            ></cm-select>
+        </div>
+        <div class="bg-white flex flex-col gap-4">
+            <!-- Table -->
+            <p-table
+                #dt
+                dataKey="subjectCode"
+                [value]="res"
+                [paginator]="true"
+                [tableStyle]="{ 'min-width': '700px' }"
+                [rows]="10"
+                [rowsPerPageOptions]="[10, 25, 50]"
+                [paginator]="true"
+                [loading]="isLoading"
+                [stripedRows]="true"
+                [showCurrentPageReport]="true"
+                [expandedRowKeys]="expandedRowKeys"
+                (onRowExpand)="onRowExpand($event)"
+                (onRowCollapse)="onRowCollapse($event)"
+                showGridlines="true"
+                currentPageReportTemplate="{{ 'common.showing' | transloco }} {first} - {last} {{ 'common.of' | transloco }} {totalRecords}"
+            >
+                <ng-template pTemplate="header">
+                    <tr>
+                        <th [width]="'1%'"></th>
+                        <th [width]="'15%'">{{ 'aacs.subjectCode' | transloco }}</th>
+                        <th [width]="'15%'">{{ 'aacs.subjectName' | transloco }}</th>
+                        <th [width]="'15%'">{{ 'aacs.teacherName' | transloco }}</th>
+                        <th [width]="'15%'">{{ 'common.startDate' | transloco }}</th>
+                        <th [width]="'15%'">{{ 'common.endDate' | transloco }}</th>
+                    </tr>
+                </ng-template>
+                <ng-template pTemplate="body" let-attendance let-columns="columns">
+                    <tr>
+                        <td>
+                            <p-button
+                                type="button"
+                                pRipple
+                                [pRowToggler]="attendance"
+                                [text]="true"
+                                [rounded]="true"
+                                [plain]="true"
+                                [icon]="expandedRowKeys[attendance.subjectCode] ? 'pi pi-chevron-down' : 'pi pi-chevron-right'"
+                            />
+                        </td>
+                        <td>{{ attendance.subjectCode }}</td>
+                        <td>{{ attendance.subjectName }}</td>
+                        <td>{{ attendance.teacherName }}</td>
+                        <td>{{ attendance.startDate | date: 'dd/MM/yyyy' }}</td>
+                        <td>{{ attendance.endDate | date: 'dd/MM/yyyy' }}</td>
+                    </tr>
+                </ng-template>
+                <ng-template #expandedrow let-attendance>
+                    <tr>
+                        <td colspan="7">
+                            <div class="p-4">
+                                <p-table [value]="attendance.attendanceDetails" dataKey="subjectCode">
+                                    <ng-template pTemplate="header">
+                                        <tr>
+                                            <th [width]="'20%'">{{ 'aacs.scheduleDate' | transloco }}</th>
+                                            <th [width]="'20%'">{{ 'common.startTime' | transloco }}</th>
+                                            <th [width]="'20%'">{{ 'common.endTime' | transloco }}</th>
+                                            <th [width]="'15%'">{{ 'aacs.attendanceTime' | transloco }}</th>
+                                            <th [width]="'15%'">{{ 'common.status' | transloco }}</th>
+                                            <th [width]="'10%'">{{ 'common.note' | transloco }}</th>
+                                        </tr>
+                                    </ng-template>
+                                    <ng-template pTemplate="body" let-detail let-columns="columns">
+                                        <tr>
+                                            <td>{{ detail.scheduleDate | date: 'dd/MM/yyyy' }}</td>
+                                            <td>{{ detail.startTime | date: 'HH:mm' }}</td>
+                                            <td>{{ detail.endTime | date: 'HH:mm' }}</td>
+                                            <td>{{ detail.attendanceTime | date: 'HH:mm' }}</td>
+                                            <td>{{ getStatusName(detail) }}</td>
+                                            <td>{{ detail.note }}</td>
+                                        </tr>
+                                    </ng-template>
+                                </p-table>
+                            </div>
+                        </td>
+                    </tr>
+                </ng-template>
+            </p-table>
+        </div>
+    </div>
+</div>

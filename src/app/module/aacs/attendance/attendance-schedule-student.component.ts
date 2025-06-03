@@ -69,7 +69,7 @@ export class AttendanceScheduleStudentComponent implements OnInit, OnDestroy {
     }
     onClickCheckAttendance(schedule: SubjectScheduleStudentRes): void {
         this._router.navigate(['./attendances/check'], {
-            queryParams: { subjectScheduleId: schedule.subjectScheduleId },
+            queryParams: { subjectScheduleDetailId: schedule.subjectScheduleDetailId },
         });
     }
 }

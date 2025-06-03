@@ -17,6 +17,7 @@ import { CmSelectOption } from '../../../base-components/cm-select/cm-select.com
 import { ConfirmationPopupService } from '../../../base-components/confirmation-popup/confirmation-popup.component';
 import { WEEK_DAYS_OPTIONS_ISO } from '../../../utils/app.utils';
 import { zodValidator } from '../../../utils/validation.utils';
+import { MessagePopupService, PopupType } from '../../../base-components/message-popup/message-popup.component';
 
 @Component({
     selector: 'subject-schedule-change-schedule-popup',
@@ -44,6 +45,7 @@ export class SubjectSchedulesChangeSchedulePopupComponent implements OnDestroy, 
         private readonly _confirmationPopupService: ConfirmationPopupService,
         private readonly _router: Router,
         private readonly _activatedRoute: ActivatedRoute,
+        private readonly _messagePopupService: MessagePopupService,
     ) {
         this.instance = this.dialogService.getInstance(this.ref);
         const data = this.instance?.data as { subjectSchedule: SubjectScheduleRes | null };
@@ -69,6 +71,14 @@ export class SubjectSchedulesChangeSchedulePopupComponent implements OnDestroy, 
         );
     }
     onSave() {
+        if (this.changeScheduleForm.get('startTime')?.value && this.changeScheduleForm.get('endTime')?.value) {
+            const startTime = this.changeScheduleForm.get('startTime')?.value;
+            const endTime = this.changeScheduleForm.get('endTime')?.value;
+            if (startTime >= endTime) {
+                this._messagePopupService.show(PopupType.ERROR, 'ERROR', 'common.message.startTimeMustLessThanEndTime');
+                return;
+            }
+        }
         if (!this.changeScheduleForm.valid) {
             this.changeScheduleForm.markAllAsTouched();
             return;

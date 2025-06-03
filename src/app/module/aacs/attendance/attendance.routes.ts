@@ -2,6 +2,7 @@ import { Route } from '@angular/router';
 import { AttendanceComponent } from './attendance.component';
 import { AttendanceScheduleStudentComponent } from './attendance-schedule-student.component';
 import { AttendancesComponent } from './attendances.component';
+import { AttendanceHistoriesComponent } from './attendance-histories.component';
 
 export const AttendanceRoutes: Route[] = [
     {
@@ -17,5 +18,9 @@ export const AttendanceRoutes: Route[] = [
                 component: AttendanceComponent,
             },
         ],
+    },
+    {
+        path: 'attendance-histories',
+        component: AttendanceHistoriesComponent,
     },
 ];

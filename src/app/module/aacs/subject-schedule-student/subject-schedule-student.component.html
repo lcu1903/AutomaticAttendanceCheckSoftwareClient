@@ -24,7 +24,7 @@
                 }"
                 class="max-h-screen-10 rounded-md shadow p-4 flex items-center gap-10 flex-1"
             >
-                <div>
+                <div class="w-screen-20">
                     <div>
                         <span class="text-surface-500 font-semibold">{{ 'aacs.subjectCode' | transloco }}</span> : {{ schedule.subjectCode }}
                     </div>
@@ -32,7 +32,7 @@
                         <span class="text-surface-500 font-semibold">{{ 'aacs.subjectName' | transloco }}</span> : {{ schedule.subjectName }}
                     </div>
                 </div>
-                <div>
+                <div class="w-screen-20">
                     <div>
                         <span class="text-surface-500 font-semibold">{{ 'aacs.studentClass' | transloco }}</span> : {{ schedule.className }}
                     </div>
@@ -40,7 +40,7 @@
                         <span class="text-surface-500 font-semibold">{{ 'aacs.semester' | transloco }}</span> : {{ schedule.semesterName }}
                     </div>
                 </div>
-                <div (click)="onShowSchedule(schedule.subjectScheduleId)" class="cursor-pointer">
+                <div (click)="onShowSchedule(schedule.subjectScheduleId)" class="cursor-pointer w-screen-20">
                     <span class="underline text-primary">{{ 'aacs.schedule' | transloco }}</span>
                     <ng-container *ngIf="schedule.subjectScheduleId == scheduleIdCalendar">
                         <ng-container
@@ -48,7 +48,7 @@
                         ></ng-container>
                     </ng-container>
                 </div>
-                <div class="flex-1">
+                <div class="flex-1 w-screen-20">
                     <p-checkbox
                         [disabled]="setOfRegisteredSchedules.includes(schedule.subjectScheduleId)"
                         [value]="schedule.subjectScheduleId"

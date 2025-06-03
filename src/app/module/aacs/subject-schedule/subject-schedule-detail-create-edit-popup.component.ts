@@ -1,21 +1,21 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
+import { FormBuilder, FormGroup } from '@angular/forms';
+import { ActivatedRoute, Router } from '@angular/router';
+import { TranslocoService } from '@jsverse/transloco';
+import moment, { Moment } from 'moment';
+import { DialogService, DynamicDialogComponent, DynamicDialogRef } from 'primeng/dynamicdialog';
 import { finalize, Subject, takeUntil } from 'rxjs';
+import { z } from 'zod';
+import { SubjectScheduleService } from '../../../aacs/service/subject-schedule/subject-schedule.service';
 import {
     SubjectScheduleDetailCreateReq,
     SubjectScheduleDetailRes,
     SubjectScheduleDetailUpdateReq,
     SubjectScheduleRes,
 } from '../../../aacs/service/subject-schedule/types';
-import { SubjectScheduleService } from '../../../aacs/service/subject-schedule/subject-schedule.service';
-import { TranslocoService } from '@jsverse/transloco';
-import { ActivatedRoute, Router } from '@angular/router';
-import { FormBuilder, FormGroup } from '@angular/forms';
-import { z } from 'zod';
-import { DialogService, DynamicDialogComponent, DynamicDialogRef } from 'primeng/dynamicdialog';
-import { SubjectRes } from '../../../aacs/service/subject/types';
-import { zodValidator } from '../../../utils/validation.utils';
 import { ConfirmationPopupService } from '../../../base-components/confirmation-popup/confirmation-popup.component';
-import moment from 'moment';
+import { zodValidator } from '../../../utils/validation.utils';
+import { MessagePopupService, PopupType } from '../../../base-components/message-popup/message-popup.component';
 
 @Component({
     selector: 'subject-schedule-detail-create-edit-popup',
@@ -44,14 +44,13 @@ export class SubjectSchedulesDetailCreateEditPopupComponent implements OnDestroy
         private readonly _confirmationPopupService: ConfirmationPopupService,
         private readonly _router: Router,
         private readonly _activatedRoute: ActivatedRoute,
+        private readonly _messagePopupService: MessagePopupService,
     ) {
         this.instance = this.dialogService.getInstance(this.ref);
         const data = this.instance?.data as { subjectScheduleDetail: SubjectScheduleDetailRes | null; subjectSchedule: SubjectScheduleRes | null };
         if (data) {
             this.subjectScheduleDetail = data.subjectScheduleDetail;
             this.subjectSchedule = data.subjectSchedule;
-            console.log(data);
-
             this.actionEnum = this.subjectScheduleDetail ? 'edit' : 'create';
         }
     }
@@ -73,9 +72,23 @@ export class SubjectSchedulesDetailCreateEditPopupComponent implements OnDestroy
                 validators: zodValidator(this.createEditSubjectSchema),
             },
         );
-        console.log(this.subjectScheduleDetailForm);
     }
     onSave() {
+        if (this.subjectScheduleDetailForm.get('scheduleDate')?.value) {
+            const date = this.subjectScheduleDetailForm.get('scheduleDate')?.value;
+            if (moment().isAfter(moment(date))) {
+                this._messagePopupService.show(PopupType.ERROR, 'ERROR', 'aacs.message.scheduleDateMustBeInFuture');
+                return;
+            }
+        }
+        if (this.subjectScheduleDetailForm.get('startTime')?.value && this.subjectScheduleDetailForm.get('endTime')?.value) {
+            const startTime = this.subjectScheduleDetailForm.get('startTime')?.value;
+            const endTime = this.subjectScheduleDetailForm.get('endTime')?.value;
+            if (startTime >= endTime) {
+                this._messagePopupService.show(PopupType.ERROR, 'ERROR', 'common.message.startTimeMustLessThanEndTime');
+                return;
+            }
+        }
         if (!this.subjectScheduleDetailForm.valid) {
             this.subjectScheduleDetailForm.markAllAsTouched();
             return;

@@ -12,9 +12,9 @@ export class SubjectScheduleStudentService {
 
     constructor(private http: HttpClient) {}
 
-    getAll(textSearch?: string): Observable<Response<SubjectScheduleStudentRes[]>> {
+    getAll(filter: { textSearch?: string; studentIds?: string[] }): Observable<Response<SubjectScheduleStudentRes[]>> {
         return this.http.get<Response<SubjectScheduleStudentRes[]>>(this.apiUrl, {
-            params: textSearch ? { textSearch } : {},
+            params: filter,
         });
     }
 

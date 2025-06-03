@@ -1,8 +1,10 @@
 export interface SubjectScheduleStudentRes {
     subjectScheduleStudentId: string;
     subjectScheduleId: string;
+    subjectScheduleDetailId?: string;
     studentId?: string;
     subjectScheduleCode: string;
+    subjectId: string;
     subjectCode?: string;
     subjectName?: string;
     startTime?: string;

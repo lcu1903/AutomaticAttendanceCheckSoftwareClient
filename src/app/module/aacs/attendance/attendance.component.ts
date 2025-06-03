@@ -17,7 +17,7 @@ export class AttendanceComponent implements OnInit, AfterViewInit, OnDestroy {
     videoElement: HTMLVideoElement | null = null;
     canvasElement: HTMLCanvasElement | null = null;
     isDetecting = false;
-    subjectScheduleId: string | null = null;
+    subjectScheduleDetailId: string | null = null;
     private stream: MediaStream | null = null;
     private faceDetected = false;
     constructor(
@@ -27,7 +27,7 @@ export class AttendanceComponent implements OnInit, AfterViewInit, OnDestroy {
         private readonly _activatedRoute: ActivatedRoute,
     ) {
         this._activatedRoute.queryParams.pipe(takeUntil(this._unsubscribeAll$)).subscribe((params) => {
-            this.subjectScheduleId = params['subjectScheduleId'] || null;
+            this.subjectScheduleDetailId = params['subjectScheduleDetailId'] || null;
         });
     }
 
@@ -90,7 +90,10 @@ export class AttendanceComponent implements OnInit, AfterViewInit, OnDestroy {
                     this.isDetecting = false;
                     await new Promise<void>((resolve) => {
                         this._faceDetectionService
-                            .checkFace({ imageData, subjectScheduleId: this.subjectScheduleId! })
+                            .checkFace({
+                                imageData,
+                                subjectScheduleDetailId: this.subjectScheduleDetailId!,
+                            })
                             .pipe(
                                 takeUntil(this._unsubscribeAll$),
                                 finalize(() => {
