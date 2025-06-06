@@ -77,14 +77,25 @@ export class AttendanceComponent implements OnInit, AfterViewInit, OnDestroy {
             const detections = await faceapi.detectSingleFace(this.videoElement!, new faceapi.TinyFaceDetectorOptions());
             if (detections != undefined) {
                 if (!this.faceDetected) {
+                    const box = detections.box;
                     this.faceDetected = true;
                     if (!this.canvasElement) {
                         this.canvasElement = document.createElement('canvas');
                     }
                     const context = this.canvasElement.getContext('2d');
-                    this.canvasElement.width = this.videoElement!.videoWidth;
-                    this.canvasElement.height = this.videoElement!.videoHeight;
-                    context?.drawImage(this.videoElement!, 0, 0);
+                    this.canvasElement.width = box.width + 20;
+                    this.canvasElement.height = box.height + 20;
+                    context?.drawImage(
+                        this.videoElement!,
+                        box.x, // Vị trí x của khuôn mặt
+                        box.y - 20, // Vị trí y của khuôn mặt
+                        box.width + 20, // Chiều rộng của khuôn mặt
+                        box.height + 30, // Chiều cao của khuôn mặt
+                        0,
+                        0,
+                        box.width + 20,
+                        box.height + 20,
+                    );
 
                     const imageData = this.canvasElement.toDataURL('image/jpeg');
                     this.isDetecting = false;
