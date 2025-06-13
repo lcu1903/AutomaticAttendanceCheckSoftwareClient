@@ -55,6 +55,8 @@ export interface SubjectScheduleDetailRes {
     scheduleDate: string;
     startTime: string;
     endTime: string;
+    totalStudentsPresent?: number;
+    totalStudents?: number;
     note?: string;
 }
 export interface SubjectScheduleDetailCreateReq {

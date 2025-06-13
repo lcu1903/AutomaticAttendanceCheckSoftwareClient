@@ -32,6 +32,9 @@ export class AttendanceHistoriesComponent implements OnDestroy, OnInit {
     subjects: CmSelectOption[] = [];
     res: AttendanceHistoryStudentRes[] = [];
     expandedRowKeys: { [key: string]: boolean } = {};
+    totalAttendance: number = 0;
+    totalAbsent: number = 0;
+    totalSchedule: number = 0;
     isLoading = false;
     constructor(
         private readonly _messagePopupService: MessagePopupService,
@@ -72,6 +75,9 @@ export class AttendanceHistoriesComponent implements OnDestroy, OnInit {
             )
             .subscribe((res) => {
                 this.res = res.data;
+                this.totalAttendance = res.data.reduce((acc, item) => acc + item.attendanceDetails.filter((e) => e.attendanceTime != null).length, 0);
+                this.totalAbsent = res.data.reduce((acc, item) => acc + item.attendanceDetails.filter((e) => e.attendanceTime == null).length, 0);
+                this.totalSchedule = res.data.reduce((acc, item) => acc + item.attendanceDetails.length, 0);
             });
     }
     onRowExpand(event: any): void {

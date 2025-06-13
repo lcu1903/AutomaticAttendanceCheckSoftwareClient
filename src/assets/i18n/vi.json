@@ -199,6 +199,9 @@
     "aacs.attendanceHistory": "Lịch sử điểm danh",
     "aacs.attendanceTime": "Thời gian điểm danh",
     "aacs.attendanceAbsent": "Vắng mặt",
+    "aacs.totalAbsent": "Tổng số vắng mặt",
+    "aacs.totalAttended": "Tổng số có mặt",
+    "aacs.attendancePresent": "Có mặt",
     "aacs.late": "Đi muộn",
     "aacs": {
         "message": {

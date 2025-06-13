@@ -8,13 +8,21 @@
     <!-- Content -->
     <div class="flex flex-col gap-4 flex-1 mx-4 shadow rounded-md bg-white p-4">
         <!-- Card -->
-        <div>
+        <div class="flex flex-1 items-center gap-4">
             <cm-select
                 [(ngModel)]="filters.subjectId"
                 [placeholder]="'aacs.plhder.chooseSubject' | transloco"
                 [options]="subjects"
                 (modelChange)="onSearch()"
             ></cm-select>
+            <div>
+                {{ 'aacs.totalAttended' | transloco }}
+                {{ totalAttendance }}/{{ totalSchedule }}
+            </div>
+            <div class="text-red-400">
+                {{ 'aacs.totalAbsent' | transloco }}
+                {{ totalAbsent }}/{{ totalSchedule }}
+            </div>
         </div>
         <div class="bg-white flex flex-col gap-4">
             <!-- Table -->

@@ -6,9 +6,8 @@ import { AppLayout } from './layout/component/app.layout';
 import { LoginComponent } from './module/auth/login/login.component';
 import { RegisterComponent } from './module/auth/register/register.component';
 import { HomeComponent } from './module/home/home.component';
-import { AttendanceComponent } from './module/aacs/attendance/attendance.component';
 export const routes: Routes = [
-    { path: '', redirectTo: 'home', pathMatch: 'full' },
+    { path: '', redirectTo: 'attendances', pathMatch: 'full' },
     {
         path: '',
         canActivate: [NoAuthGuard],
