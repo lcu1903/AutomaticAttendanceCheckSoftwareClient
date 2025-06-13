@@ -7,6 +7,7 @@ import { ConfirmDialogModule } from 'primeng/confirmdialog';
 import { DialogService } from 'primeng/dynamicdialog';
 import { ToastModule } from 'primeng/toast';
 import { ConfirmationPopupService } from './base-components/confirmation-popup/confirmation-popup.component';
+import * as faceapi from 'face-api.js';
 @Component({
     selector: 'app-root',
     standalone: true,
@@ -25,5 +26,10 @@ export class AppComponent implements OnInit {
         this.translocoService.selectTranslateObject('viLocale').subscribe((res) => {
             this.config.setTranslation(res);
         });
+        this.preloadFaceApiModels();
+    }
+    async preloadFaceApiModels() {
+        const modelUrl = 'assets/models'; // Hoặc đúng base path nếu deploy subfolder
+        await faceapi.nets.tinyFaceDetector.loadFromUri(modelUrl);
     }
 }

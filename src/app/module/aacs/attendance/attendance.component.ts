@@ -45,12 +45,12 @@ export class AttendanceComponent implements OnInit, AfterViewInit, OnDestroy {
 
     async ngAfterViewInit(): Promise<void> {
         this.videoElement = this.videoElementRef?.nativeElement;
-        await this.loadFaceApiModels();
+        // await this.loadFaceApiModels();
         this.initializeCamera();
     }
 
     async loadFaceApiModels() {
-        await faceapi.nets.tinyFaceDetector.loadFromUri('/assets/models');
+        // await faceapi.nets.tinyFaceDetector.loadFromUri('/assets/models');
         // Có thể load thêm các model khác nếu cần
     }
 

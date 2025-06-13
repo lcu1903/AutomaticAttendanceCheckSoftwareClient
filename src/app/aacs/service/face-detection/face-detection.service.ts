@@ -11,7 +11,7 @@ export interface FaceCheckReq {
 
 @Injectable({ providedIn: 'root' })
 export class FaceDetectionService {
-    private apiUrl = '/api/face-detection/check';
+    private apiUrl = '/api/face-detections/check';
 
     constructor(private http: HttpClient) {}
 

@@ -38,7 +38,10 @@
             "systemPositionUpdateFailed": "Cập nhật chức vụ thất bại",
             "userDeleteFailed": "Xóa người dùng thất bại",
             "userNotFound": "Không tìm thấy người dùng",
-            "pleaseCheckAgain": "Vui lòng kiểm tra lại"
+            "pleaseCheckAgain": "Vui lòng kiểm tra lại",
+            "userCreateFailed": "Tạo người dùng thất bại",
+            "userUpdateFailed": "Cập nhật người dùng thất bại",
+            "userAlreadyExists": "Người dùng đã tồn tại"
         },
         "error": {
             "required": "Bắt buộc",
