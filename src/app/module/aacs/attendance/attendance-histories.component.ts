@@ -36,6 +36,8 @@ export class AttendanceHistoriesComponent implements OnDestroy, OnInit {
     totalAbsent: number = 0;
     totalSchedule: number = 0;
     isLoading = false;
+    isImageVisible = false;
+    imageSrc: string = '';
     constructor(
         private readonly _messagePopupService: MessagePopupService,
         private readonly _translocoService: TranslocoService,
@@ -111,5 +113,9 @@ export class AttendanceHistoriesComponent implements OnDestroy, OnInit {
                 };
             });
         });
+    }
+    onShowAttendanceImage(imageSrc: string): void {
+        this.isImageVisible = true;
+        this.imageSrc = imageSrc;
     }
 }

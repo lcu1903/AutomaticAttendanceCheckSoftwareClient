@@ -41,12 +41,12 @@ export const routes: Routes = [
             layout: 'normal',
         },
         children: [
-            {
-                path: 'home',
-                canActivate: [PageGuard],
-                canActivateChild: [PageGuard],
-                component: HomeComponent,
-            },
+            // {
+            //     path: 'home',
+            //     canActivate: [PageGuard],
+            //     canActivateChild: [PageGuard],
+            //     component: HomeComponent,
+            // },
             {
                 path: '',
                 canActivateChild: [PageGuard],

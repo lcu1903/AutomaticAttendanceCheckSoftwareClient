@@ -131,7 +131,9 @@
         "note": "Ghi chú",
         "common": "Chung",
         "startTime": "Thời gian bắt đầu",
-        "endTime": "Thời gian kết thúc"
+        "endTime": "Thời gian kết thúc",
+        "image": "Hình ảnh",
+        "detail": "Chi tiết"
     },
     "viLocale": {
         "firstDayOfWeek": 1,

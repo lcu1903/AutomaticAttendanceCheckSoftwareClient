@@ -87,6 +87,7 @@
                                             <th [width]="'15%'">{{ 'aacs.attendanceTime' | transloco }}</th>
                                             <th [width]="'15%'">{{ 'common.status' | transloco }}</th>
                                             <th [width]="'10%'">{{ 'common.note' | transloco }}</th>
+                                            <th [width]="'10%'">{{ 'common.image' | transloco }}</th>
                                         </tr>
                                     </ng-template>
                                     <ng-template pTemplate="body" let-detail let-columns="columns">
@@ -97,6 +98,15 @@
                                             <td>{{ detail.attendanceTime | date: 'HH:mm' }}</td>
                                             <td>{{ getStatusName(detail) }}</td>
                                             <td>{{ detail.note }}</td>
+                                            <td>
+                                                <div
+                                                    *ngIf="detail.imageUrl"
+                                                    class="text-primary underline"
+                                                    (click)="onShowAttendanceImage(detail.imageUrl)"
+                                                >
+                                                    {{ 'common.detail' | transloco }}
+                                                </div>
+                                            </td>
                                         </tr>
                                     </ng-template>
                                 </p-table>
@@ -107,4 +117,14 @@
             </p-table>
         </div>
     </div>
+    <p-dialog
+        header="Hình ảnh"
+        [modal]="true"
+        [(visible)]="isImageVisible"
+        [style]="{ width: '50rem' }"
+        [breakpoints]="{ '1199px': '75vw', '575px': '90vw' }"
+        [maximizable]="true"
+    >
+        <img [src]="imageSrc" />
+    </p-dialog>
 </div>
